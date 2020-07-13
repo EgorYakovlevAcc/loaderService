@@ -1,0 +1,74 @@
+package com.service.impl;
+
+import com.model.Option;
+import com.model.Question;
+import com.repo.OptionRepository;
+import com.service.OptionService;
+import com.service.QuestionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class OptionServiceImpl implements OptionService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OptionServiceImpl.class);
+    @Autowired
+    private OptionRepository optionRepository;
+    @Autowired
+    private QuestionService questionService;
+
+    @Override
+    public Option findOptionById(Integer id) {
+        return optionRepository.findOptionById(id);
+    }
+
+    @Override
+    public List<Option> findOptionByQuestion(Question question) {
+        return optionRepository.findOptionByQuestion(question);
+    }
+
+    @Override
+    public void createOptionsByQuestionAndContents(Integer questionId, List<com.pojo.Option> options) {
+        Question question = questionService.findQuestionById(questionId);
+        for (com.pojo.Option o : options) {
+            Option option = new Option();
+            option.setQuestion(question);
+            option.setContent(o.getContent());
+            option.setReaction(o.getReaction());
+            optionRepository.save(option);
+        }
+    }
+
+    @Override
+    public Integer getCorrectIndexOfOptionByAnswer(String answerStr) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public void editOptionsByQuestionAndContents(Integer questionId, List<Option> previousOptions, List<com.pojo.Option> options) {
+        for (Option option: previousOptions) {
+            optionRepository.delete(option);
+        }
+//        createOptionsByQuestionAndContents(questionId, options.stream()
+//                .map(x -> x.getContent())
+//                .collect(Collectors.toList()));
+    }
+
+    @Override
+    public void delete(Option option) {
+        optionRepository.delete(option);
+    }
+
+    @Override
+    public com.pojo.Option convertOptionModelToOptionPojo(Option option) {
+        com.pojo.Option optionPojo = new com.pojo.Option();
+        optionPojo.setContent(option.getContent());
+        return optionPojo;
+    }
+
+}

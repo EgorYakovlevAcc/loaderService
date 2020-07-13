@@ -1,0 +1,3 @@
+# Project exclude paths
+/loader-ui/target/
+/target/

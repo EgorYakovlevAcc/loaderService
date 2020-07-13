@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/loader-back/loader-back.iml" filepath="$PROJECT_DIR$/loader-back/loader-back.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loader-service.iml" filepath="$PROJECT_DIR$/loader-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loader-ui/loader-ui.iml" filepath="$PROJECT_DIR$/loader-ui/loader-ui.iml" />
+    </modules>
+  </component>
+</project>
