@@ -14,5 +14,6 @@ public interface QuestionService {
     Question getNextQuestionByWeight(Integer weight);
     void deleteQuestionById(Integer id);
     void saveQuestionWithImageContent(Question question, byte[] image);
-    Question getNextQuestionByNumber(Integer number);
+    List<Question> findAllQuestionsForPorters();
+    List<Question> findAllQuestionsForCustomers();
 }

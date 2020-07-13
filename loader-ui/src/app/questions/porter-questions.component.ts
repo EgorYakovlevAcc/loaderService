@@ -7,10 +7,10 @@ import {ImageFileService} from "../service/image-file.service";
 
 @Component({
   selector: 'app-questions',
-  templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css']
+  templateUrl: './porter-questions.component.html',
+  styleUrls: ['./porter-questions.component.css']
 })
-export class QuestionsComponent implements OnInit {
+export class PorterQuestionsComponent implements OnInit {
   questions: Question[];
   public selectedFile;
 

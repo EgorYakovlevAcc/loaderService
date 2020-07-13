@@ -1,10 +1,12 @@
 package com.model;
 
+import com.model.user.BotUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.List;
 
 @Entity
@@ -22,7 +24,8 @@ public class Question {
     private byte[] attachement;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Option> options;
-
+    private Integer relatedTo;
+    private UserType userType;
 
     public Question() {
     }

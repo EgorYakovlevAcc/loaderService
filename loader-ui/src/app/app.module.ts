@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {RouterModule, Routes} from "@angular/router";
-import {QuestionsComponent} from './questions/questions.component';
+import {PorterQuestionsComponent} from './questions/porter-questions.component';
 import {UsersComponent} from './users/users.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {MainpageComponent} from './mainpage/mainpage.component';
@@ -17,11 +17,12 @@ import { MessageFormComponent } from './message-form/message-form.component';
 import { AboutComponent } from './about/about.component';
 import { FirstAndLastMessagesEditorComponent } from './first-and-last-messages-editor/first-and-last-messages-editor.component';
 import { ScoreRangeMessageComponent } from './score-range-message/score-range-message.component';
+import { CustomerQuestionsComponent } from './customer-questions/customer-questions.component';
 
 const appRoutes: Routes = [
   {
     path: 'questions',
-    component: QuestionsComponent
+    component: PorterQuestionsComponent
   },
   {
     path: 'users',
@@ -54,7 +55,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     NavigationComponent,
-    QuestionsComponent,
+    PorterQuestionsComponent,
     UsersComponent,
     NotFoundComponent,
     MainpageComponent,
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
     MessageFormComponent,
     AboutComponent,
     FirstAndLastMessagesEditorComponent,
-    ScoreRangeMessageComponent
+    ScoreRangeMessageComponent,
+    CustomerQuestionsComponent
   ],
   imports: [
     BrowserModule,

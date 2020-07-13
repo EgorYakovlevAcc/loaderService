@@ -1,6 +1,7 @@
 package com.service.impl;
 
 import com.model.Question;
+import com.model.UserType;
 import com.pojo.Option;
 import com.pojo.QuestionOptionsAnswer;
 import com.repo.QuestionRepository;
@@ -73,9 +74,12 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question getNextQuestionByNumber(Integer number) {
-        List<Question> questions = questionRepository.findAll();
-        return questions.get(number);
+    public List<Question> findAllQuestionsForPorters() {
+        return questionRepository.findQuestionsByUserType(UserType.PORTER);
     }
 
+    @Override
+    public List<Question> findAllQuestionsForCustomers() {
+        return questionRepository.findQuestionsByUserType(UserType.CUSTOMER);
+    }
 }

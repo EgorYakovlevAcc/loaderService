@@ -30,10 +30,16 @@ public class QuestionController {
     @Autowired
     private OptionService optionService;
 
-    @GetMapping(value = {"/all"})
-    public String getQuestions(Model model) {
-        System.out.println("getQuestions");
-        List<Question> questions = questionService.findAll();
+    @GetMapping(value = {"/all/porters"})
+    public String getQuestionsPorters(Model model) {
+        List<Question> questions = questionService.findAllQuestionsForPorters();
+        model.addAttribute("questions", questions);
+        return "questions";
+    }
+
+    @GetMapping(value = {"/all/customers"})
+    public String getQuestionsCustomers(Model model) {
+        List<Question> questions = questionService.findAllQuestionsForCustomers();
         model.addAttribute("questions", questions);
         return "questions";
     }

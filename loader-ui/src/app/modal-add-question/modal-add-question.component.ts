@@ -17,11 +17,10 @@ export class ModalAddQuestionComponent implements OnInit {
   indexOfTrueOption:number;
   isQuestionChanged:boolean;
   question: Question = {
+    attachment: undefined,
+    userType: "",
     id:0,
-    content: '',
-    options: [],
-    answer: '',
-    weight:0
+    content: ''
   };
 
 
@@ -42,12 +41,6 @@ export class ModalAddQuestionComponent implements OnInit {
 
   saveQuestion() {
     let i:number = 0;
-    for (let option of this.question.options){
-      if (i == this.indexOfTrueOption) {
-        this.question.answer = option.content;
-      }
-      i++;
-    }
     this.questionService.sendQuestion(this.question, this.isQuestionChanged).subscribe(result => {
         location.reload();
       },
@@ -55,14 +48,5 @@ export class ModalAddQuestionComponent implements OnInit {
         alert("Error")
       });
     this.modalForm.close("Efrfrf");
-  }
-
-  addOptionToQuestion() {
-    let opt: Option = new Option();
-    this.question.options.push(opt);
-  }
-
-  removeOptionToQuestion() {
-
   }
 }
