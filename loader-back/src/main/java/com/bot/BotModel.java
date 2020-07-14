@@ -85,7 +85,7 @@ public final class BotModel {
             public final String PORTER_CHANGE_TIMETABLE_CMD = "PORTER_CHANGE_TIMETABLE";
 
             public final String PORTER_EXECUTE_ORDER = "REQUEST_EXECUTE_ORDER_%s";
-            public final Pattern PORTER_EXECUTE_ORDER_REGEX = Pattern.compile("REQUEST_EXECUTE_ORDER_\\d*");
+            public final Pattern PORTER_EXECUTE_ORDER_REGEX = Pattern.compile("^REQUEST_EXECUTE_ORDER_\\d*$");
         }
 
         public interface Texts {
