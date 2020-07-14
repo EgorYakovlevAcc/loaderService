@@ -13,6 +13,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Question findQuestionById(Integer id);
     List<Question> findQuestionsByUserType(UserType userType);
 
-    Question findQuestionByQuestionNumber(Integer questionNumber);
+    Question findQuestionByQuestionNumberAndUserType(Integer questionNumber, UserType userType);
     Integer countAllByUserType(UserType userType);
 }

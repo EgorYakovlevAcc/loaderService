@@ -57,7 +57,7 @@ public class QuestionServiceImpl implements QuestionService {
             return null;
         }
         Integer questionNumber = currentQuestionNumber == -1 ? 0 : currentQuestionNumber;
-        Question question = questionRepository.findQuestionByQuestionNumber(questionNumber);
+        Question question = questionRepository.findQuestionByQuestionNumberAndUserType(questionNumber, UserType.PORTER);
         porter.setAskingQuestions(true);
         porter.setCurrentQuestionNum(questionNumber + 1);
         porterRepository.save(porter);
@@ -69,12 +69,11 @@ public class QuestionServiceImpl implements QuestionService {
         Integer customerQuestionAmount = questionRepository.countAllByUserType(UserType.CUSTOMER);
         Integer currentQuestionNumber = customer.getCurrentQuestionNum();
         if (currentQuestionNumber >= customerQuestionAmount) {
-            customer.setFinishedAskingQuestions(true);
             return null;
         }
         Integer questionNumber = currentQuestionNumber == -1 ? 0 : currentQuestionNumber;
-        Question question = questionRepository.findQuestionByQuestionNumber(questionNumber);
-        customer.setCurrentQuestionNum(currentQuestionNumber + 1);
+        Question question = questionRepository.findQuestionByQuestionNumberAndUserType(questionNumber, UserType.CUSTOMER);
+        customer.setCurrentQuestionNum(questionNumber + 1);
         customer.setAskingQuestions(true);
         customerRepository.save(customer);
         return question;
