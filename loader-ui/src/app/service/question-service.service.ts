@@ -13,8 +13,13 @@ export class QuestionServiceService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllQuestions(): Observable<any> {
-    let url = this.host + "all/text";
+  getAllQuestionsPorter(): Observable<any> {
+    let url = this.host + "all/porter";
+    return this.httpClient.get(url);
+  }
+
+  getAllQuestionsCustomer(): Observable<any> {
+    let url = this.host + "all/customer";
     return this.httpClient.get(url);
   }
 

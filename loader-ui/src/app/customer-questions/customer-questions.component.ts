@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
 import {Question} from "../model/question/question";
+import {ImageFileService} from "../service/image-file.service";
+import {QuestionServiceService} from "../service/question-service.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ModalAddQuestionComponent} from "../modal-add-question/modal-add-question.component";
 
 @Component({
   selector: 'app-customer-questions',
@@ -8,27 +11,29 @@ import {Question} from "../model/question/question";
   styleUrls: ['./customer-questions.component.css']
 })
 export class CustomerQuestionsComponent implements OnInit {
-  model:Question = {
-    userType: "CUSTOMER",
-    id:0,
-    content:''
-  };
-  constructor(private httpClient: HttpClient) { }
+  questions: Question[];
+  public selectedFile;
+
+  constructor(private imageFileService: ImageFileService, private questionService: QuestionServiceService, private modalService: NgbModal) {
+  }
 
   ngOnInit(): void {
-  }
-
-  sendQuestionWithOptions(): void{
-    let url="http://localhost:8080/questions/add/customers";
-    this.httpClient.post(url, this.model).subscribe(res =>
-      {
-        location.reload();
-      },
-      error => {
-        alert("Error");
+    this.questionService.getAllQuestionsCustomer().subscribe((result: Question[]) => {
+        this.questions = result;
       }
-    )
+    );
   }
 
-}
+  openCreationNewQuestionFormCustomer() {
+    this.modalService.open(ModalAddQuestionComponent);
+  }
 
+  deleteQuestion(id) {
+    this.questionService.deleteQuestion(id).subscribe(result => {
+      location.reload();
+    }, error => {
+      alert("Error");
+    });
+
+  }
+}

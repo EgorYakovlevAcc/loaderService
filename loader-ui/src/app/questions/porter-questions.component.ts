@@ -18,13 +18,13 @@ export class PorterQuestionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questionService.getAllQuestions().subscribe((result: Question[]) => {
+    this.questionService.getAllQuestionsPorter().subscribe((result: Question[]) => {
         this.questions = result;
       }
     );
   }
 
-  openCreationNewQuestionForm() {
+  openCreationNewQuestionFormPorter() {
     this.modalService.open(ModalAddQuestionComponent);
   }
 

@@ -1,13 +1,39 @@
-<form (submit)="sendQuestionWithOptions()">
-  <div class="form-group row">
-    <label for="question__content" class="col-sm-2 col-form-label">question</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="question__content" [(ngModel)] = model.content placeholder="question">
-    </div>
-  </div>
-  <div class="form-group row">
-    <div class="col-sm-10">
-      <button type="submit" class="btn btn-primary">ok</button>
-    </div>
-  </div>
-</form>
+<div class="container-fluid">
+  <button type="button" (click)="openCreationNewQuestionFormCustomer()" class="btn btn-primary btn-lg btn-block"
+          style="margin: 20px 0 20px 0">add new question
+  </button>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>
+        №
+      </th>
+      <th>
+        content
+      </th>
+      <th>
+        actions
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let question of questions; let i = index">
+    <tr id="'tr__' + {{i}}">
+      <td>
+        {{i + 1}}
+      </td>
+      <td>
+        {{question.content}}
+      </td>
+      <td>
+        <div class="container">
+          <div class="row" style="text-align: center">
+            <div class="col">
+              <button class="btn btn-danger" (click)="deleteQuestion(question.id)">delete</button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
