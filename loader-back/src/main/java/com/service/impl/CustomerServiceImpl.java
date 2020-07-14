@@ -31,4 +31,20 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAskingQuestions(false);
         customer.setFinishedAskingQuestions(true);
     }
+
+    @Override
+    public void setOrderCreationProcessing(Customer customer, boolean b) {
+        customer.setOrderCreationProcessing(b);
+        //turn off order processing creation action
+        if (!b) {
+            customer.setOrderQuestionNum(-1);
+        }
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public void updateOrderCreationQuestionNum(Customer customer, int i) {
+        customer.setOrderQuestionNum(i);
+        customerRepository.save(customer);
+    }
 }

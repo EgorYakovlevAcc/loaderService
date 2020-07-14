@@ -1,12 +1,14 @@
 package com.model.user;
 
 import com.model.answer.AnswerPorter;
+import com.model.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "porters")
@@ -30,4 +32,6 @@ public class Porter implements BotUser {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="porter_id")
     private AnswerPorter answer;
+    @ManyToMany
+    private List<Order> orders;
 }

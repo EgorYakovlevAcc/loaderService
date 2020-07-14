@@ -4,6 +4,8 @@ import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
 import com.model.Question;
+import com.model.order.Order;
+import com.model.order.Status;
 import com.model.user.BotUser;
 import com.model.user.Customer;
 import com.model.user.Porter;
@@ -34,32 +36,27 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private PorterService porterService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public MessagesPackage handleMessage(Update update) {
         MessagesPackage messagesPackage = new MessagesPackage();
         Message message = update.getMessage();
         User user = message == null ? update.getCallbackQuery().getFrom() : message.getFrom();
-        LOGGER.info("EGORKA = {}", user);
         BotUser botUser = userService.findTelegramUserByTelegramId(user.getId());
-        LOGGER.info("EGORKA POMIDORKA= {}", botUser);
         if (botUser == null) {
-            LOGGER.info("EGORKA POMIDORKA botUser=null");
             if (update.hasCallbackQuery()) {
-                LOGGER.info("EGORKA POMIDORKA hasCallbackQuery=true");
-                LOGGER.info("EGORKA POMIDORKA hasCallbackQuery={}", update.getCallbackQuery());
-                callbackScenario(messagesPackage, update.getCallbackQuery());
+                callbackScenario(messagesPackage, update.getCallbackQuery(), null);
             } else {
                 anonymousHelloScenario(messagesPackage, message.getChatId());
             }
         } else {
-            LOGGER.info("EGORKA POMIDORKA botUser not null");
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if (porter.isFinishedAskingQuestions()) {
-                    scenarioForKnownPorter(messagesPackage, porter);
-                }
-                else {
+                    callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
+                } else {
                     if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
                         answerService.savePorterAnswer(porter, message.getText());
                         Question question = questionService.getNextQuestionForPorter(porter);
@@ -76,9 +73,13 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             } else {
                 Customer customer = (Customer) botUser;
                 if (customer.isFinishedAskingQuestions()) {
-                    scenarioForKnownCustomer(messagesPackage, customer);
-                }
-                else {
+                    if (customer.isOrderCreationProcessing()) {
+                        setValuesToOrder(customer, message.getText());
+                        orderCreationActionHandler(messagesPackage, customer);
+                    } else {
+                        callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
+                    }
+                } else {
                     if ((customer.isAskingQuestions()) && (!customer.isFinishedAskingQuestions())) {
                         answerService.saveCustomerAnswer(customer, message.getText());
                         Question question = questionService.getNextQuestionForCustomer(customer);
@@ -97,11 +98,45 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         return messagesPackage;
     }
 
-    private void textScenario() {
-
+    private void setValuesToOrder(Customer customer, String answer) {
+        Order order = orderService.findOrdersByCustomerAndStatus(customer, Status.PROCESSING).stream().findFirst().orElse(null);
+        switch (customer.getOrderQuestionNum()) {
+            case 0: {
+                orderService.setDateForOrder(order, answer);
+                break;
+            }
+            case 1: {
+                orderService.setAmountOfPortersForOrder(order, answer);
+                break;
+            }
+            case 2: {
+                orderService.setTimeForExecutingOrder(order, answer);
+                break;
+            }
+            case 3: {
+                orderService.setPayForHourOfOnePersonforOrder(order, answer);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 
-    private void callbackScenario(MessagesPackage messagesPackage, CallbackQuery callbackQuery) {
+    private void orderCreationActionHandler(MessagesPackage messagesPackage, Customer customer) {
+        Integer orderQuestionNum = customer.getOrderQuestionNum();
+        if (orderQuestionNum >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
+            customerService.setOrderCreationProcessing(customer, false);
+            customSendMessage(messagesPackage, BotModel.Messages.ORDER_CREATION_FINISHED, customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
+            return;
+        }
+        orderQuestionNum++;
+        customerService.updateOrderCreationQuestionNum(customer, orderQuestionNum);
+        String text = BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.get(orderQuestionNum);
+        customSendMessage(messagesPackage, text, customer.getChatId(), null);
+    }
+
+    private void callbackScenario(MessagesPackage messagesPackage, CallbackQuery callbackQuery, BotUser botUser) {
         String command = callbackQuery.getData();
         switch (command) {
             case BotModel.InlineButtons.Commands.SELECT_PORTER_CMD: {
@@ -114,11 +149,20 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 callBackSelectCustomerHandler(messagesPackage, callbackQuery.getFrom(), callbackQuery.getMessage().getChatId());
                 break;
             }
+            case BotModel.InlineButtons.Commands.CUSTOMER_MAKE_ORDER_CMD: {
+                callBackCustomerMakeOrderHandler(messagesPackage, (Customer) botUser);
+                break;
+            }
             default: {
                 LOGGER.info("\nEGORKA = DEFAULT\n");
                 break;
             }
         }
+    }
+
+    private void callBackCustomerMakeOrderHandler(MessagesPackage messagesPackage, Customer customer) {
+        customerService.setOrderCreationProcessing(customer, true);
+        orderService.createOrder(customer);
     }
 
     private void callBackSelectPorterHandler(MessagesPackage messagesPackage, User user, Long chatId) {

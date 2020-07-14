@@ -1,22 +1,40 @@
 package com.bot;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 public final class BotModel {
+    public interface OrderCreationQuestions {
+        Map<Integer, String> CREATE_ORDER_QUESTIONS = ImmutableMap.of(0, "Дата заказа",
+                1, "Колличество грузчиков",
+                2, "Время выполнения заказа",
+                3, "Почасовая оплата одного грузчика");
+    }
+    public interface DefaultValues {
+        Double PAY_FOR_AN_HOUR = 100.0;
+        Double ORDER_EXECUTING_TIME = 4.0;
+        Integer AMOUNT_OF_PORTERS = 1;
+        Date ORDER_EXECUTION_DATE = ElementsHelper.getDefaultDate();
+    }
+
     public interface Messages {
         public final String HELLO_ANONYMOUS = "Добро пожаловать!";
-        public final String SELECT_ACTIONS = "Выберите действие ниже";
+        public final String SELECT_ACTIONS = "Выберите действие";
+        public final String ORDER_CREATION_FINISHED = "Заказ успешно создан";
     }
 
     public interface UserTypeStr {
         String USER_TYPE_CUSTOMER = "CUSTOMER";
-        String USER_TYPE_PORTER = "CUSTOMER";
+        String USER_TYPE_PORTER = "PORTER";
     }
 
     public interface InlineKeyboards {
@@ -59,7 +77,12 @@ public final class BotModel {
     }
 
     private static class ElementsHelper {
-        public static InlineKeyboardButton createInlineButton(String text, String command) {
+        static Date getDefaultDate() {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1);
+            return calendar.getTime();
+        }
+        static InlineKeyboardButton createInlineButton(String text, String command) {
             if ((StringUtils.isEmpty(text)) || (StringUtils.isEmpty(command))) {
                 throw new IllegalArgumentException("Parameters text or command should not be empty for create button");
             }
