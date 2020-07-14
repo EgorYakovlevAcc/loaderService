@@ -197,8 +197,12 @@ __webpack_require__.r(__webpack_exports__);
 
 const appRoutes = [
     {
-        path: 'questions',
+        path: 'questions-porter',
         component: _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"]
+    },
+    {
+        path: 'questions-customer',
+        component: _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"]
     },
     {
         path: 'users',

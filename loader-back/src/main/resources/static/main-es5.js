@@ -424,8 +424,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     "./src/app/customer-questions/customer-questions.component.ts");
 
     var appRoutes = [{
-      path: 'questions',
+      path: 'questions-porter',
       component: _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"]
+    }, {
+      path: 'questions-customer',
+      component: _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"]
     }, {
       path: 'users',
       component: _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"]

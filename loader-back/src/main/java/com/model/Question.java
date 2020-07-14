@@ -25,6 +25,7 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Option> options;
     private Integer relatedTo;
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
     public Question() {

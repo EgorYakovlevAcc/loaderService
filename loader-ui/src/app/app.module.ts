@@ -21,8 +21,12 @@ import { CustomerQuestionsComponent } from './customer-questions/customer-questi
 
 const appRoutes: Routes = [
   {
-    path: 'questions',
+    path: 'questions-porter',
     component: PorterQuestionsComponent
+  },
+  {
+    path: 'questions-customer',
+    component: CustomerQuestionsComponent
   },
   {
     path: 'users',
