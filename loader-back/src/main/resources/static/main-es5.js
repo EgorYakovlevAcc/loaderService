@@ -2681,7 +2681,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(QuestionServiceService, [{
         key: "getAllQuestionsPorter",
         value: function getAllQuestionsPorter() {
-          var url = this.host + "all/porter";
+          var url = this.host + "all/porters";
           return this.httpClient.get(url);
         }
       }, {

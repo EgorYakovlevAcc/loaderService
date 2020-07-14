@@ -14,7 +14,7 @@ export class QuestionServiceService {
   }
 
   getAllQuestionsPorter(): Observable<any> {
-    let url = this.host + "all/porter";
+    let url = this.host + "all/porters";
     return this.httpClient.get(url);
   }
 

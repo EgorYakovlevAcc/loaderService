@@ -1316,7 +1316,7 @@ class QuestionServiceService {
         this.host = "/questions/";
     }
     getAllQuestionsPorter() {
-        let url = this.host + "all/porter";
+        let url = this.host + "all/porters";
         return this.httpClient.get(url);
     }
     getAllQuestionsCustomer() {
