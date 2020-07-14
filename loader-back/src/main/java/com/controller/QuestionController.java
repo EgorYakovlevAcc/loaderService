@@ -1,10 +1,6 @@
 package com.controller;
 
-import com.model.Question;
-import com.pojo.Option;
-import com.pojo.QuestionAndOptions;
-import com.pojo.QuestionOptionsAnswer;
-import com.service.OptionService;
+import com.pojo.Question;
 import com.service.QuestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,34 +23,26 @@ public class QuestionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(QuestionController.class);
     @Autowired
     private QuestionService questionService;
-    @Autowired
-    private OptionService optionService;
 
     @GetMapping(value = {"/all/porters"})
     public String getQuestionsPorters(Model model) {
-        List<Question> questions = questionService.findAllQuestionsForPorters();
+        List<com.model.Question> questions = questionService.findAllQuestionsForPorters();
         model.addAttribute("questions", questions);
         return "questions";
     }
 
     @GetMapping(value = {"/all/customers"})
     public String getQuestionsCustomers(Model model) {
-        List<Question> questions = questionService.findAllQuestionsForCustomers();
+        List<com.model.Question> questions = questionService.findAllQuestionsForCustomers();
         model.addAttribute("questions", questions);
         return "questions";
-    }
-
-    @GetMapping(value = {"/all/text"})
-    @ResponseBody
-    public List<QuestionOptionsAnswer> getQuestionsText(Model model) {
-        return null;
     }
 
     @GetMapping(value = {"/add"})
     public String getAddQuestion(Model model) {
         System.out.println("getAddQuestion");
         if (Objects.isNull(model.getAttribute("questionAndOption"))) {
-            QuestionAndOptions questionAndOptions = new QuestionAndOptions();
+            Question questionAndOptions = new Question();
             model.addAttribute("questionAndOption", questionAndOptions);
             model.addAttribute("buttonValue", "createQuestion");
         }
@@ -62,25 +50,20 @@ public class QuestionController {
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity postAddQuestion(@RequestBody QuestionOptionsAnswer questionOptionsAnswer){
+    public ResponseEntity postAddQuestion(@RequestBody Question questionOptionsAnswer){
         return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = "/edit")
     @ResponseBody
-    public QuestionOptionsAnswer getEditQuestion(Model model, @RequestParam("id") Integer questionId) {
-        Question question = questionService.findQuestionById(questionId);
-        QuestionOptionsAnswer questionOptionsAndAnswer = new QuestionOptionsAnswer();
-        List<Option> optionsPojo = question.getOptions().stream()
-                .map(option -> optionService.convertOptionModelToOptionPojo(option))
-                .collect(Collectors.toList());
-        questionOptionsAndAnswer.setOptions(optionsPojo);
-        return questionOptionsAndAnswer;
+    public Question getEditQuestion(Model model, @RequestParam("id") Integer questionId) {
+        com.model.Question question = questionService.findQuestionById(questionId);
+        Question questionPojo = new Question();
+        return questionPojo;
     }
 
     @PostMapping(value = "/edit")
-    public ResponseEntity postEditQuestion(@RequestBody QuestionOptionsAnswer questionOptionsAnswer) {
-        System.out.println(questionOptionsAnswer.getId());
+    public ResponseEntity postEditQuestion(@RequestBody Question questionPojo) {
         return ResponseEntity.ok(null);
     }
 
@@ -95,7 +78,7 @@ public class QuestionController {
         byte[] imageByte = new byte[0];
         try {
             imageByte = imageFile.getBytes();
-            Question question = questionService.findQuestionById(questionId);
+            com.model.Question question = questionService.findQuestionById(questionId);
             questionService.saveQuestionWithImageContent(question, imageByte);
             return ResponseEntity.ok(null);
         } catch (IOException e) {

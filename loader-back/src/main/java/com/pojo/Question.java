@@ -11,9 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class QuestionAndOptions {
+public class Question {
+    private Integer id;
     private String content;
-    private List<Option> options;
-    private Integer correctAnswerNum;
-    private int activeNum;
+
 }

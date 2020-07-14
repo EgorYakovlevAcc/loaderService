@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Question} from "../model/question/question";
 
 @Component({
   selector: 'app-customer-questions',
@@ -7,9 +8,10 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./customer-questions.component.css']
 })
 export class CustomerQuestionsComponent implements OnInit {
-  model:AddingQuestionWithOptionsForm = {
-    question:'',
-    options:[]
+  model:Question = {
+    userType: "CUSTOMER",
+    id:0,
+    content:''
   };
   constructor(private httpClient: HttpClient) { }
 
@@ -28,14 +30,5 @@ export class CustomerQuestionsComponent implements OnInit {
     )
   }
 
-}
-
-export interface AddingQuestionWithOptionsForm {
-  question:string;
-  options:Option[];
-}
-
-export interface Option {
-  content:string;
 }
 

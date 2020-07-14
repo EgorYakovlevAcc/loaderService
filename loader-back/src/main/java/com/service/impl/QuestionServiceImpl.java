@@ -2,10 +2,7 @@ package com.service.impl;
 
 import com.model.Question;
 import com.model.UserType;
-import com.pojo.Option;
-import com.pojo.QuestionOptionsAnswer;
 import com.repo.QuestionRepository;
-import com.service.OptionService;
 import com.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
