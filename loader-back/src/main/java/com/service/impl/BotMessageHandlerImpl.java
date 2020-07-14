@@ -79,14 +79,17 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         String command = callbackQuery.getData();
         switch (command) {
             case BotModel.InlineButtons.Commands.SELECT_PORTER_CMD: {
+                LOGGER.info("\nSELECT_PORTER_CMD\n");
                 callBackSelectPorterHandler(messagesPackage, callbackQuery.getFrom(), callbackQuery.getMessage().getChatId());
                 break;
             }
             case BotModel.InlineButtons.Commands.SELECT_CUSTOMER_CMD: {
+                LOGGER.info("\nSELECT_CUSTOMER_CMD\n");
                 callBackSelectCustomerHandler(messagesPackage, callbackQuery.getFrom(), callbackQuery.getMessage().getChatId());
                 break;
             }
             default: {
+                LOGGER.info("\nEGORKA = DEFAULT\n");
                 break;
             }
         }
