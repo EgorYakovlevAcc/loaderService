@@ -14,5 +14,5 @@ import java.util.List;
 public class Question {
     private Integer id;
     private String content;
-
+    private String userType;
 }

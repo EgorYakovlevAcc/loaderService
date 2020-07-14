@@ -15,4 +15,6 @@ public interface QuestionService {
     void saveQuestionWithImageContent(Question question, byte[] image);
     List<Question> findAllQuestionsForPorters();
     List<Question> findAllQuestionsForCustomers();
+
+    void createQuestionForTypeByPojo(com.pojo.Question question);
 }

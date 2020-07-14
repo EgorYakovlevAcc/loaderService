@@ -41,10 +41,4 @@ public class MainController {
         globalTelegramMessageSender.sendGlobalMessage(messageToUsers.getText(), messageToUsers.getMinScore(), messageToUsers.getMaxScore());
         return ResponseEntity.ok(null);
     }
-
-    @GetMapping(value = "/qrcode/get/present")
-    public ResponseEntity getQrCodeGeneration(@RequestParam("chatId") Long chatId){
-
-        return ResponseEntity.ok("PRESENT HAS BEEN GIVEN TO USER!");
-    }
 }

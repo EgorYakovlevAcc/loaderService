@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.bot.BotModel;
 import com.model.Question;
 import com.model.UserType;
 import com.repo.QuestionRepository;
@@ -77,5 +78,13 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findAllQuestionsForCustomers() {
         return questionRepository.findQuestionsByUserType(UserType.CUSTOMER);
+    }
+
+    @Override
+    public void createQuestionForTypeByPojo(com.pojo.Question questionPojo) {
+        Question question = new Question();
+        question.setText(questionPojo.getContent());
+        question.setUserType(questionPojo.getUserType().equals(BotModel.UserTypeStr.USER_TYPE_CUSTOMER) ? UserType.CUSTOMER : UserType.PORTER);
+        questionRepository.save(question);
     }
 }
