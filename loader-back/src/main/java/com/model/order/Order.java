@@ -30,6 +30,7 @@ public class Order {
     private Double price;
     @Column(name = "hours_num")
     private Double hoursNum;
+    @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne(fetch =  FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
