@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
@@ -33,7 +34,12 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         User user = message.getFrom();
         BotUser botUser = userService.findTelegramUserByTelegramId(user.getId());
         if (botUser == null) {
-            anonymousHelloScenario(messagesPackage, message.getChatId());
+            if (update.hasCallbackQuery()) {
+                callbackScenario(update.getCallbackQuery());
+            }
+            else {
+                anonymousHelloScenario(messagesPackage, message.getChatId());
+            }
         }
         else {
             knownHelloScenario(messagesPackage, botUser);
@@ -45,8 +51,19 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
 
     }
 
-    private void callbackScenario() {
-
+    private void callbackScenario(CallbackQuery callbackQuery) {
+        String command = callbackQuery.getData();
+        switch (command) {
+            case BotModel.InlineButtons.Commands.SELECT_PORTER_CMD : {
+                break;
+            }
+            case BotModel.InlineButtons.Commands.SELECT_CUSTOMER_CMD : {
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 
     private void anonymousHelloScenario(MessagesPackage messagesPackage, Long chatId) {

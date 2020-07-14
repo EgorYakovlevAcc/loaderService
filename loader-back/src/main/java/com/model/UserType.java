@@ -1,6 +1,12 @@
 package com.model;
 
 public enum  UserType {
-    PORTER,
-    CUSTOMER;
+    PORTER("PORTER"),
+    CUSTOMER("CUSTOMER");
+
+    private String value;
+
+    UserType(String value) {
+        this.value = value;
+    }
 }
