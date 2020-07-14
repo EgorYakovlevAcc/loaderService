@@ -42,12 +42,16 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         BotUser botUser = userService.findTelegramUserByTelegramId(user.getId());
         LOGGER.info("EGORKA POMIDORKA= {}", botUser);
         if (botUser == null) {
+            LOGGER.info("EGORKA POMIDORKA botUser=null");
             if (update.hasCallbackQuery()) {
+                LOGGER.info("EGORKA POMIDORKA hasCallbackQuery=true");
+                LOGGER.info("EGORKA POMIDORKA hasCallbackQuery={}", update.getCallbackQuery());
                 callbackScenario(messagesPackage, update.getCallbackQuery());
             } else {
                 anonymousHelloScenario(messagesPackage, message.getChatId());
             }
         } else {
+            LOGGER.info("EGORKA POMIDORKA botUser not null");
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
