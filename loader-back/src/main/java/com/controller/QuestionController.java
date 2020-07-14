@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.pojo.PojoOrdinarClassMapper;
 import com.pojo.Question;
 import com.service.QuestionService;
 import org.slf4j.Logger;
@@ -24,17 +25,17 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping(value = {"/all/porters"})
-    public String getQuestionsPorters(Model model) {
+    @ResponseBody
+    public List<Question> getQuestionsPorters() {
         List<com.model.Question> questions = questionService.findAllQuestionsForPorters();
-        model.addAttribute("questions", questions);
-        return "questions";
+        return PojoOrdinarClassMapper.questionsToQuestionPojosMapping(questions);
     }
 
     @GetMapping(value = {"/all/customers"})
-    public String getQuestionsCustomers(Model model) {
+    @ResponseBody
+    public List<Question> getQuestionsCustomers() {
         List<com.model.Question> questions = questionService.findAllQuestionsForCustomers();
-        model.addAttribute("questions", questions);
-        return "questions";
+        return PojoOrdinarClassMapper.questionsToQuestionPojosMapping(questions);
     }
 
     @GetMapping(value = {"/add"})
