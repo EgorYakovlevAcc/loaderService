@@ -672,7 +672,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       selectors: [["app-customer-questions"]],
       decls: 13,
       vars: 1,
-      consts: [[1, "container-fluid"], ["type", "button", 1, "btn", "btn-primary", "btn-lg", "btn-block", 2, "margin", "20px 0 20px 0", 3, "click"], [1, "table", "table-bordered"], [4, "ngFor", "ngForOf"], [3, "id"], [1, "container"], [1, "row", 2, "text-align", "center"], [1, "col"], [1, "btn", "btn-danger", 3, "click"]],
+      consts: [[1, "container-fluid"], ["type", "button", 1, "btn", "btn-primary", "btn-lg", "btn-block", 2, "margin", "20px 0 20px 0", 3, "click"], [1, "table", "table-borderless"], [4, "ngFor", "ngForOf"], [3, "id"], [1, "container"], [1, "row", 2, "text-align", "center"], [1, "col"], [1, "btn", "btn-danger", 3, "click"]],
       template: function CustomerQuestionsComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -2069,7 +2069,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       selectors: [["app-questions"]],
       decls: 13,
       vars: 1,
-      consts: [[1, "container-fluid"], ["type", "button", 1, "btn", "btn-primary", "btn-lg", "btn-block", 2, "margin", "20px 0 20px 0", 3, "click"], [1, "table", "table-bordered"], [4, "ngFor", "ngForOf"], [3, "id"], [1, "container"], [1, "row", 2, "text-align", "center"], [1, "col"], [1, "btn", "btn-danger", 3, "click"]],
+      consts: [[1, "container-fluid"], ["type", "button", 1, "btn", "btn-primary", "btn-lg", "btn-block", 2, "margin", "20px 0 20px 0", 3, "click"], [1, "table", "table-borderless"], [4, "ngFor", "ngForOf"], [3, "id"], [1, "container"], [1, "row", 2, "text-align", "center"], [1, "col"], [1, "btn", "btn-danger", 3, "click"]],
       template: function PorterQuestionsComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);

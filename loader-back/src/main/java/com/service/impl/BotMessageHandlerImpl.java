@@ -65,6 +65,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         Question question = questionService.getNextQuestionForPorter(porter);
                         if (question == null) {
                             porterService.setFinishAskingQuestions(porter);
+                            scenarioForKnownPorter(messagesPackage, porter);
                         } else {
                             customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
                         }
@@ -83,6 +84,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         Question question = questionService.getNextQuestionForCustomer(customer);
                         if (question == null) {
                             customerService.setFinishAskingQuestions(customer);
+                            scenarioForKnownCustomer(messagesPackage, customer);
                         } else {
                             customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
                         }
