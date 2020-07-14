@@ -40,6 +40,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         User user = message.getFrom();
         LOGGER.info("EGORKA = {}", user);
         BotUser botUser = userService.findTelegramUserByTelegramId(user.getId());
+        LOGGER.info("EGORKA POMIDORKA= {}", botUser);
         if (botUser == null) {
             if (update.hasCallbackQuery()) {
                 callbackScenario(messagesPackage, update.getCallbackQuery());
