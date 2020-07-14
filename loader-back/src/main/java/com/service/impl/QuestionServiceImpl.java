@@ -60,7 +60,7 @@ public class QuestionServiceImpl implements QuestionService {
         Integer questionNumber = currentQuestionNumber == -1 ? 0 : currentQuestionNumber;
         Question question = questionRepository.findQuestionByQuestionNumber(questionNumber);
         porter.setAskingQuestions(true);
-        porter.setCurrentQuestionNum(currentQuestionNumber + 1);
+        porter.setCurrentQuestionNum(questionNumber + 1);
         porterRepository.save(porter);
         return question;
     }
