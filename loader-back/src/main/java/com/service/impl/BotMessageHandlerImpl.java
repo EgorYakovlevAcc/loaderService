@@ -162,6 +162,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
 
     private void callBackCustomerMakeOrderHandler(MessagesPackage messagesPackage, Customer customer) {
         customerService.setOrderCreationProcessing(customer, true);
+        customSendMessage(messagesPackage, BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.get(0), customer.getChatId(), null);
         orderService.createOrder(customer);
     }
 
