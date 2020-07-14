@@ -24,6 +24,7 @@ public class OrderServiceImpl implements OrderService {
     public Order createOrder(Customer customer) {
         Order order = new Order();
         order.setCustomer(customer);
+        customer.setOrderQuestionNum(0);
         order.setStatus(Status.PROCESSING);
         return orderRepository.save(order);
     }
