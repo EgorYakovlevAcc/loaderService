@@ -18,6 +18,9 @@ public class Customer implements BotUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    public Integer telegramId;
-    public Long chatId;
+    private Integer telegramId;
+    private Long chatId;
+    private Integer currentQuestionNum;
+    private boolean isAskingQuestions;
+    private boolean isFinishedAskingQuestions;
 }

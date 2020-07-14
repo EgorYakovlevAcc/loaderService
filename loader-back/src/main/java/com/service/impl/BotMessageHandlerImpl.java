@@ -7,6 +7,7 @@ import com.model.user.BotUser;
 import com.model.user.Customer;
 import com.model.user.Porter;
 import com.service.BotMessageHandler;
+import com.service.QuestionService;
 import com.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,8 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(Bot.class);
     @Autowired
     private UserService userService;
+    @Autowired
+    private QuestionService questionService;
 
     @Override
     public MessagesPackage handleMessage(Update update) {
@@ -35,14 +38,24 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         BotUser botUser = userService.findTelegramUserByTelegramId(user.getId());
         if (botUser == null) {
             if (update.hasCallbackQuery()) {
-                callbackScenario(update.getCallbackQuery());
-            }
-            else {
+                callbackScenario(messagesPackage, update.getCallbackQuery());
+            } else {
                 anonymousHelloScenario(messagesPackage, message.getChatId());
             }
-        }
-        else {
-            knownHelloScenario(messagesPackage, botUser);
+        } else {
+            if (botUser instanceof Porter) {
+                Porter porter = (Porter) botUser;
+                if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
+                    customSendMessage(messagesPackage, questionService.getNextQuestionForPorter(porter).getText(), porter.getChatId(), null);
+                }
+                knownHelloScenarioForPorter(messagesPackage, porter);
+            } else {
+                Customer customer = (Customer) botUser;
+                if ((customer.isAskingQuestions()) && (!customer.isFinishedAskingQuestions())) {
+                    customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), customer.getChatId(), null);
+                }
+                knownHelloScenarioForCustomer(messagesPackage, customer);
+            }
         }
         return messagesPackage;
     }
@@ -51,19 +64,31 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
 
     }
 
-    private void callbackScenario(CallbackQuery callbackQuery) {
+    private void callbackScenario(MessagesPackage messagesPackage, CallbackQuery callbackQuery) {
         String command = callbackQuery.getData();
         switch (command) {
-            case BotModel.InlineButtons.Commands.SELECT_PORTER_CMD : {
+            case BotModel.InlineButtons.Commands.SELECT_PORTER_CMD: {
+                callBackSelectPorterHandler(messagesPackage, callbackQuery.getFrom(), callbackQuery.getMessage().getChatId());
                 break;
             }
-            case BotModel.InlineButtons.Commands.SELECT_CUSTOMER_CMD : {
+            case BotModel.InlineButtons.Commands.SELECT_CUSTOMER_CMD: {
+                callBackSelectCustomerHandler(messagesPackage, callbackQuery.getFrom(), callbackQuery.getMessage().getChatId());
                 break;
             }
             default: {
                 break;
             }
         }
+    }
+
+    private void callBackSelectPorterHandler(MessagesPackage messagesPackage, User user, Long chatId) {
+        Porter porter = userService.createPorter(user.getId(), chatId);
+        customSendMessage(messagesPackage, questionService.getNextQuestionForPorter(porter).getText(), chatId, null);
+    }
+
+    private void callBackSelectCustomerHandler(MessagesPackage messagesPackage, User user, Long chatId) {
+        Customer customer = userService.createCustomer(user.getId(), chatId);
+        customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), chatId, null);
     }
 
     private void anonymousHelloScenario(MessagesPackage messagesPackage, Long chatId) {
@@ -74,15 +99,12 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         messagesPackage.addMessageToPackage(anonymousHelloMessage);
     }
 
-    private void knownHelloScenario(MessagesPackage messagesPackage, BotUser botUser) {
-        if (botUser instanceof Customer) {
-            Customer customer = (Customer) botUser;
-            customSendMessage(messagesPackage, String.format(BotModel.Messages.HELLO_KNOWN, customer.getName()), customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
-        }
-        else {
-            Porter porter = (Porter) botUser;
-            customSendMessage(messagesPackage, String.format(BotModel.Messages.HELLO_KNOWN, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
-        }
+    private void knownHelloScenarioForCustomer(MessagesPackage messagesPackage, Customer customer) {
+        customSendMessage(messagesPackage, String.format(BotModel.Messages.HELLO_KNOWN, customer.getName()), customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
+    }
+
+    private void knownHelloScenarioForPorter(MessagesPackage messagesPackage, Porter porter) {
+        customSendMessage(messagesPackage, String.format(BotModel.Messages.HELLO_KNOWN, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
     }
 
     private void customSendMessage(MessagesPackage messagesPackage, String text, Long chatId, InlineKeyboardMarkup inlineKeyboardMarkup) {

@@ -27,6 +27,7 @@ public class Question {
     private Integer relatedTo;
     @Enumerated(EnumType.STRING)
     private UserType userType;
+    private Integer questionNumber;
 
     public Question() {
     }

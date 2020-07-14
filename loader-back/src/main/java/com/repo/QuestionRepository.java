@@ -12,4 +12,7 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Question findQuestionById(Integer id);
     List<Question> findQuestionsByUserType(UserType userType);
+
+    Question findQuestionByQuestionNumber(Integer questionNumber);
+    Integer countAllByUserType(UserType userType);
 }

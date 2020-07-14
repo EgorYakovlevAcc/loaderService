@@ -3,7 +3,13 @@ package com.service.impl;
 import com.bot.BotModel;
 import com.model.Question;
 import com.model.UserType;
+import com.model.user.BotUser;
+import com.model.user.Customer;
+import com.model.user.Porter;
+import com.repo.CustomerRepository;
+import com.repo.PorterRepository;
 import com.repo.QuestionRepository;
+import com.service.CustomerService;
 import com.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +24,10 @@ import java.util.stream.Collectors;
 public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private PorterRepository porterRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Override
     public Question findQuestionById(Integer id) {
@@ -40,23 +50,35 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question getNextQuestion(Integer currentQuestionId) {
-        List<Question> questions = questionRepository.findAll();
-        Integer currentQuestionIndex = questions.stream()
-                .map(question -> question.getId())
-                .collect(Collectors.toList())
-                .indexOf(currentQuestionId);
-        if ((currentQuestionIndex < questions.size() - 1) && (Objects.nonNull(currentQuestionId))) {
-            Question question = questions.get(currentQuestionIndex + 1);
-            return question;
-        } else {
+    public Question getNextQuestionForPorter(Porter porter) {
+        Integer currentQuestionNumber = porter.getCurrentQuestionNum();
+        Integer porterQuestionAmount = questionRepository.countAllByUserType(UserType.PORTER);
+        if (currentQuestionNumber >= porterQuestionAmount) {
+            porter.setFinishedAskingQuestions(true);
             return null;
         }
+        Integer questionNumber = currentQuestionNumber == -1 ? 0 : currentQuestionNumber;
+        Question question = questionRepository.findQuestionByQuestionNumber(questionNumber);
+        porter.setAskingQuestions(true);
+        porter.setCurrentQuestionNum(currentQuestionNumber + 1);
+        porterRepository.save(porter);
+        return question;
     }
 
     @Override
-    public Question getNextQuestionByWeight(Integer weight) {
-        return null;
+    public Question getNextQuestionForCustomer(Customer customer) {
+        Integer customerQuestionAmount = questionRepository.countAllByUserType(UserType.CUSTOMER);
+        Integer currentQuestionNumber = customer.getCurrentQuestionNum();
+        if (currentQuestionNumber >= customerQuestionAmount) {
+            customer.setFinishedAskingQuestions(true);
+            return null;
+        }
+        Integer questionNumber = currentQuestionNumber == -1 ? 0 : currentQuestionNumber;
+        Question question = questionRepository.findQuestionByQuestionNumber(questionNumber);
+        customer.setCurrentQuestionNum(currentQuestionNumber + 1);
+        customer.setAskingQuestions(true);
+        customerRepository.save(customer);
+        return question;
     }
 
     @Override
@@ -82,9 +104,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void createQuestionForTypeByPojo(com.pojo.Question questionPojo) {
+        UserType userType = questionPojo.getUserType().equals(BotModel.UserTypeStr.USER_TYPE_CUSTOMER) ? UserType.CUSTOMER : UserType.PORTER;
+        Integer newQuestionNum = questionRepository.countAllByUserType(userType);
         Question question = new Question();
         question.setText(questionPojo.getContent());
-        question.setUserType(questionPojo.getUserType().equals(BotModel.UserTypeStr.USER_TYPE_CUSTOMER) ? UserType.CUSTOMER : UserType.PORTER);
+        question.setUserType(userType);
+        question.setQuestionNumber(newQuestionNum);
         questionRepository.save(question);
     }
 }

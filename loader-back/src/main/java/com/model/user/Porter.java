@@ -21,6 +21,9 @@ public class Porter implements BotUser {
     private String username;
     private String nationality;
     private String timetable;
-    public Integer telegramId;
-    public Long chatId;
+    private Integer telegramId;
+    private Integer currentQuestionNum;
+    private Long chatId;
+    private boolean isAskingQuestions;
+    private boolean isFinishedAskingQuestions;
 }
