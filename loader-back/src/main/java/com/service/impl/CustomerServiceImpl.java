@@ -1,8 +1,11 @@
 package com.service.impl;
 
+import com.model.order.Status;
 import com.model.user.Customer;
 import com.repo.CustomerRepository;
+import com.repo.OrderRepository;
 import com.service.CustomerService;
+import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public Customer findCustomerByTelegramId(Integer id) {
@@ -37,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
         //turn off order processing creation action
         if (!b) {
             customer.setOrderQuestionNum(0);
+            orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
         }
         customer.setOrderCreationProcessing(b);
         customerRepository.save(customer);

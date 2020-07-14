@@ -99,7 +99,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     }
 
     private void setValuesToOrder(Customer customer, String answer) {
-        Order order = orderService.findOrdersByCustomerAndStatus(customer, Status.PROCESSING).stream().findFirst().orElse(null);
+        Order order = orderService.findOrderByCustomerAndStatus(customer, Status.PROCESSING);
         switch (customer.getOrderQuestionNum()) {
             case 0: {
                 orderService.setDateForOrder(order, answer);
@@ -127,6 +127,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         Integer orderQuestionNum = customer.getOrderQuestionNum();
         if (orderQuestionNum + 1 >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
             customerService.setOrderCreationProcessing(customer, false);
+            orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
             customSendMessage(messagesPackage, BotModel.Messages.ORDER_CREATION_FINISHED, customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
             return;
         }

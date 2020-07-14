@@ -12,7 +12,6 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,8 +29,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findOrdersByCustomerAndStatus(Customer customer, Status status) {
-        return orderRepository.findOrdersByCustomerAndStatus(customer, status);
+    public Order findOrderByCustomerAndStatus(Customer customer, Status status) {
+        return orderRepository.findOrderByCustomerAndStatus(customer, status);
     }
 
     @Override
@@ -60,6 +59,13 @@ public class OrderServiceImpl implements OrderService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus) {
+        Order order = orderRepository.findOrderByCustomerAndStatus(customer, currentStatus);
+        order.setStatus(newStatus);
+        orderRepository.save(order);
     }
 
 

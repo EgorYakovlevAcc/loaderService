@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderService {
     Order createOrder(Customer customer);
-    List<Order> findOrdersByCustomerAndStatus(Customer customer, Status status);
+    Order findOrderByCustomerAndStatus(Customer customer, Status status);
 
     void setPayForHourOfOnePersonforOrder(Order order, String answer);
 
@@ -17,4 +17,6 @@ public interface OrderService {
     void setAmountOfPortersForOrder(Order order, String answer);
 
     void setDateForOrder(Order order, String answer);
+
+    void setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus);
 }
