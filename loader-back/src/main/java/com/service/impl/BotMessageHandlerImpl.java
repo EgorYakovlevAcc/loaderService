@@ -28,6 +28,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboar
 
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.PatternSyntaxException;
 
 @Service
 @Transactional
@@ -188,8 +189,13 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     }
 
     private Integer getOrderIdFromPorterOrderExecutionCommand(String command) {
-        Matcher matcher = BotModel.InlineButtons.Commands.PORTER_EXECUTE_ORDER_REGEX.matcher(command);
-        return StringUtils.isEmpty(matcher.group()) ? Integer.parseInt(matcher.group()) : -1;
+        try {
+            String orderIdStr = command.replaceFirst(BotModel.InlineButtons.Commands.PORTER_EXECUTE_ORDER_REGEX, "");
+            return Integer.parseInt(orderIdStr);
+        }
+        catch (PatternSyntaxException e) {
+            return -1;
+        }
     }
 
     private void callBackCustomerMakeOrderHandler(MessagesPackage messagesPackage, Customer customer) {

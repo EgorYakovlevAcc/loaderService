@@ -38,6 +38,7 @@ public final class BotModel {
                 2, "Время выполнения заказа",
                 3, "Почасовая оплата одного грузчика");
     }
+
     public interface DefaultValues {
         Double PAY_FOR_AN_HOUR = 100.0;
         Double ORDER_EXECUTING_TIME = 4.0;
@@ -85,7 +86,7 @@ public final class BotModel {
             public final String PORTER_CHANGE_TIMETABLE_CMD = "PORTER_CHANGE_TIMETABLE";
 
             public final String PORTER_EXECUTE_ORDER = "REQUEST_EXECUTE_ORDER_%s";
-            public final Pattern PORTER_EXECUTE_ORDER_REGEX = Pattern.compile("^REQUEST_EXECUTE_ORDER_[\\d]*$");
+            public final String PORTER_EXECUTE_ORDER_REGEX = "REQUEST_EXECUTE_ORDER_";
         }
 
         public interface Texts {
