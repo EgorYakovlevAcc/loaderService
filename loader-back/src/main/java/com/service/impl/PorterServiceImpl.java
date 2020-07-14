@@ -15,7 +15,7 @@ public class PorterServiceImpl implements PorterService {
 
     @Override
     public Porter findPorterByTelegramId(Integer id) {
-        return null;
+        return porterRepository.findPorterByTelegramId(id);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findCustomerByTelegramId(Integer id) {
-        return null;
+        return customerRepository.findCustomerByTelegramId(id);
     }
 
     @Override
