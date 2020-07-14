@@ -19,7 +19,7 @@ export class QuestionServiceService {
   }
 
   getAllQuestionsCustomer(): Observable<any> {
-    let url = this.host + "all/customer";
+    let url = this.host + "all/customers";
     return this.httpClient.get(url);
   }
 
