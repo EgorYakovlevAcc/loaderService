@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -30,7 +31,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findOrderByCustomerAndStatus(Customer customer, Status status) {
-        return orderRepository.findOrderByCustomer_IdAndStatus(customer.getId(), status);
+        //todo:refactoring must have!
+        return orderRepository.findAll().stream()
+                .filter(x -> x.getStatus() == Status.PROCESSING)
+                .filter(x -> x.getCustomer().getId().equals(customer.getId()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
