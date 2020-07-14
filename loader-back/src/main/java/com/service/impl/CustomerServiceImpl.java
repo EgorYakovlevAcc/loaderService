@@ -42,7 +42,6 @@ public class CustomerServiceImpl implements CustomerService {
         //turn off order processing creation action
         if (!b) {
             customer.setOrderQuestionNum(0);
-            orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
         }
         customer.setOrderCreationProcessing(b);
         customerRepository.save(customer);
