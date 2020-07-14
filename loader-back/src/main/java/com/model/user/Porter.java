@@ -1,5 +1,6 @@
 package com.model.user;
 
+import com.model.answer.AnswerPorter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,7 @@ public class Porter implements BotUser {
     private Long chatId;
     private boolean isAskingQuestions;
     private boolean isFinishedAskingQuestions;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="porter_id")
+    private AnswerPorter answer;
 }

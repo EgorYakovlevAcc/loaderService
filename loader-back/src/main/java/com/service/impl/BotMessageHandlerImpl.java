@@ -6,6 +6,7 @@ import com.bot.MessagesPackage;
 import com.model.user.BotUser;
 import com.model.user.Customer;
 import com.model.user.Porter;
+import com.service.AnswerService;
 import com.service.BotMessageHandler;
 import com.service.QuestionService;
 import com.service.UserService;
@@ -29,6 +30,8 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private UserService userService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private AnswerService answerService;
 
     @Override
     public MessagesPackage handleMessage(Update update) {
@@ -46,6 +49,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
+                    answerService.savePorterAnswer(porter, message.getText());
                     customSendMessage(messagesPackage, questionService.getNextQuestionForPorter(porter).getText(), porter.getChatId(), null);
                 }
                 else {
@@ -54,6 +58,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             } else {
                 Customer customer = (Customer) botUser;
                 if ((customer.isAskingQuestions()) && (!customer.isFinishedAskingQuestions())) {
+                    answerService.saveCustomerAnswer(customer, message.getText());
                     customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), customer.getChatId(), null);
                 }
                 else {
