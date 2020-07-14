@@ -12,8 +12,6 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -31,12 +29,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findOrderByCustomerAndStatus(Customer customer, Status status) {
-        //todo:refactoring must have!
-        return orderRepository.findAll().stream()
-                .filter(x -> x.getStatus() == Status.PROCESSING)
-                .filter(x -> x.getCustomer().getId().equals(customer.getId()))
-                .findFirst()
-                .orElse(null);
+        return orderRepository.findOrderByCustomerAndStatus(customer, status);
     }
 
     @Override
@@ -69,10 +62,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus) {
-        Order order = orderRepository.findOrderByCustomer_IdAndStatus(customer.getId(), currentStatus);
+        Order order = findOrderByCustomerAndStatusTemporary(customer, currentStatus);
         order.setStatus(newStatus);
         return orderRepository.save(order);
     }
 
+    private Order findOrderByCustomerAndStatusTemporary(Customer customer, Status currentStatus) {
+        //todo:refactoring must have!
+        return orderRepository.findAll().stream()
+                .filter(x -> x.getStatus() == currentStatus)
+                .filter(x -> x.getCustomer().getId().equals(customer.getId()))
+                .findFirst()
+                .orElse(null);
+    }
 
 }
