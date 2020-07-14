@@ -207,7 +207,6 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     }
 
     private void sendNotificationForPorters(MessagesPackage messagesPackage, Order order) {
-        LOGGER.info("ORDER EGORKA!!! ={}", order.getHoursNum());
         String description = String.format(BotModel.InlineButtons.Texts.ORDER_NOTIFICATION_TEMPLATE,
                 order.getOrderDate(), order.getWorkersNum(), order.getHoursNum(), order.getPrice());
         List<Porter> porters = porterService.findPortersByTimetable();

@@ -74,7 +74,7 @@ public final class BotModel {
 
             public final String PORTER_CHANGE_TIMETABLE = "Изменить график работы";
 
-            public final String ORDER_NOTIFICATION_TEMPLATE = "Новый заказ\n Дата: {}\n Колличество человек: {} \n Время работы: {}\n Почасовая оплата для одного человека: {}";
+            public final String ORDER_NOTIFICATION_TEMPLATE = "Новый заказ\n Дата: %s\n Колличество человек: %s\n Время работы: %s\n Почасовая оплата для одного человека: %s";
         }
     }
 
