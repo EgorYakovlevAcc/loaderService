@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository <Order, Integer> {
-    Order findOrderByCustomerAndStatus(Customer customer, Status status);
+    Order findOrderByCustomer_IdAndStatus(Integer customer_Id, Status status);
 }

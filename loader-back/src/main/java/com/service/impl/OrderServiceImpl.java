@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findOrderByCustomerAndStatus(Customer customer, Status status) {
-        return orderRepository.findOrderByCustomerAndStatus(customer, status);
+        return orderRepository.findOrderByCustomer_IdAndStatus(customer.getId(), status);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus) {
-        Order order = orderRepository.findOrderByCustomerAndStatus(customer, currentStatus);
+        Order order = orderRepository.findOrderByCustomer_IdAndStatus(customer.getId(), currentStatus);
         order.setStatus(newStatus);
         return orderRepository.save(order);
     }
