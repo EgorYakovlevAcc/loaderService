@@ -48,13 +48,17 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
                     customSendMessage(messagesPackage, questionService.getNextQuestionForPorter(porter).getText(), porter.getChatId(), null);
                 }
-                knownHelloScenarioForPorter(messagesPackage, porter);
+                else {
+                    knownHelloScenarioForPorter(messagesPackage, porter);
+                }
             } else {
                 Customer customer = (Customer) botUser;
                 if ((customer.isAskingQuestions()) && (!customer.isFinishedAskingQuestions())) {
                     customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), customer.getChatId(), null);
                 }
-                knownHelloScenarioForCustomer(messagesPackage, customer);
+                else {
+                    knownHelloScenarioForCustomer(messagesPackage, customer);
+                }
             }
         }
         return messagesPackage;

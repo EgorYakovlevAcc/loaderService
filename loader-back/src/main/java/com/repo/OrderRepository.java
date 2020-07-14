@@ -4,6 +4,6 @@ import com.model.order.Order;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderRepository {
-    Order findOrderBuId(Integer id);
+public interface OrderRepository<Order, Integer> {
+
 }
