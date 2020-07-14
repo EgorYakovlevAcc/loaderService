@@ -3,6 +3,7 @@ package com.service.impl;
 import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
+import com.google.common.collect.ImmutableList;
 import com.model.Question;
 import com.model.order.Order;
 import com.model.order.Status;
@@ -21,6 +22,9 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -127,8 +131,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         Integer orderQuestionNum = customer.getOrderQuestionNum();
         if (orderQuestionNum + 1 >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
             customerService.setOrderCreationProcessing(customer, false);
-            orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
+            Order createdOrder = orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
             customSendMessage(messagesPackage, BotModel.Messages.ORDER_CREATION_FINISHED, customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
+            sendNotificationForPorters(messagesPackage, createdOrder);
             return;
         }
         orderQuestionNum++;
@@ -199,5 +204,23 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         sendMessage.setChatId(chatId);
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         messagesPackage.addMessageToPackage(sendMessage);
+    }
+
+    private void sendNotificationForPorters(MessagesPackage messagesPackage, Order order) {
+        String description = String.format(BotModel.InlineButtons.Texts.ORDER_NOTIFICATION_TEMPLATE,
+                order.getOrderDate(), order.getWorkersNum(), order.getHoursNum(), order.getPrice());
+        List<Porter> porters = porterService.findPortersByTimetable();
+        for (Porter porter : porters) {
+            customSendMessage(messagesPackage, description, porter.getChatId(), getKeyBoardOfExecutingOrderForPorter(order.getId()));
+        }
+    }
+
+    private InlineKeyboardMarkup getKeyBoardOfExecutingOrderForPorter(Integer orderId) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+        inlineKeyboardButton.setText("Я хочу выполнить этот заказ");
+        inlineKeyboardButton.setCallbackData("REQUEST_EXECUTE_ORDER_[" + orderId + "]");
+        inlineKeyboardMarkup.setKeyboard(ImmutableList.of(ImmutableList.of(inlineKeyboardButton)));
+        return inlineKeyboardMarkup;
     }
 }

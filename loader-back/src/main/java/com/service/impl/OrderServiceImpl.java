@@ -62,10 +62,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus) {
+    public Order setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus) {
         Order order = orderRepository.findOrderByCustomerAndStatus(customer, currentStatus);
         order.setStatus(newStatus);
-        orderRepository.save(order);
+        return orderRepository.save(order);
     }
 
 

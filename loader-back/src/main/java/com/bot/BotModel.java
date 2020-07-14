@@ -66,13 +66,15 @@ public final class BotModel {
             public final String PORTER_CHANGE_TIMETABLE_CMD = "PORTER_CHANGE_TIMETABLE";
         }
 
-        interface Texts {
+        public interface Texts {
             public final String SELECT_PORTER = "Я грузчик";
             public final String SELECT_CUSTOMER = "Я заказчик";
 
             public final String CUSTOMER_MAKE_ORDER = "Сделать заказ";
 
             public final String PORTER_CHANGE_TIMETABLE = "Изменить график работы";
+
+            public final String ORDER_NOTIFICATION_TEMPLATE = "Новый заказ\n Дата: {}\n Колличество человек: {} \n Время работы: {}\n Почасовая оплата для одного человека: {}";
         }
     }
 

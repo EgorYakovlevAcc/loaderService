@@ -18,5 +18,5 @@ public interface OrderService {
 
     void setDateForOrder(Order order, String answer);
 
-    void setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus);
+    Order setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus);
 }

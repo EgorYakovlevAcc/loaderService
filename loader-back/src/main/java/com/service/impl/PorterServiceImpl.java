@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class PorterServiceImpl implements PorterService {
@@ -21,6 +23,11 @@ public class PorterServiceImpl implements PorterService {
     @Override
     public Porter createPorter(Porter porter) {
         return porterRepository.save(porter);
+    }
+
+    @Override
+    public List<Porter> findPortersByTimetable() {
+        return porterRepository.findAll();
     }
 
     @Override
