@@ -7,4 +7,6 @@ public interface CustomerService {
     void save(Customer customer);
 
     Customer createCustomer(Customer customer);
+
+    void setFinishAskingQuestions(Customer customer);
 }

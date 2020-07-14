@@ -54,7 +54,6 @@ public class QuestionServiceImpl implements QuestionService {
         Integer currentQuestionNumber = porter.getCurrentQuestionNum();
         Integer porterQuestionAmount = questionRepository.countAllByUserType(UserType.PORTER);
         if (currentQuestionNumber >= porterQuestionAmount) {
-            porter.setFinishedAskingQuestions(true);
             return null;
         }
         Integer questionNumber = currentQuestionNumber == -1 ? 0 : currentQuestionNumber;

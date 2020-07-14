@@ -11,7 +11,7 @@ import java.util.List;
 public final class BotModel {
     public interface Messages {
         public final String HELLO_ANONYMOUS = "Добро пожаловать!";
-        public final String HELLO_KNOWN = "С возвращением! {}";
+        public final String SELECT_ACTIONS = "Выберите действие ниже";
     }
 
     public interface UserTypeStr {

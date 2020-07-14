@@ -25,4 +25,10 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
+
+    @Override
+    public void setFinishAskingQuestions(Customer customer) {
+        customer.setAskingQuestions(false);
+        customer.setFinishedAskingQuestions(true);
+    }
 }

@@ -23,5 +23,10 @@ public class PorterServiceImpl implements PorterService {
         return porterRepository.save(porter);
     }
 
-
+    @Override
+    public void setFinishAskingQuestions(Porter porter) {
+        porter.setFinishedAskingQuestions(true);
+        porter.setAskingQuestions(false);
+        porterRepository.save(porter);
+    }
 }

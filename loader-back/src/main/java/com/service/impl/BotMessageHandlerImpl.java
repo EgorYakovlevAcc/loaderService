@@ -3,13 +3,11 @@ package com.service.impl;
 import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
+import com.model.Question;
 import com.model.user.BotUser;
 import com.model.user.Customer;
 import com.model.user.Porter;
-import com.service.AnswerService;
-import com.service.BotMessageHandler;
-import com.service.QuestionService;
-import com.service.UserService;
+import com.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private QuestionService questionService;
     @Autowired
     private AnswerService answerService;
+    @Autowired
+    private PorterService porterService;
+    @Autowired
+    private CustomerService customerService;
 
     @Override
     public MessagesPackage handleMessage(Update update) {
@@ -54,21 +56,39 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             LOGGER.info("EGORKA POMIDORKA botUser not null");
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
-                if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
-                    answerService.savePorterAnswer(porter, message.getText());
-                    customSendMessage(messagesPackage, questionService.getNextQuestionForPorter(porter).getText(), porter.getChatId(), null);
+                if (porter.isFinishedAskingQuestions()) {
+                    scenarioForKnownPorter(messagesPackage, porter);
                 }
                 else {
-                    knownHelloScenarioForPorter(messagesPackage, porter);
+                    if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
+                        answerService.savePorterAnswer(porter, message.getText());
+                        Question question = questionService.getNextQuestionForPorter(porter);
+                        if (question == null) {
+                            porterService.setFinishAskingQuestions(porter);
+                        } else {
+                            customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
+                        }
+                    } else {
+                        //todo: действия, когда грезчик не закончил регистрацию
+                    }
                 }
             } else {
                 Customer customer = (Customer) botUser;
-                if ((customer.isAskingQuestions()) && (!customer.isFinishedAskingQuestions())) {
-                    answerService.saveCustomerAnswer(customer, message.getText());
-                    customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), customer.getChatId(), null);
+                if (customer.isFinishedAskingQuestions()) {
+                    scenarioForKnownCustomer(messagesPackage, customer);
                 }
                 else {
-                    knownHelloScenarioForCustomer(messagesPackage, customer);
+                    if ((customer.isAskingQuestions()) && (!customer.isFinishedAskingQuestions())) {
+                        answerService.saveCustomerAnswer(customer, message.getText());
+                        Question question = questionService.getNextQuestionForCustomer(customer);
+                        if (question == null) {
+                            customerService.setFinishAskingQuestions(customer);
+                        } else {
+                            customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
+                        }
+                    } else {
+                        //todo:действия, когда клиент не закончил регистрацию
+                    }
                 }
             }
         }
@@ -117,12 +137,12 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         messagesPackage.addMessageToPackage(anonymousHelloMessage);
     }
 
-    private void knownHelloScenarioForCustomer(MessagesPackage messagesPackage, Customer customer) {
-        customSendMessage(messagesPackage, String.format(BotModel.Messages.HELLO_KNOWN, customer.getName()), customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
+    private void scenarioForKnownCustomer(MessagesPackage messagesPackage, Customer customer) {
+        customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, customer.getName()), customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
     }
 
-    private void knownHelloScenarioForPorter(MessagesPackage messagesPackage, Porter porter) {
-        customSendMessage(messagesPackage, String.format(BotModel.Messages.HELLO_KNOWN, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
+    private void scenarioForKnownPorter(MessagesPackage messagesPackage, Porter porter) {
+        customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
     }
 
     private void customSendMessage(MessagesPackage messagesPackage, String text, Long chatId, InlineKeyboardMarkup inlineKeyboardMarkup) {
