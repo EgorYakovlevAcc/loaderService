@@ -10,7 +10,7 @@ public interface CustomerService {
 
     void setFinishAskingQuestions(Customer customer);
 
-    void setOrderCreationProcessing(Customer customer, boolean b);
+    void setOrderSearchingProcessing(Customer customer, boolean b);
 
     void updateOrderCreationQuestionNum(Customer customer, int i);
 }

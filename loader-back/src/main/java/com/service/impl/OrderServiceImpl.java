@@ -1,10 +1,17 @@
 package com.service.impl;
 
+import com.bot.Bot;
 import com.bot.BotModel;
+import com.bot.MessagesPackage;
+import com.exception.CustomBotException;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.model.order.Order;
 import com.model.order.Status;
 import com.model.user.Customer;
+import com.model.user.Porter;
 import com.repo.OrderRepository;
+import com.service.CustomerService;
 import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +19,14 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CustomerService customerService;
 
     @Override
     public Order createOrder(Customer customer) {
@@ -64,6 +74,32 @@ public class OrderServiceImpl implements OrderService {
     public Order setStatusToOrderByCustomer(Customer customer, Status currentStatus, Status newStatus) {
         Order order = findOrderByCustomerAndStatusTemporary(customer, currentStatus);
         order.setStatus(newStatus);
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order findOrderById(Integer id) {
+        return orderRepository.findOrderById(id);
+    }
+
+    @Override
+    public Order subscribePorterForOrderAndReturnOrder(Integer orderId, Porter porter) {
+        Order order = orderRepository.findOrderById(orderId);
+        //todo: поддержка других статусов
+        if (order.getStatus() != Status.SEARCHING) {
+            throw new CustomBotException(BotModel.ErrorHandling.ErrorCodes.EY_0001,
+                    BotModel.ErrorHandling.ErrorName.EY_0001,
+                    BotModel.ErrorHandling.ErrorDescription.EY_0001);
+        }
+        List list = order.getPorters();
+        list.add(porter);
+        order.setPorters(list);
+        Integer restAmountOfWorkers = order.getRestAmountOfWorkers() - 1;
+        order.setRestAmountOfWorkers(restAmountOfWorkers);
+        if (restAmountOfWorkers <= 0) {
+            order.setStatus(Status.RECRUITMENT_COMPLETED);
+            //todo: подумать над транзакционностью
+        }
         return orderRepository.save(order);
     }
 

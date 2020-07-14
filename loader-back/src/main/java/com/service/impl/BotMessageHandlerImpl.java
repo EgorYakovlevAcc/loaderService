@@ -3,6 +3,7 @@ package com.service.impl;
 import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
+import com.exception.CustomBotException;
 import com.google.common.collect.ImmutableList;
 import com.model.Question;
 import com.model.order.Order;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -25,6 +27,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.List;
+import java.util.regex.Matcher;
 
 @Service
 @Transactional
@@ -130,8 +133,8 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private void orderCreationActionHandler(MessagesPackage messagesPackage, Customer customer) {
         Integer orderQuestionNum = customer.getOrderQuestionNum();
         if (orderQuestionNum + 1 >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
-            customerService.setOrderCreationProcessing(customer, false);
-            Order createdOrder = orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
+            customerService.setOrderSearchingProcessing(customer, false);
+            Order createdOrder = orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.RECRUITMENT_COMPLETED);
             customSendMessage(messagesPackage, BotModel.Messages.ORDER_CREATION_FINISHED, customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
             sendNotificationForPorters(messagesPackage, createdOrder);
             return;
@@ -146,12 +149,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         String command = callbackQuery.getData();
         switch (command) {
             case BotModel.InlineButtons.Commands.SELECT_PORTER_CMD: {
-                LOGGER.info("\nSELECT_PORTER_CMD\n");
                 callBackSelectPorterHandler(messagesPackage, callbackQuery.getFrom(), callbackQuery.getMessage().getChatId());
                 break;
             }
             case BotModel.InlineButtons.Commands.SELECT_CUSTOMER_CMD: {
-                LOGGER.info("\nSELECT_CUSTOMER_CMD\n");
                 callBackSelectCustomerHandler(messagesPackage, callbackQuery.getFrom(), callbackQuery.getMessage().getChatId());
                 break;
             }
@@ -160,14 +161,39 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 break;
             }
             default: {
-                LOGGER.info("\nEGORKA = DEFAULT\n");
+                Integer orderId = getOrderIdFromPorterOrderExecutionCommand(command);
+                if (orderId != -1) {
+                    Porter porter = (Porter) botUser;
+                    try {
+                        Order order = orderService.subscribePorterForOrderAndReturnOrder(orderId, porter);
+                        List<Porter> porters = order.getPorters();
+                        Customer customer = order.getCustomer();
+                        orderRecruitmentCompletedHandler(messagesPackage, porters, customer, orderId);
+                    } catch (CustomBotException cbe) {
+                        if (cbe.getErrorCode().equals(BotModel.ErrorHandling.ErrorCodes.EY_0001)) {
+                            customSendMessage(messagesPackage, BotModel.Notifications.UNFORTUNATELY_ALL_WORKERS_WERE_FOUND, porter.getChatId(), null);
+                        } else throw cbe;
+                    }
+                }
                 break;
             }
         }
     }
 
+    private void orderRecruitmentCompletedHandler(MessagesPackage messagesPackage, List<Porter> porters, Customer customer, Integer orderId) {
+        for (Porter porter : porters) {
+            customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS, orderId), porter.getChatId(), null);
+        }
+        customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER, orderId), customer.getChatId(), null);
+    }
+
+    private Integer getOrderIdFromPorterOrderExecutionCommand(String command) {
+        Matcher matcher = BotModel.InlineButtons.Commands.PORTER_EXECUTE_ORDER_REGEX.matcher(command);
+        return StringUtils.isEmpty(matcher.group()) ? Integer.parseInt(matcher.group()) : -1;
+    }
+
     private void callBackCustomerMakeOrderHandler(MessagesPackage messagesPackage, Customer customer) {
-        customerService.setOrderCreationProcessing(customer, true);
+        customerService.setOrderSearchingProcessing(customer, true);
         customSendMessage(messagesPackage, BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.get(0), customer.getChatId(), null);
         orderService.createOrder(customer);
     }
@@ -218,8 +244,8 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private InlineKeyboardMarkup getKeyBoardOfExecutingOrderForPorter(Integer orderId) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-        inlineKeyboardButton.setText("Я хочу выполнить этот заказ");
-        inlineKeyboardButton.setCallbackData("REQUEST_EXECUTE_ORDER_[" + orderId + "]");
+        inlineKeyboardButton.setText(BotModel.InlineButtons.Texts.PORTER_WANTS_TO_EXECUTE_ORDER);
+        inlineKeyboardButton.setCallbackData(String.format(BotModel.InlineButtons.Commands.PORTER_EXECUTE_ORDER, orderId));
         inlineKeyboardMarkup.setKeyboard(ImmutableList.of(ImmutableList.of(inlineKeyboardButton)));
         return inlineKeyboardMarkup;
     }

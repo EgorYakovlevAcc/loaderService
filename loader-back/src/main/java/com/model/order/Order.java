@@ -36,6 +36,7 @@ public class Order {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+    private Integer restAmountOfWorkers;
     @ManyToMany
     private List<Porter> porters;
 }

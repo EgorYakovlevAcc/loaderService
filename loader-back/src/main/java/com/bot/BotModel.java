@@ -10,9 +10,28 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 public final class BotModel {
+    public interface ErrorHandling {
+        interface ErrorCodes {
+            final String EY_0001 = "EY_0001";
+        }
+        interface ErrorName {
+            final String EY_0001 = "INVALID_STATUS_TRANSFER";
+        }
+        interface ErrorDescription {
+            final String EY_0001 = "Cannot execute action for order in RECRUITMENT_COMPLETED status";
+        }
+    }
+
+    public interface Notifications {
+        String UNFORTUNATELY_ALL_WORKERS_WERE_FOUND = "К сожалению, нужное число человек уже откликнулись на данный заказ. Ожидайте следующий заказ.";
+        String ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS = "Формирование заказа %s завершено";
+        String ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER = "Для выполнения заказа %s найдено необходимое число рабочих";
+    }
+
     public interface OrderCreationQuestions {
         Map<Integer, String> CREATE_ORDER_QUESTIONS = ImmutableMap.of(0, "Дата заказа",
                 1, "Колличество грузчиков",
@@ -64,17 +83,22 @@ public final class BotModel {
             public final String CUSTOMER_MAKE_ORDER_CMD = "CUSTOMER_MAKE_ORDER";
 
             public final String PORTER_CHANGE_TIMETABLE_CMD = "PORTER_CHANGE_TIMETABLE";
+
+            public final String PORTER_EXECUTE_ORDER = "REQUEST_EXECUTE_ORDER_[%s]";
+            public final Pattern PORTER_EXECUTE_ORDER_REGEX = Pattern.compile("REQUEST_EXECUTE_ORDER_[(\\\\w++)]");
         }
 
         public interface Texts {
             public final String SELECT_PORTER = "Я грузчик";
             public final String SELECT_CUSTOMER = "Я заказчик";
 
-            public final String CUSTOMER_MAKE_ORDER = "Сделать заказ";
+            public final String CUSTOMER_MAKE_ORDER = "Создать заказ";
 
             public final String PORTER_CHANGE_TIMETABLE = "Изменить график работы";
 
-            public final String ORDER_NOTIFICATION_TEMPLATE = "Новый заказ\n Дата: %s\n Колличество человек: %s\n Время работы: %s\n Почасовая оплата для одного человека: %s";
+            public final String ORDER_NOTIFICATION_TEMPLATE = "Новый заказ\n Дата: %s\n Количество человек: %s\n Время работы: %s\n Почасовая оплата для одного человека: %s";
+
+            String PORTER_WANTS_TO_EXECUTE_ORDER = "Я хочу выполнить этот заказ";
         }
     }
 

@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void setOrderCreationProcessing(Customer customer, boolean b) {
+    public void setOrderSearchingProcessing(Customer customer, boolean b) {
         //turn off order processing creation action
         if (!b) {
             customer.setOrderQuestionNum(0);
