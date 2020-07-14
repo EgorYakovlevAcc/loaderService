@@ -48,7 +48,7 @@ public class QuestionController {
         return "add_question";
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/add/{userType}")
     public ResponseEntity postAddQuestion(@RequestBody Question question){
         questionService.createQuestionForTypeByPojo(question);
         return ResponseEntity.ok(null);

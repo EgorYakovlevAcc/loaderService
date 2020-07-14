@@ -356,7 +356,8 @@ class CustomerQuestionsComponent {
         });
     }
     openCreationNewQuestionFormCustomer() {
-        this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+        let modalForm = this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+        modalForm.componentInstance.userType = "CUSTOMER";
     }
     deleteQuestion(id) {
         this.questionService.deleteQuestion(id).subscribe(result => {
@@ -669,6 +670,7 @@ class ModalAddQuestionComponent {
     }
     saveQuestion() {
         let i = 0;
+        this.question.userType = this.userType;
         this.questionService.sendQuestion(this.question, this.isQuestionChanged).subscribe(result => {
             location.reload();
         }, error => {
@@ -678,7 +680,7 @@ class ModalAddQuestionComponent {
     }
 }
 ModalAddQuestionComponent.ɵfac = function ModalAddQuestionComponent_Factory(t) { return new (t || ModalAddQuestionComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbModal"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_question_service_service__WEBPACK_IMPORTED_MODULE_2__["QuestionServiceService"])); };
-ModalAddQuestionComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ModalAddQuestionComponent, selectors: [["app-modal-add-question"]], inputs: { editQuestion: "editQuestion" }, decls: 19, vars: 3, consts: [[1, "modal-lg"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [1, "modal-body"], [1, "container"], [1, "row"], [1, "col"], ["for", "question__input"], ["id", "question__input", 3, "ngModel", "ngModelChange"], [1, "modal-footer"], ["type", "submit", "class", "btn btn-primary", "style", "margin: 0 20px auto", 3, "click", 4, "ngIf"], ["type", "submit", 1, "btn", "btn-primary", 2, "margin", "0 20px auto", 3, "click"]], template: function ModalAddQuestionComponent_Template(rf, ctx) { if (rf & 1) {
+ModalAddQuestionComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ModalAddQuestionComponent, selectors: [["app-modal-add-question"]], inputs: { editQuestion: "editQuestion", userType: "userType" }, decls: 19, vars: 3, consts: [[1, "modal-lg"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [1, "modal-body"], [1, "container"], [1, "row"], [1, "col"], ["for", "question__input"], ["id", "question__input", 3, "ngModel", "ngModelChange"], [1, "modal-footer"], ["type", "submit", "class", "btn btn-primary", "style", "margin: 0 20px auto", 3, "click", 4, "ngIf"], ["type", "submit", 1, "btn", "btn-primary", 2, "margin", "0 20px auto", 3, "click"]], template: function ModalAddQuestionComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h4", 2);
@@ -729,6 +731,8 @@ ModalAddQuestionComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵ
                 styleUrls: ['./modal-add-question.component.css']
             }]
     }], function () { return [{ type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbModal"] }, { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"] }, { type: _service_question_service_service__WEBPACK_IMPORTED_MODULE_2__["QuestionServiceService"] }]; }, { editQuestion: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }], userType: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }] }); })();
 
@@ -1005,7 +1009,8 @@ class PorterQuestionsComponent {
         });
     }
     openCreationNewQuestionFormPorter() {
-        this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+        let modalForm = this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+        modalForm.componentInstance.userType = "PORTER";
     }
     deleteQuestion(id) {
         this.questionService.deleteQuestion(id).subscribe(result => {

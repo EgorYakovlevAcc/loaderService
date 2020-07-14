@@ -25,7 +25,8 @@ export class PorterQuestionsComponent implements OnInit {
   }
 
   openCreationNewQuestionFormPorter() {
-    this.modalService.open(ModalAddQuestionComponent);
+    let modalForm = this.modalService.open(ModalAddQuestionComponent);
+    modalForm.componentInstance.userType = "PORTER";
   }
 
   deleteQuestion(id) {

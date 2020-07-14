@@ -13,6 +13,7 @@ import {ImageFile} from "../model/image-file";
 })
 export class ModalAddQuestionComponent implements OnInit {
   @Input() editQuestion:Question;
+  @Input() userType:string;
   modalForm: NgbActiveModal;
   indexOfTrueOption:number;
   isQuestionChanged:boolean;
@@ -41,6 +42,7 @@ export class ModalAddQuestionComponent implements OnInit {
 
   saveQuestion() {
     let i:number = 0;
+    this.question.userType = this.userType;
     this.questionService.sendQuestion(this.question, this.isQuestionChanged).subscribe(result => {
         location.reload();
       },

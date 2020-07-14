@@ -643,7 +643,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "openCreationNewQuestionFormCustomer",
         value: function openCreationNewQuestionFormCustomer() {
-          this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+          var modalForm = this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+          modalForm.componentInstance.userType = "CUSTOMER";
         }
       }, {
         key: "deleteQuestion",
@@ -1301,6 +1302,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "saveQuestion",
         value: function saveQuestion() {
           var i = 0;
+          this.question.userType = this.userType;
           this.questionService.sendQuestion(this.question, this.isQuestionChanged).subscribe(function (result) {
             location.reload();
           }, function (error) {
@@ -1321,7 +1323,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       type: ModalAddQuestionComponent,
       selectors: [["app-modal-add-question"]],
       inputs: {
-        editQuestion: "editQuestion"
+        editQuestion: "editQuestion",
+        userType: "userType"
       },
       decls: 19,
       vars: 3,
@@ -1438,6 +1441,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }];
       }, {
         editQuestion: [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }],
+        userType: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }]
       });
@@ -2014,7 +2020,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "openCreationNewQuestionFormPorter",
         value: function openCreationNewQuestionFormPorter() {
-          this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+          var modalForm = this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+          modalForm.componentInstance.userType = "PORTER";
         }
       }, {
         key: "deleteQuestion",

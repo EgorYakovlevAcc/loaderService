@@ -25,7 +25,8 @@ export class CustomerQuestionsComponent implements OnInit {
   }
 
   openCreationNewQuestionFormCustomer() {
-    this.modalService.open(ModalAddQuestionComponent);
+    let modalForm = this.modalService.open(ModalAddQuestionComponent);
+    modalForm.componentInstance.userType = "CUSTOMER";
   }
 
   deleteQuestion(id) {
