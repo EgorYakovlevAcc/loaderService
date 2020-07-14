@@ -125,7 +125,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
 
     private void orderCreationActionHandler(MessagesPackage messagesPackage, Customer customer) {
         Integer orderQuestionNum = customer.getOrderQuestionNum();
-        if (orderQuestionNum >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
+        if (orderQuestionNum + 1 >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
             customerService.setOrderCreationProcessing(customer, false);
             customSendMessage(messagesPackage, BotModel.Messages.ORDER_CREATION_FINISHED, customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
             return;
