@@ -2936,13 +2936,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deleteCustomer",
         value: function deleteCustomer(id) {
-          var url = "remove?id=" + id + "c/ustomer";
+          var url = "remove/сustomer?id=" + id;
           return this.httpClient.get(url);
         }
       }, {
         key: "deletePorter",
         value: function deletePorter(id) {
-          var url = "remove?id=" + id + "/porter";
+          var url = "remove/porter?id=" + id;
           return this.httpClient.get(url);
         }
       }]);

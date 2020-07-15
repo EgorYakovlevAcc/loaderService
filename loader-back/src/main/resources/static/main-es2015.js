@@ -1450,11 +1450,11 @@ class UserServiceService {
         return this.httpClient.get("all/customers");
     }
     deleteCustomer(id) {
-        let url = "remove?id=" + id + "c/ustomer";
+        let url = "remove/сustomer?id=" + id;
         return this.httpClient.get(url);
     }
     deletePorter(id) {
-        let url = "remove?id=" + id + "/porter";
+        let url = "remove/porter?id=" + id;
         return this.httpClient.get(url);
     }
 }
