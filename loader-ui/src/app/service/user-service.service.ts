@@ -9,8 +9,12 @@ export class UserServiceService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllUsers(): Observable<any> {
-    return this.httpClient.get("all/users");
+  getAllPorters(): Observable<any> {
+    return this.httpClient.get("all/porters");
+  }
+
+  getAllCustomers(): Observable<any> {
+    return this.httpClient.get("all/customers");
   }
 
   givePresentToUser(id): Observable<any> {

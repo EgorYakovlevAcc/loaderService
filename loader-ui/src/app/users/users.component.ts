@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe((result: User[]) => {
+    this.userService.getAllPorters().subscribe((result: User[]) => {
         this.users = result;
         this.checkIsUserActiveNow(this.users);
       }

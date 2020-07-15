@@ -422,6 +422,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
     /*! ./customer-questions/customer-questions.component */
     "./src/app/customer-questions/customer-questions.component.ts");
+    /* harmony import */
+
+
+    var _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+    /*! ./user-customers/user-customers.component */
+    "./src/app/user-customers/user-customers.component.ts");
 
     var appRoutes = [{
       path: 'questions-porter',
@@ -430,8 +436,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       path: 'questions-customer',
       component: _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"]
     }, {
-      path: 'users',
+      path: 'porters',
       component: _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"]
+    }, {
+      path: 'customers',
+      component: _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"]
     }, {
       path: '',
       component: _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"],
@@ -468,7 +477,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     (function () {
       (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, {
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"]],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"], _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"]],
         imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]],
         exports: [_angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]]
       });
@@ -480,7 +489,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AppModule, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
         args: [{
-          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"]],
+          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"], _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"]],
           imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"].forRoot(appRoutes)],
           exports: [_angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]],
           providers: [],
@@ -2899,9 +2908,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       _createClass(UserServiceService, [{
-        key: "getAllUsers",
-        value: function getAllUsers() {
-          return this.httpClient.get("all/users");
+        key: "getAllPorters",
+        value: function getAllPorters() {
+          return this.httpClient.get("all/porters");
+        }
+      }, {
+        key: "getAllCustomers",
+        value: function getAllCustomers() {
+          return this.httpClient.get("all/customers");
         }
       }, {
         key: "givePresentToUser",
@@ -2940,6 +2954,101 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }], function () {
         return [{
           type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
+        }];
+      }, null);
+    })();
+    /***/
+
+  },
+
+  /***/
+  "./src/app/user-customers/user-customers.component.ts":
+  /*!************************************************************!*\
+    !*** ./src/app/user-customers/user-customers.component.ts ***!
+    \************************************************************/
+
+  /*! exports provided: UserCustomersComponent */
+
+  /***/
+  function srcAppUserCustomersUserCustomersComponentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UserCustomersComponent", function () {
+      return UserCustomersComponent;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _service_user_service_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../service/user-service.service */
+    "./src/app/service/user-service.service.ts");
+
+    var UserCustomersComponent =
+    /*#__PURE__*/
+    function () {
+      function UserCustomersComponent(userService) {
+        _classCallCheck(this, UserCustomersComponent);
+
+        this.userService = userService;
+      }
+
+      _createClass(UserCustomersComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {
+          var _this6 = this;
+
+          this.userService.getAllCustomers().subscribe(function (result) {
+            _this6.users = result;
+          });
+        }
+      }]);
+
+      return UserCustomersComponent;
+    }();
+
+    UserCustomersComponent.ɵfac = function UserCustomersComponent_Factory(t) {
+      return new (t || UserCustomersComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_user_service_service__WEBPACK_IMPORTED_MODULE_1__["UserServiceService"]));
+    };
+
+    UserCustomersComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+      type: UserCustomersComponent,
+      selectors: [["app-user-customers"]],
+      decls: 2,
+      vars: 0,
+      template: function UserCustomersComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "user-customers works!");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+      },
+      styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3VzZXItY3VzdG9tZXJzL3VzZXItY3VzdG9tZXJzLmNvbXBvbmVudC5jc3MifQ== */"]
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](UserCustomersComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+          selector: 'app-user-customers',
+          templateUrl: './user-customers.component.html',
+          styleUrls: ['./user-customers.component.css']
+        }]
+      }], function () {
+        return [{
+          type: _service_user_service_service__WEBPACK_IMPORTED_MODULE_1__["UserServiceService"]
         }];
       }, null);
     })();
@@ -3110,12 +3219,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(UsersComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this6 = this;
+          var _this7 = this;
 
-          this.userService.getAllUsers().subscribe(function (result) {
-            _this6.users = result;
+          this.userService.getAllPorters().subscribe(function (result) {
+            _this7.users = result;
 
-            _this6.checkIsUserActiveNow(_this6.users);
+            _this7.checkIsUserActiveNow(_this7.users);
           });
         }
       }, {

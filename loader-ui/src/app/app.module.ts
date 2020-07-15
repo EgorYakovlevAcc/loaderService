@@ -18,6 +18,7 @@ import { AboutComponent } from './about/about.component';
 import { FirstAndLastMessagesEditorComponent } from './first-and-last-messages-editor/first-and-last-messages-editor.component';
 import { ScoreRangeMessageComponent } from './score-range-message/score-range-message.component';
 import { CustomerQuestionsComponent } from './customer-questions/customer-questions.component';
+import { UserCustomersComponent } from './user-customers/user-customers.component';
 
 const appRoutes: Routes = [
   {
@@ -29,8 +30,12 @@ const appRoutes: Routes = [
     component: CustomerQuestionsComponent
   },
   {
-    path: 'users',
+    path: 'porters',
     component: UsersComponent
+  },
+  {
+    path: 'customers',
+    component: UserCustomersComponent
   },
   {
     path: '',
@@ -69,7 +74,8 @@ const appRoutes: Routes = [
     AboutComponent,
     FirstAndLastMessagesEditorComponent,
     ScoreRangeMessageComponent,
-    CustomerQuestionsComponent
+    CustomerQuestionsComponent,
+    UserCustomersComponent
   ],
   imports: [
     BrowserModule,
