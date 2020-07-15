@@ -133,7 +133,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         Integer orderQuestionNum = customer.getOrderQuestionNum();
         if (orderQuestionNum + 1 >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
             customerService.setOrderSearchingProcessing(customer, false);
-            Order createdOrder = orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
+            Order createdOrder = orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.SEARCHING);
             customSendMessage(messagesPackage, BotModel.Messages.ORDER_CREATION_FINISHED, customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
             sendNotificationForPorters(messagesPackage, createdOrder);
             return;
