@@ -11,6 +11,7 @@ export class QuestionComponent implements OnInit {
   model:Question = {
     userType: "",
     content:'',
+    label:'',
     id:0
   };
   constructor(private httpClient: HttpClient) { }

@@ -20,6 +20,7 @@ export class ModalAddQuestionComponent implements OnInit {
   question: Question = {
     attachment: undefined,
     userType: "",
+    label: '',
     id:0,
     content: ''
   };

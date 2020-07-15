@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Customer {
     private Integer id;
+    private String userName;
     private Integer telegramId;
     private String customerName;
 }

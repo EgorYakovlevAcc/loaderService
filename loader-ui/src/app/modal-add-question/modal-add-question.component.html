@@ -17,14 +17,19 @@
       <textarea [(ngModel)]="question.content" id="question__input">
       </textarea>
         </div>
+        <div class="col">
+          <input id="question__label" [(ngModel)]="question.label"/>
+        </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-primary" style="margin: 0 20px auto" (click)="saveQuestion()" *ngIf="isQuestionChanged">
+    <button type="submit" class="btn btn-primary" style="margin: 0 20px auto" (click)="saveQuestion()"
+            *ngIf="isQuestionChanged">
       edit question
     </button>
-    <button type="submit" class="btn btn-primary" style="margin: 0 20px auto" (click)="saveQuestion()" *ngIf="!isQuestionChanged">
+    <button type="submit" class="btn btn-primary" style="margin: 0 20px auto" (click)="saveQuestion()"
+            *ngIf="!isQuestionChanged">
       save question
     </button>
   </div>

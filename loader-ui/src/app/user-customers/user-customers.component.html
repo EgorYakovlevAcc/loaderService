@@ -11,6 +11,9 @@
       customer name
     </th>
     <th>
+      telegram username
+    </th>
+    <th>
       actions
     </th>
   </tr>
@@ -25,6 +28,9 @@
     </td>
     <td>
       {{customer.customerName}}
+    </td>
+    <td>
+      {{customer.userName}}
     </td>
     <td>
       <button class="btn btn-danger" (click)="deleteCustomer(customer.id)">delete</button>

@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Porter {
     private Integer id;
+    private String userName;
     Integer telegramId;
     String porterName;
 }

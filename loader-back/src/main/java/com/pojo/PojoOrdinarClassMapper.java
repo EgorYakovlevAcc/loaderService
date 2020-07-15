@@ -28,6 +28,7 @@ public class PojoOrdinarClassMapper {
         Porter porterPojo = new Porter();
         porterPojo.setPorterName(porter.getFullName());
         porterPojo.setTelegramId(porter.getTelegramId());
+        porterPojo.setUserName(porter.getUsername());
         porterPojo.setId(porter.getId());
         return porterPojo;
     }
@@ -42,6 +43,7 @@ public class PojoOrdinarClassMapper {
         Customer customerPojo = new Customer();
         customerPojo.setCustomerName(customer.getName());
         customerPojo.setId(customer.getId());
+        customerPojo.setUserName(customer.getUsername());
         customerPojo.setTelegramId(customer.getTelegramId());
         return customerPojo;
     }
