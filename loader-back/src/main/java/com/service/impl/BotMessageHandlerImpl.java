@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -27,7 +26,6 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.PatternSyntaxException;
 
 @Service
@@ -135,7 +133,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         Integer orderQuestionNum = customer.getOrderQuestionNum();
         if (orderQuestionNum + 1 >= BotModel.OrderCreationQuestions.CREATE_ORDER_QUESTIONS.size()) {
             customerService.setOrderSearchingProcessing(customer, false);
-            Order createdOrder = orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.RECRUITMENT_COMPLETED);
+            Order createdOrder = orderService.setStatusToOrderByCustomer(customer, Status.PROCESSING, Status.CREATED);
             customSendMessage(messagesPackage, BotModel.Messages.ORDER_CREATION_FINISHED, customer.getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
             sendNotificationForPorters(messagesPackage, createdOrder);
             return;
