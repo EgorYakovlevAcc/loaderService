@@ -2,12 +2,15 @@ package com.service.impl;
 
 import com.model.order.Status;
 import com.model.user.Customer;
+import com.model.user.Porter;
 import com.repo.CustomerRepository;
 import com.repo.OrderRepository;
 import com.service.CustomerService;
 import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -51,5 +54,10 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateOrderCreationQuestionNum(Customer customer, int i) {
         customer.setOrderQuestionNum(i);
         customerRepository.save(customer);
+    }
+
+    @Override
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 }

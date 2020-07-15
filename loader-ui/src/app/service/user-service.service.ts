@@ -17,13 +17,8 @@ export class UserServiceService {
     return this.httpClient.get("all/customers");
   }
 
-  givePresentToUser(id): Observable<any> {
-    let url = "user/" + id + "/present";
-    return this.httpClient.get(url);
-  }
-
-  isPresenGivenToUser(id): any {
-    let url = "user/" + id + "/present/check";
+  deleteUser(id): Observable<any> {
+    let url = "remove?id=" + id;
     return this.httpClient.get(url);
   }
 }

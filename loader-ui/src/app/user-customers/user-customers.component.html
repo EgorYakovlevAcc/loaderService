@@ -1,1 +1,34 @@
-<p>user-customers works!</p>
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>
+      №
+    </th>
+    <th>
+      telegram id
+    </th>
+    <th>
+      customer name
+    </th>
+    <th>
+      actions
+    </th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let customer of customers; let i = index">
+  <tr>
+    <td>
+      {{i}}
+    </td>
+    <td>
+      {{customer.telegramId}}
+    </td>
+    <td>
+      {{customer.customerName}}
+    </td>
+    <td>
+      <button class="btn btn-danger" (click)="deleteCustomer(customer.id)">delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserServiceService} from "../service/user-service.service";
 import {User} from "../model/user/user";
+import {Porter} from "../porter";
 
 @Component({
   selector: 'app-users',
@@ -8,34 +9,23 @@ import {User} from "../model/user/user";
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: User[];
+  porters: Porter[];
 
   constructor(private userService: UserServiceService) {
   }
 
   ngOnInit(): void {
-    this.userService.getAllPorters().subscribe((result: User[]) => {
-        this.users = result;
-        this.checkIsUserActiveNow(this.users);
+    this.userService.getAllPorters().subscribe((result: Porter[]) => {
+        this.porters = result;
       }
     )
   }
 
-  checkIsUserActiveNow(users): void {
-    users.forEach(function (value: User) {
-      if (value.activeNow) {
-        value.color = "yellow";
-      }
-      if (value.presentGiven) {
-        value.color = "red";
-      }
-    });
-  }
-
-  givePresentToUser(id): void {
-    this.userService.givePresentToUser(id).subscribe(result => {
+  deletePorter(id) {
+    this.userService.deleteUser(id).subscribe(result => {
       location.reload();
-    })
-  }
-
+    }, error => {
+      alert("Error");
+    });
+}
 }

@@ -1,6 +1,9 @@
 package com.service;
 
 import com.model.user.Customer;
+import com.model.user.Porter;
+
+import java.util.List;
 
 public interface CustomerService {
     Customer findCustomerByTelegramId(Integer id);
@@ -13,4 +16,6 @@ public interface CustomerService {
     void setOrderSearchingProcessing(Customer customer, boolean b);
 
     void updateOrderCreationQuestionNum(Customer customer, int i);
+
+    List<Customer> findAll();
 }

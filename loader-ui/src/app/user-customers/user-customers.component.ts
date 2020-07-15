@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {User} from "../model/user/user";
+import {Component, OnInit} from '@angular/core';
 import {UserServiceService} from "../service/user-service.service";
+import {Customer} from "../customer";
 
 @Component({
   selector: 'app-user-customers',
@@ -8,15 +8,23 @@ import {UserServiceService} from "../service/user-service.service";
   styleUrls: ['./user-customers.component.css']
 })
 export class UserCustomersComponent implements OnInit {
-  users: User[];
+  customers: Customer[];
 
   constructor(private userService: UserServiceService) {
   }
 
   ngOnInit(): void {
-    this.userService.getAllCustomers().subscribe((result: User[]) => {
-        this.users = result;
+    this.userService.getAllCustomers().subscribe((result: Customer[]) => {
+        this.customers = result;
       }
     )
+  }
+
+  deleteCustomer(id) {
+    this.userService.deleteUser(id).subscribe(result => {
+      location.reload();
+    }, error => {
+      alert("Error");
+    });
   }
 }

@@ -8,24 +8,15 @@
       telegram id
     </th>
     <th>
-      first name
-    </th>
-    <th>
-      last name
-    </th>
-    <th>
       porter name
     </th>
     <th>
-      score
-    </th>
-    <th>
-      is present given
+      actions
     </th>
   </tr>
   </thead>
-  <tbody *ngFor="let porter of users; let i = index">
-  <tr [ngStyle]="{'background-color':porter.color}">
+  <tbody *ngFor="let porter of porters; let i = index">
+  <tr>
     <td>
       {{i}}
     </td>
@@ -33,19 +24,10 @@
       {{porter.telegramId}}
     </td>
     <td>
-      {{porter.firstName}}
+      {{porter.porterName}}
     </td>
     <td>
-      {{porter.lastName}}
-    </td>
-    <td>
-      {{porter.username}}
-    </td>
-    <td>
-      {{porter.score}}
-    </td>
-    <td>
-      <button class="badge-info" (click)="givePresentToUser(porter.id)" [disabled]="porter.presentGiven">give present</button>
+      <button class="btn btn-danger" (click)="deletePorter(porter.id)">delete</button>
     </td>
   </tr>
   </tbody>

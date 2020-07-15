@@ -36,4 +36,9 @@ public class PorterServiceImpl implements PorterService {
         porter.setAskingQuestions(false);
         porterRepository.save(porter);
     }
+
+    @Override
+    public List<Porter> findAll() {
+        return porterRepository.findAll();
+    }
 }

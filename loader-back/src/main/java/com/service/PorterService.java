@@ -10,4 +10,6 @@ public interface PorterService {
 
     List<Porter> findPortersByTimetable();
     void setFinishAskingQuestions(Porter porter);
+
+    List<Porter> findAll();
 }
