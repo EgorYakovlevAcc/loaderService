@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
   }
 
   deletePorter(id) {
-    this.userService.deleteUser(id).subscribe(result => {
+    this.userService.deletePorter(id).subscribe(result => {
       location.reload();
     }, error => {
       alert("Error");

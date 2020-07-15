@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +43,18 @@ public class MainController {
         return customerService.findAll().stream()
                 .map(PojoOrdinarClassMapper::customerToCustomerPojoMapping)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/remove/porter")
+    public ResponseEntity removePorter(@RequestParam("id") Integer porterId) {
+        portserService.deletePorterById(porterId);
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping(value = "/remove/customer")
+    public ResponseEntity removeCustomer(@RequestParam("id") Integer customerId) {
+        customerService.deleteCustomerById(customerId);
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping(value = {"/", "/index"})

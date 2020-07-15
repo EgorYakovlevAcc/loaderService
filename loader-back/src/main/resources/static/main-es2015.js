@@ -1449,8 +1449,12 @@ class UserServiceService {
     getAllCustomers() {
         return this.httpClient.get("all/customers");
     }
-    deleteUser(id) {
-        let url = "remove?id=" + id;
+    deleteCustomer(id) {
+        let url = "remove?id=" + id + "c/ustomer";
+        return this.httpClient.get(url);
+    }
+    deletePorter(id) {
+        let url = "remove?id=" + id + "/porter";
         return this.httpClient.get(url);
     }
 }
@@ -1529,7 +1533,7 @@ class UserCustomersComponent {
         });
     }
     deleteCustomer(id) {
-        this.userService.deleteUser(id).subscribe(result => {
+        this.userService.deleteCustomer(id).subscribe(result => {
             location.reload();
         }, error => {
             alert("Error");
@@ -1639,7 +1643,7 @@ class UsersComponent {
         });
     }
     deletePorter(id) {
-        this.userService.deleteUser(id).subscribe(result => {
+        this.userService.deletePorter(id).subscribe(result => {
             location.reload();
         }, error => {
             alert("Error");

@@ -12,4 +12,6 @@ public interface PorterService {
     void setFinishAskingQuestions(Porter porter);
 
     List<Porter> findAll();
+
+    void deletePorterById(Integer porterId);
 }

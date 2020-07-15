@@ -41,4 +41,9 @@ public class PorterServiceImpl implements PorterService {
     public List<Porter> findAll() {
         return porterRepository.findAll();
     }
+
+    @Override
+    public void deletePorterById(Integer porterId) {
+        porterRepository.deleteById(porterId);
+    }
 }

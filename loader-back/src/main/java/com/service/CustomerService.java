@@ -18,4 +18,6 @@ public interface CustomerService {
     void updateOrderCreationQuestionNum(Customer customer, int i);
 
     List<Customer> findAll();
+
+    void deleteCustomerById(Integer customerId);
 }

@@ -2934,9 +2934,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           return this.httpClient.get("all/customers");
         }
       }, {
-        key: "deleteUser",
-        value: function deleteUser(id) {
-          var url = "remove?id=" + id;
+        key: "deleteCustomer",
+        value: function deleteCustomer(id) {
+          var url = "remove?id=" + id + "c/ustomer";
+          return this.httpClient.get(url);
+        }
+      }, {
+        key: "deletePorter",
+        value: function deletePorter(id) {
+          var url = "remove?id=" + id + "/porter";
           return this.httpClient.get(url);
         }
       }]);
@@ -3109,7 +3115,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deleteCustomer",
         value: function deleteCustomer(id) {
-          this.userService.deleteUser(id).subscribe(function (result) {
+          this.userService.deleteCustomer(id).subscribe(function (result) {
             location.reload();
           }, function (error) {
             alert("Error");
@@ -3344,7 +3350,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deletePorter",
         value: function deletePorter(id) {
-          this.userService.deleteUser(id).subscribe(function (result) {
+          this.userService.deletePorter(id).subscribe(function (result) {
             location.reload();
           }, function (error) {
             alert("Error");

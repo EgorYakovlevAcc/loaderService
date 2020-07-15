@@ -17,8 +17,13 @@ export class UserServiceService {
     return this.httpClient.get("all/customers");
   }
 
-  deleteUser(id): Observable<any> {
-    let url = "remove?id=" + id;
+  deleteCustomer(id): Observable<any> {
+    let url = "remove?id=" + id + "c/ustomer";
+    return this.httpClient.get(url);
+  }
+
+  deletePorter(id): Observable<any> {
+    let url = "remove?id=" + id + "/porter";
     return this.httpClient.get(url);
   }
 }

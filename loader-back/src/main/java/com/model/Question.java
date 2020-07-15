@@ -28,6 +28,7 @@ public class Question {
     @Enumerated(EnumType.STRING)
     private UserType userType;
     private Integer questionNumber;
+    private String label;
 
     public Question() {
     }

@@ -21,7 +21,7 @@ export class UserCustomersComponent implements OnInit {
   }
 
   deleteCustomer(id) {
-    this.userService.deleteUser(id).subscribe(result => {
+    this.userService.deleteCustomer(id).subscribe(result => {
       location.reload();
     }, error => {
       alert("Error");
