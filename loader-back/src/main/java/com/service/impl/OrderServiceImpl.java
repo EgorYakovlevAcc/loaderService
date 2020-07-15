@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPorters(list);
         Integer restAmountOfWorkers = order.getRestAmountOfWorkers();
         order.setRestAmountOfWorkers(restAmountOfWorkers - 1);
-        if (restAmountOfWorkers <= 0) {
+        if (restAmountOfWorkers - 1 <= 0) {
             order.setStatus(Status.RECRUITMENT_COMPLETED);
             //todo: подумать над транзакционностью
         }

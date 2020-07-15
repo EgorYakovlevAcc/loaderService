@@ -165,9 +165,11 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                     Porter porter = (Porter) botUser;
                     try {
                         Order order = orderService.subscribePorterForOrderAndReturnOrder(orderId, porter);
-                        List<Porter> porters = order.getPorters();
-                        Customer customer = order.getCustomer();
-                        orderRecruitmentCompletedHandler(messagesPackage, porters, customer, orderId);
+                        if (order.getStatus() == Status.RECRUITMENT_COMPLETED) {
+                            List<Porter> porters = order.getPorters();
+                            Customer customer = order.getCustomer();
+                            orderRecruitmentCompletedHandler(messagesPackage, porters, customer, orderId);
+                        }
                     } catch (CustomBotException cbe) {
                         if (cbe.getErrorCode().equals(BotModel.ErrorHandling.ErrorCodes.EY_0001)) {
                             customSendMessage(messagesPackage, BotModel.Notifications.UNFORTUNATELY_ALL_WORKERS_WERE_FOUND, porter.getChatId(), null);
@@ -190,8 +192,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         try {
             String orderIdStr = command.replaceFirst(BotModel.InlineButtons.Commands.PORTER_EXECUTE_ORDER_REGEX, "");
             return Integer.parseInt(orderIdStr);
-        }
-        catch (PatternSyntaxException e) {
+        } catch (PatternSyntaxException e) {
             return -1;
         }
     }
