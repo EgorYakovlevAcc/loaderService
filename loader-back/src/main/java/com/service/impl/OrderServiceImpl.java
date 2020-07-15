@@ -56,7 +56,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void setAmountOfPortersForOrder(Order order, String answer) {
-        order.setWorkersNum(StringUtils.isEmpty(answer) ? BotModel.DefaultValues.AMOUNT_OF_PORTERS : Integer.parseInt(answer));
+        Integer numOfWorkers = StringUtils.isEmpty(answer) ? BotModel.DefaultValues.AMOUNT_OF_PORTERS : Integer.parseInt(answer);
+        order.setWorkersNum(numOfWorkers);
+        order.setRestAmountOfWorkers(numOfWorkers);
         orderRepository.save(order);
     }
 
