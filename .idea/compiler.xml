@@ -6,17 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="loader-back" />
         <module name="loader-ui" />
+        <module name="loader-back" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="loader-back" target="1.8" />
-      <module name="loader-service" target="1.8" />
-      <module name="loader-ui" target="1.8" />
-      <module name="ncbot" target="1.8" />
-      <module name="ncbot-ui" target="1.8" />
-      <module name="ncbotpro" target="1.8" />
+      <module name="loader-back" target="13" />
+      <module name="loader-service" target="13" />
+      <module name="loader-ui" target="13" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -24,8 +21,6 @@
       <module name="loader-back" options="-parameters" />
       <module name="loader-service" options="-parameters" />
       <module name="loader-ui" options="-parameters" />
-      <module name="ncbot" options="-parameters" />
-      <module name="ncbot-ui" options="-parameters" />
     </option>
   </component>
 </project>

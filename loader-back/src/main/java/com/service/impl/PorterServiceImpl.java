@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.model.order.Order;
 import com.model.user.Porter;
 import com.repo.PorterRepository;
 import com.service.PorterService;
@@ -44,6 +45,10 @@ public class PorterServiceImpl implements PorterService {
 
     @Override
     public void deletePorterById(Integer porterId) {
+        Porter porter = porterRepository.findPorterById(porterId);
+        List<Order> orders = porter.getOrders();
+        porter.setOrders(null);
+        porterRepository.save(porter);
         porterRepository.deleteById(porterId);
     }
 }
