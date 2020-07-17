@@ -69,7 +69,11 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         if (question == null) {
                             porterService.setFinishAskingQuestions(porter);
                             scenarioForKnownPorter(messagesPackage, porter);
-                        } else {
+                        }
+                        else {
+                            if (question.getLabel().equals("TIMETABLE")) {
+                                porterService.setIsTimetable(porter, true);
+                            }
                             customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
                         }
                     } else {
@@ -176,6 +180,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         } else throw cbe;
                     }
                 }
+                else {
+
+                }
                 break;
             }
         }
@@ -195,6 +202,11 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         } catch (PatternSyntaxException e) {
             return -1;
         }
+    }
+
+    private Integer getOrderIdFromPorterDayForTimetableCommand(String command) {
+        String dayAndOrderIdStr = command.replaceFirst("SELECT_FOR_ORDER_", "");
+        return null;
     }
 
     private void callBackCustomerMakeOrderHandler(MessagesPackage messagesPackage, Customer customer) {

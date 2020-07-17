@@ -51,4 +51,10 @@ public class PorterServiceImpl implements PorterService {
         porterRepository.save(porter);
         porterRepository.deleteById(porterId);
     }
+
+    @Override
+    public void setIsTimetable(Porter porter, boolean b) {
+        porter.setStartTimetable(b);
+        porterRepository.save(porter);
+    }
 }

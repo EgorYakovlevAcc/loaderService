@@ -2936,7 +2936,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deleteCustomer",
         value: function deleteCustomer(id) {
-          var url = "remove/сustomer?id=" + id;
+          var url = "remove/customer?id=" + id;
           return this.httpClient.get(url);
         }
       }, {

@@ -14,4 +14,6 @@ public interface PorterService {
     List<Porter> findAll();
 
     void deletePorterById(Integer porterId);
+
+    void setIsTimetable(Porter porter, boolean b);
 }

@@ -33,7 +33,8 @@ public final class BotModel {
     }
 
     public interface OrderCreationQuestions {
-        Map<Integer, String> CREATE_ORDER_QUESTIONS = ImmutableMap.of(0, "Дата заказа",
+        Map<Integer, String> CREATE_ORDER_QUESTIONS = ImmutableMap.of(
+                0, "Дата заказа",
                 1, "Колличество грузчиков",
                 2, "Время выполнения заказа",
                 3, "Почасовая оплата одного грузчика");
@@ -87,6 +88,21 @@ public final class BotModel {
 
             public final String PORTER_EXECUTE_ORDER = "REQUEST_EXECUTE_ORDER_%s";
             public final String PORTER_EXECUTE_ORDER_REGEX = "REQUEST_EXECUTE_ORDER_";
+
+            public final String MONDAY_SELECT_TIMETABLE = "MONDAY_SELECT_FOR_ORDER";
+            public final String MONDAY_SELECT_TIMETABLE_REGEX = "MONDAY_SELECT_FOR_ORDER_%s";
+            public final String TUESDAY_SELECT_TIMETABLE = "TUESDAY_SELECT_FOR_ORDER";
+            public final String TUESDAY_SELECT_TIMETABLE_REGEX = "TUESDAY_SELECT_FOR_ORDER_%s";
+            public final String THUSDAY_SELECT_TIMETABLE = "THUSDAY_SELECT_FOR_ORDER";
+            public final String THUSDAY_SELECT_TIMETABLE_REGEX = "THUSDAY_SELECT_FOR_ORDER_%s";
+            public final String WENSDAY_SELECT_TIMETABLE = "WENSDAY_SELECT_FOR_ORDER";
+            public final String WENSDAY_SELECT_TIMETABLE_REGEX = "WENSDAY_SELECT_FOR_ORDER_%s";
+            public final String FRIDAY_SELECT_TIMETABLE = "FRIDAY_SELECT_FOR_ORDER";
+            public final String FRIDAY_SELECT_TIMETABLE_REGEX = "FRIDAY_SELECT_FOR_ORDER_%s";
+            public final String SATURDAY_SELECT_TIMETABLE = "SATURDAY_SELECT_FOR_ORDER";
+            public final String SATURDAY_SELECT_TIMETABLE_REGEX = "SATURDAY_SELECT_FOR_ORDER";
+            public final String SUNDAY_SELECT_TIMETABLE = "SUNDAY_SELECT_FOR_ORDER_%s";
+            public final String SUNDAY_SELECT_TIMETABLE_REGEX = "SUNDAY_SELECT_FOR_ORDER";
         }
 
         public interface Texts {

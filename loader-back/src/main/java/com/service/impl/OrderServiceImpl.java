@@ -105,6 +105,11 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
+    @Override
+    public void deleteOrders(List<Order> orders) {
+        orderRepository.deleteAll(orders);
+    }
+
     private Order findOrderByCustomerAndStatusTemporary(Customer customer, Status currentStatus) {
         //todo:refactoring must have!
         return orderRepository.findAll().stream()

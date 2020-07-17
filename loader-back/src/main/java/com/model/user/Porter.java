@@ -32,6 +32,7 @@ public class Porter implements BotUser {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="porter_id")
     private AnswerPorter answer;
+    private boolean isStartTimetable;
     @ManyToMany
     private List<Order> orders;
 }

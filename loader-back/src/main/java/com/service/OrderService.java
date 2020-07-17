@@ -5,6 +5,8 @@ import com.model.order.Status;
 import com.model.user.Customer;
 import com.model.user.Porter;
 
+import java.util.List;
+
 public interface OrderService {
     Order createOrder(Customer customer);
     Order findOrderByCustomerAndStatus(Customer customer, Status status);
@@ -22,4 +24,6 @@ public interface OrderService {
     Order findOrderById(Integer id);
 
     Order subscribePorterForOrderAndReturnOrder(Integer orderId, Porter porter);
+
+    void deleteOrders(List<Order> orders);
 }

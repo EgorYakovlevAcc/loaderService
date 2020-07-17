@@ -1450,7 +1450,7 @@ class UserServiceService {
         return this.httpClient.get("all/customers");
     }
     deleteCustomer(id) {
-        let url = "remove/сustomer?id=" + id;
+        let url = "remove/customer?id=" + id;
         return this.httpClient.get(url);
     }
     deletePorter(id) {

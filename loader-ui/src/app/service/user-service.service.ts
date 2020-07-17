@@ -18,7 +18,7 @@ export class UserServiceService {
   }
 
   deleteCustomer(id): Observable<any> {
-    let url = "remove/сustomer?id=" + id;
+    let url = "remove/customer?id=" + id;
     return this.httpClient.get(url);
   }
 
