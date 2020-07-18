@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import javax.management.StandardEmitterMBean;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,8 @@ public final class BotModel {
         String ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS = "Формирование заказа %s завершено";
         String ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER = "Для выполнения заказа %s найдено необходимое число рабочих";
         String INPUT_TIME_START = "В какое время вы готовы начать работу";
+
+        String FINISH_COMPLETE_TIMETABLE = "Вы обозначили следующий график работы:\n";
 
         String PORTER_HAD_CHOSEN_CURRENT_ORDER = "Вы уже выбрали заказ № %s для выполнения";
     }
@@ -84,6 +87,7 @@ public final class BotModel {
                     Templates.TUESADAY_TIMETABLE_INL_BTN, Templates.WENSDAY_TIMETABLE_INL_BTN,
                     Templates.THUESDAY_TIMETABLE_INL_BTN, Templates.FRIDAY_TIMETABLE_INL_BTN,
                     Templates.SATURDAY_TIMETABLE_INL_BTN, Templates.SUNDAY_TIMETABLE_INL_BTN);
+            List<InlineButtons> PORTER_TIMETABLE_CONFIRM_BTN_LINE = ImmutableList.of();
         }
 
         interface Templates {
@@ -99,6 +103,8 @@ public final class BotModel {
             InlineKeyboardButton FRIDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.FRIDAY, Commands.FRIDAY_SELECT_TIMETABLE);
             InlineKeyboardButton SATURDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SATURDAY, Commands.SATURDAY_SELECT_TIMETABLE);
             InlineKeyboardButton SUNDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SUNDAY, Commands.SUNDAY_SELECT_TIMETABLE);
+
+            InlineKeyboardButton PORTER_TIMATABLE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CONFIRM_TIMETABLE_BTN, Commands.SUNDAY_SELECT_TIMETABLE);
         }
 
         public interface Commands {
@@ -121,6 +127,8 @@ public final class BotModel {
             public final String FRIDAY_SELECT_TIMETABLE = "4_SELECT_FOR_PORTER";
             public final String SATURDAY_SELECT_TIMETABLE = "5_SELECT_FOR_PORTER";
             public final String SUNDAY_SELECT_TIMETABLE = "6_SELECT_FOR_PORTER";
+
+            public final String PORTER_TIMETABLE_CONFIRM_BTN = "7_SELECT_FOR_PORTER";
         }
 
         public interface Texts {
@@ -143,14 +151,27 @@ public final class BotModel {
             String PORTER_INVALID_TIME_FORMAT = "Введите время в формате ЧЧ24-ММ";
 
             interface Days {
-                String MONDAY = "Пн";
-                String TUESADAY = "Вт";
-                String WENSDAY = "Ср";
-                String THUESDAY = "Чт";
-                String FRIDAY = "Пт";
-                String SATURDAY = "Сб";
-                String SUNDAY = "Вс";
+                final String MONDAY = "Пн";
+                final String TUESADAY = "Вт";
+                final String WENSDAY = "Ср";
+                final String THUESDAY = "Чт";
+                final String FRIDAY = "Пт";
+                final String SATURDAY = "Сб";
+                final String SUNDAY = "Вс";
+
+                Map<Integer, String> DAY_ID_AND_DAY = ImmutableMap.<Integer, String>builder()
+                        .put(0, MONDAY)
+                        .put(1, TUESADAY)
+                        .put(2, WENSDAY)
+                        .put(3, THUESDAY)
+                        .put(4, FRIDAY)
+                        .put(5, SATURDAY)
+                        .put(6, SUNDAY)
+                        .build();
             }
+
+            String PORTER_CONFIRM_TIMETABLE_BTN = "Расписание сформировано";
+
         }
     }
 

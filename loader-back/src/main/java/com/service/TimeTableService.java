@@ -9,4 +9,6 @@ public interface TimeTableService {
     TimeTable createTimeTableByDayAndPorter(Integer dayId, Porter porter);
     void completeDayTimetableByStartTime(Porter porter, Time start);
     TimeTable completeDayTimetableByFinishTime(Porter porter, Time finish);
+
+    String getTimetableDescription(Porter porter);
 }

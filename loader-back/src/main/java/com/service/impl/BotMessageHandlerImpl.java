@@ -48,6 +48,8 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private CustomerService customerService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private TimeTableService timeTableService;
 
     @Override
     public MessagesPackage handleMessage(Update update) {
@@ -218,9 +220,14 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                     break;
                 }
                 Integer dayId = getOrderIdFromPorterDayForTimetableCommand(command);
-                if (dayId != -1) {
+                if (dayId != -1 && dayId != 7) {
                     porterService.setEditingDayTimetable(porter, dayId);
                     customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
+                    break;
+                }
+                else if(dayId == 7) {
+                    String timetableConfirmN = timeTableService.getTimetableDescription(porter);
+                    customSendMessage(messagesPackage, BotModel.Notifications.FINISH_COMPLETE_TIMETABLE + timetableConfirmN, porter.getChatId(), null);
                     break;
                 }
                 break;

@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.bot.BotModel;
 import com.model.TimeTable;
 import com.model.user.Porter;
 import com.repo.TimeTableRepository;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeTableServiceImpl implements TimeTableService{
@@ -36,5 +39,15 @@ public class TimeTableServiceImpl implements TimeTableService{
         timeTable.setDayEditing(false);
         timeTable.setFinish(finish);
         return timeTableRepository.save(timeTable);
+    }
+
+    @Override
+    public String getTimetableDescription(Porter porter) {
+        List<TimeTable> timeTableList = timeTableRepository.findTimeTablesByPorterAndIsDayEditing(porter, false);
+        StringBuilder timetableDescription = new StringBuilder();
+        for (TimeTable timeTable: timeTableList) {
+            timetableDescription.append(BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(timeTable.getDay()) + ":\n" + "начало работы: " + timeTable.getStart() + "\n" + "Окончание рабочего: " + timeTable.getFinish() + "\n");
+        }
+        return timetableDescription.toString();
     }
 }
