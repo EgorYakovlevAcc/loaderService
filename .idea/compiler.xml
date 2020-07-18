@@ -11,9 +11,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="loader-back" target="13" />
-      <module name="loader-service" target="13" />
-      <module name="loader-ui" target="13" />
+      <module name="loader-back" target="1.8" />
+      <module name="loader-service" target="1.8" />
+      <module name="loader-ui" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
