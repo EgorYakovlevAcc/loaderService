@@ -25,7 +25,7 @@ public class TimeTableServiceImpl implements TimeTableService{
 
     @Override
     public void completeDayTimetable(Porter porter, Time start, Time finish) {
-        TimeTable timeTable = timeTableRepository.findTimeTableByPorterAndDayEditing(porter, true);
+        TimeTable timeTable = timeTableRepository.findTimeTableByPorterAndIsDayEditing(porter, true);
         timeTable.setDayEditing(false);
         timeTable.setStart(start);
         timeTable.setStart(finish);

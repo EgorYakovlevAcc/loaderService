@@ -5,11 +5,7 @@ import com.model.user.Porter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Time;
-
 @Repository
 public interface TimeTableRepository extends JpaRepository<TimeTable, Integer> {
-    TimeTable findTimeTableById(Integer id);
-    TimeTable findTimeTableByDayAndPorter(Integer day, Porter porter);
-    TimeTable findTimeTableByPorterAndDayEditing(Porter porter, boolean isDayEditing);
+    TimeTable findTimeTableByPorterAndIsDayEditing(Porter porter, boolean isDayEditing);
 }
