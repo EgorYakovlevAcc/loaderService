@@ -71,21 +71,22 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         if (porter.isStartTimetable()) {
                             if (message == null) {
                                 callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
+                            } else {
+                                try {
+                                    if (!porter.isHasStartDateInput()) {
+                                        String startTime = message.getText();
+                                        porterService.setHasStartDateInputOn(porter, startTime);
+                                        customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_FINISH_DATE, porter.getChatId(), null);
+                                    } else {
+                                        String finishTime = message.getText();
+                                        TimeTable timeTable = porterService.setHasStartDateInputOff(porter, finishTime);
+                                        customSendMessage(messagesPackage, String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT, timeTable.getDay(), timeTable.getStart(), timeTable.getFinish()), porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+                                    }
+                                } catch (CustomBotException cbe) {
+                                    customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_INVALID_TIME_FORMAT, porter.getChatId(), null);
+                                }
                             }
-                            else {
-                              if (!porter.isHasStartDateInput()) {
-                                  String startTime = message.getText();
-                                  porterService.setHasStartDateInputOn(porter, startTime);
-                                  customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_FINISH_DATE, porter.getChatId(), null);
-                              }
-                              else {
-                                  String finishTime = message.getText();
-                                  TimeTable timeTable = porterService.setHasStartDateInputOff(porter, finishTime);
-                                  customSendMessage(messagesPackage, String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT, timeTable.getDay(), timeTable.getStart(), timeTable.getFinish()), porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
-                              }
-                            }
-                        }
-                        else {
+                        } else {
                             answerService.savePorterAnswer(porter, message.getText());
                             Question question = questionService.getNextQuestionForPorter(porter);
                             if (question == null) {
@@ -248,7 +249,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         Pattern pattern = Pattern.compile(BotModel.InlineButtons.Commands.DAY_SELECT_TIMETABLE_REGEX);
         Matcher matcher = pattern.matcher(command);
         if (matcher.find()) {
-             dayAndOrderIdStr = matcher.replaceAll("");
+            dayAndOrderIdStr = matcher.replaceAll("");
         }
         return StringUtils.isEmpty(dayAndOrderIdStr) ? -1 : Integer.parseInt(dayAndOrderIdStr);
     }

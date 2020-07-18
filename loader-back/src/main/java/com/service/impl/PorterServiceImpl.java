@@ -1,5 +1,8 @@
 package com.service.impl;
 
+import com.bot.Bot;
+import com.bot.BotModel;
+import com.exception.CustomBotException;
 import com.model.TimeTable;
 import com.model.order.Order;
 import com.model.user.Porter;
@@ -13,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,7 +28,6 @@ public class PorterServiceImpl implements PorterService {
     private TimeTableService timeTableService;
     @Autowired
     private PorterRepository porterRepository;
-    private final static Logger LOGGER = LoggerFactory.getLogger(PorterServiceImpl.class);
 
     @Override
     public Porter findPorterByTelegramId(Integer id) {
@@ -75,7 +80,6 @@ public class PorterServiceImpl implements PorterService {
     @Override
     public void setHasStartDateInputOn(Porter porter, String startTimeStr) {
         porter.setHasStartDateInput(true);
-        LOGGER.info("!!!!!!!!!!!!!!!!!!!!!!EGORKA = {}", startTimeStr);
         Time startTime = getTimeByStr(startTimeStr);
         timeTableService.completeDayTimetableByStartTime(porter, startTime);
         porterRepository.save(porter);
@@ -91,6 +95,22 @@ public class PorterServiceImpl implements PorterService {
     }
 
     private Time getTimeByStr(String timeStr) {
-        return Time.valueOf(timeStr);
+        Time time = getTimeByStrResult(timeStr);
+        if (time == null) {
+            throw new CustomBotException(BotModel.ErrorHandling.ErrorCodes.EY_0003,
+                    BotModel.ErrorHandling.ErrorName.EY_0003,
+                    BotModel.ErrorHandling.ErrorDescription.EY_0003);
+        }
+        return time;
+    }
+
+    private Time getTimeByStrResult(String timeStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        try {
+            Time time = new Time (sdf.parse(timeStr).getTime());
+            return time;
+        } catch (ParseException e) {
+           return null;
+        }
     }
 }

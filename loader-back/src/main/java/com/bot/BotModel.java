@@ -17,16 +17,19 @@ public final class BotModel {
         interface ErrorCodes {
             final String EY_0001 = "EY_0001";
             final String EY_0002 = "EY_0002";
+            final String EY_0003 = "EY_0003";
         }
 
         interface ErrorName {
             final String EY_0001 = "INVALID_STATUS_TRANSFER";
             final String EY_0002 = "PORTER_HAD_CHOSEN_CURRENT_ORDER";
+            final String EY_0003 = "PORTER_HAD_INPUTED_TIME_IN_INCORRECT_FORMAT";
         }
 
         interface ErrorDescription {
             final String EY_0001 = "Cannot execute action for order in RECRUITMENT_COMPLETED status";
             final String EY_0002 = "Porter had been chosen current order for execute";
+            String EY_0003 = "Porter had inputed time value in incorrect format";
         }
     }
 
@@ -137,6 +140,7 @@ public final class BotModel {
             String PORTER_FINISH_DATE = "До скольки вы готовы работать?";
 
             String DAY_TIMETABLE_RESULT = "%s:\n вы работаете с %s до %s";
+            String PORTER_INVALID_TIME_FORMAT = "Введите время в формате ЧЧ24-ММ";
 
             interface Days {
                 String MONDAY = "Пн";
