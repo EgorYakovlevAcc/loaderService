@@ -104,7 +104,7 @@ public final class BotModel {
             InlineKeyboardButton SATURDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SATURDAY, Commands.SATURDAY_SELECT_TIMETABLE);
             InlineKeyboardButton SUNDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SUNDAY, Commands.SUNDAY_SELECT_TIMETABLE);
 
-            InlineKeyboardButton PORTER_TIMATABLE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CONFIRM_TIMETABLE_BTN, Commands.SUNDAY_SELECT_TIMETABLE);
+            InlineKeyboardButton PORTER_TIMATABLE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CONFIRM_TIMETABLE_BTN, Commands.PORTER_CONFIRM_TIMETABLE);
         }
 
         public interface Commands {
@@ -128,7 +128,7 @@ public final class BotModel {
             public final String SATURDAY_SELECT_TIMETABLE = "5_SELECT_FOR_PORTER";
             public final String SUNDAY_SELECT_TIMETABLE = "6_SELECT_FOR_PORTER";
 
-            public final String PORTER_TIMETABLE_CONFIRM_BTN = "7_SELECT_FOR_PORTER";
+            String PORTER_CONFIRM_TIMETABLE = "7_SELECT_FOR_PORTER";
         }
 
         public interface Texts {
