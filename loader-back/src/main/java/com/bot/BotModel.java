@@ -75,7 +75,7 @@ public final class BotModel {
         InlineKeyboardMarkup SELECT_ROLE_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_ROLE_BTN_LINE));
         InlineKeyboardMarkup SELECT_CUSTOMER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_CUSTOMER_ACTION_BTN_LINE));
         InlineKeyboardMarkup SELECT_PORTER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_PORTER_ACTION_BTN_LINE));
-        InlineKeyboardMarkup PORTER_TIMETABLE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_BTN_LINE));
+        InlineKeyboardMarkup PORTER_TIMETABLE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_BTN_LINE, InlineButtons.ButtonsLines.PORTER_TIMETABLE_CONFIRM_BTN_LINE));
     }
 
     public interface InlineButtons {
@@ -87,7 +87,7 @@ public final class BotModel {
                     Templates.TUESADAY_TIMETABLE_INL_BTN, Templates.WENSDAY_TIMETABLE_INL_BTN,
                     Templates.THUESDAY_TIMETABLE_INL_BTN, Templates.FRIDAY_TIMETABLE_INL_BTN,
                     Templates.SATURDAY_TIMETABLE_INL_BTN, Templates.SUNDAY_TIMETABLE_INL_BTN);
-            List<InlineButtons> PORTER_TIMETABLE_CONFIRM_BTN_LINE = ImmutableList.of();
+            List<InlineKeyboardButton> PORTER_TIMETABLE_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CONFIRM_INL_BTN);
         }
 
         interface Templates {
