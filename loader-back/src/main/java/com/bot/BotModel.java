@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 
 public final class BotModel {
@@ -18,9 +17,11 @@ public final class BotModel {
         interface ErrorCodes {
             final String EY_0001 = "EY_0001";
         }
+
         interface ErrorName {
             final String EY_0001 = "INVALID_STATUS_TRANSFER";
         }
+
         interface ErrorDescription {
             final String EY_0001 = "Cannot execute action for order in RECRUITMENT_COMPLETED status";
         }
@@ -63,13 +64,18 @@ public final class BotModel {
         InlineKeyboardMarkup SELECT_ROLE_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_ROLE_BTN_LINE));
         InlineKeyboardMarkup SELECT_CUSTOMER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_CUSTOMER_ACTION_BTN_LINE));
         InlineKeyboardMarkup SELECT_PORTER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_PORTER_ACTION_BTN_LINE));
+        InlineKeyboardMarkup PORTER_TIMETABLE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_BTN_LINE));
     }
 
-     public interface InlineButtons {
+    public interface InlineButtons {
         interface ButtonsLines {
             List<InlineKeyboardButton> SELECT_ROLE_BTN_LINE = ImmutableList.of(Templates.SELECT_PORTER_INL_BTN, Templates.SELECT_CUSTOMER_INL_BTN);
             List<InlineKeyboardButton> SELECT_CUSTOMER_ACTION_BTN_LINE = ImmutableList.of(Templates.MAKE_ORDER_INL_BTN);
             List<InlineKeyboardButton> SELECT_PORTER_ACTION_BTN_LINE = ImmutableList.of(Templates.PORTER_CHANGE_TIMETABLE_INL_BTN);
+            List<InlineKeyboardButton> PORTER_TIMETABLE_BTN_LINE = ImmutableList.of(Templates.MONDAY_TIMETABLE_INL_BTN,
+                    Templates.TUESADAY_TIMETABLE_INL_BTN, Templates.WENSDAY_TIMETABLE_INL_BTN,
+                    Templates.THUESDAY_TIMETABLE_INL_BTN, Templates.FRIDAY_TIMETABLE_INL_BTN,
+                    Templates.SATURDAY_TIMETABLE_INL_BTN, Templates.SUNDAY_TIMETABLE_INL_BTN);
         }
 
         interface Templates {
@@ -77,6 +83,14 @@ public final class BotModel {
             public final InlineKeyboardButton SELECT_CUSTOMER_INL_BTN = ElementsHelper.createInlineButton(Texts.SELECT_CUSTOMER, Commands.SELECT_CUSTOMER_CMD);
             public final InlineKeyboardButton MAKE_ORDER_INL_BTN = ElementsHelper.createInlineButton(Texts.CUSTOMER_MAKE_ORDER, Commands.CUSTOMER_MAKE_ORDER_CMD);
             InlineKeyboardButton PORTER_CHANGE_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CHANGE_TIMETABLE, Commands.PORTER_CHANGE_TIMETABLE_CMD);
+
+            InlineKeyboardButton MONDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.MONDAY, Commands.MONDAY_SELECT_TIMETABLE);
+            InlineKeyboardButton TUESADAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.TUESADAY, Commands.TUESADAY_SELECT_TIMETABLE);
+            InlineKeyboardButton WENSDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.WENSDAY, Commands.WENSDAY_SELECT_TIMETABLE);
+            InlineKeyboardButton THUESDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.THUESDAY, Commands.THUESDAY_SELECT_TIMETABLE);
+            InlineKeyboardButton FRIDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.FRIDAY, Commands.FRIDAY_SELECT_TIMETABLE);
+            InlineKeyboardButton SATURDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SATURDAY, Commands.SATURDAY_SELECT_TIMETABLE);
+            InlineKeyboardButton SUNDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SUNDAY, Commands.SUNDAY_SELECT_TIMETABLE);
         }
 
         public interface Commands {
@@ -112,6 +126,18 @@ public final class BotModel {
             public final String ORDER_NOTIFICATION_TEMPLATE = "Новый заказ\n Дата: %s\n Количество человек: %s\n Время работы: %s\n Почасовая оплата для одного человека: %s";
 
             String PORTER_WANTS_TO_EXECUTE_ORDER = "Я хочу выполнить этот заказ";
+
+            String PORTER_SELECT_TIMETABLE = "Выберите день, когда вы готовы работать";
+
+            interface Days {
+                String MONDAY = "Пн";
+                String TUESADAY = "Вт";
+                String WENSDAY = "Ср";
+                String THUESDAY = "Чт";
+                String FRIDAY = "Пт";
+                String SATURDAY = "Сб";
+                String SUNDAY = "Вс";
+            }
         }
     }
 
@@ -121,6 +147,7 @@ public final class BotModel {
             calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1);
             return calendar.getTime();
         }
+
         static InlineKeyboardButton createInlineButton(String text, String command) {
             if ((StringUtils.isEmpty(text)) || (StringUtils.isEmpty(command))) {
                 throw new IllegalArgumentException("Parameters text or command should not be empty for create button");

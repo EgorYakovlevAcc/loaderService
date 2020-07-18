@@ -79,6 +79,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             } else {
                                 if (question.getLabel().equals("TIMETABLE")) {
                                     porterService.setIsTimetable(porter, true);
+                                    customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
                                 }
                                 customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
                             }
