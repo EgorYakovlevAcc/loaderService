@@ -6,6 +6,8 @@ import com.model.user.Porter;
 import com.repo.PorterRepository;
 import com.service.PorterService;
 import com.service.TimeTableService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ public class PorterServiceImpl implements PorterService {
     private TimeTableService timeTableService;
     @Autowired
     private PorterRepository porterRepository;
+    private final static Logger LOGGER = LoggerFactory.getLogger(PorterServiceImpl.class);
 
     @Override
     public Porter findPorterByTelegramId(Integer id) {
@@ -72,6 +75,7 @@ public class PorterServiceImpl implements PorterService {
     @Override
     public void setHasStartDateInputOn(Porter porter, String startTimeStr) {
         porter.setHasStartDateInput(true);
+        LOGGER.info("!!!!!!!!!!!!!!!!!!!!!!EGORKA = {}", startTimeStr);
         Time startTime = getTimeByStr(startTimeStr);
         timeTableService.completeDayTimetableByStartTime(porter, startTime);
         porterRepository.save(porter);
