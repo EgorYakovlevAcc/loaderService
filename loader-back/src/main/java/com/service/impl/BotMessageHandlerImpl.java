@@ -6,6 +6,7 @@ import com.bot.MessagesPackage;
 import com.exception.CustomBotException;
 import com.google.common.collect.ImmutableList;
 import com.model.Question;
+import com.model.TimeTable;
 import com.model.order.Order;
 import com.model.order.Status;
 import com.model.user.BotUser;
@@ -68,7 +69,21 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 } else {
                     if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
                         if (porter.isStartTimetable()) {
-
+                            if (message == null) {
+                                callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
+                            }
+                            else {
+                              if (!porter.isHasStartDateInput()) {
+                                  String startTime = message.getText();
+                                  porterService.setHasStartDateInputOn(porter, startTime);
+                                  customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_FINISH_DATE, porter.getChatId(), null);
+                              }
+                              else {
+                                  String finishTime = message.getText();
+                                  TimeTable timeTable = porterService.setHasStartDateInputOff(porter, finishTime);
+                                  customSendMessage(messagesPackage, String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT, timeTable.getDay(), timeTable.getStart(), timeTable.getFinish()), porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+                              }
+                            }
                         }
                         else {
                             answerService.savePorterAnswer(porter, message.getText());
@@ -77,11 +92,11 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 porterService.setFinishAskingQuestions(porter);
                                 scenarioForKnownPorter(messagesPackage, porter);
                             } else {
+                                customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
                                 if (question.getLabel().equals("TIMETABLE")) {
                                     porterService.setIsTimetable(porter, true);
                                     customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
                                 }
-                                customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
                             }
                         }
                     } else {
@@ -183,16 +198,28 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             orderRecruitmentCompletedHandler(messagesPackage, porters, customer, orderId);
                         }
                     } catch (CustomBotException cbe) {
-                        if (cbe.getErrorCode().equals(BotModel.ErrorHandling.ErrorCodes.EY_0001)) {
-                            customSendMessage(messagesPackage, BotModel.Notifications.UNFORTUNATELY_ALL_WORKERS_WERE_FOUND, porter.getChatId(), null);
-                        } else throw cbe;
+                        String notification = "";
+                        switch (cbe.getErrorCode()) {
+                            case BotModel.ErrorHandling.ErrorCodes.EY_0001: {
+                                notification = BotModel.Notifications.UNFORTUNATELY_ALL_WORKERS_WERE_FOUND;
+                                break;
+                            }
+                            case BotModel.ErrorHandling.ErrorCodes.EY_0002: {
+                                notification = String.format(BotModel.Notifications.PORTER_HAD_CHOSEN_CURRENT_ORDER, orderId);
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }
+                        customSendMessage(messagesPackage, notification, porter.getChatId(), null);
                     }
                     break;
                 }
                 Integer dayId = getOrderIdFromPorterDayForTimetableCommand(command);
                 if (dayId != -1) {
                     porterService.setEditingDayTimetable(porter, dayId);
-                    customSendMessage(messagesPackage, BotModel.Notifications.SELECT_TIME, porter.getChatId(), null);
+                    customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
                     break;
                 }
                 break;

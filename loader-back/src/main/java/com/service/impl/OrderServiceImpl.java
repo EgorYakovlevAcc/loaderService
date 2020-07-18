@@ -93,6 +93,11 @@ public class OrderServiceImpl implements OrderService {
                     BotModel.ErrorHandling.ErrorName.EY_0001,
                     BotModel.ErrorHandling.ErrorDescription.EY_0001);
         }
+        if (order.getPorters().stream().anyMatch(x -> x.equals(porter))) {
+            throw new CustomBotException(BotModel.ErrorHandling.ErrorCodes.EY_0002,
+                    BotModel.ErrorHandling.ErrorName.EY_0002,
+                    BotModel.ErrorHandling.ErrorDescription.EY_0002);
+        }
         List list = order.getPorters();
         list.add(porter);
         order.setPorters(list);

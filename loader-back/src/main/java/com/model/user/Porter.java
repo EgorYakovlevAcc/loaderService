@@ -34,6 +34,7 @@ public class Porter implements BotUser {
     @JoinColumn(name="porter_id")
     private AnswerPorter answer;
     private boolean isStartTimetable;
+    private boolean hasStartDateInput;
     @ManyToMany
     private List<Order> orders;
     @OneToMany(mappedBy = "porter",cascade = CascadeType.ALL)

@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserService {
         porter.setFinishedAskingQuestions(false);
         porter.setAskingQuestions(false);
         porter.setTelegramId(telegramUserId);
+        porter.setStartTimetable(false);
+        porter.setHasStartDateInput(false);
         porter.setCurrentQuestionNum(-1);
         return porterService.createPorter(porter);
     }

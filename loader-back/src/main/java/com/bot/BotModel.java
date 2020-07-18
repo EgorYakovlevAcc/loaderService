@@ -16,14 +16,17 @@ public final class BotModel {
     public interface ErrorHandling {
         interface ErrorCodes {
             final String EY_0001 = "EY_0001";
+            final String EY_0002 = "EY_0002";
         }
 
         interface ErrorName {
             final String EY_0001 = "INVALID_STATUS_TRANSFER";
+            final String EY_0002 = "PORTER_HAD_CHOSEN_CURRENT_ORDER";
         }
 
         interface ErrorDescription {
             final String EY_0001 = "Cannot execute action for order in RECRUITMENT_COMPLETED status";
+            final String EY_0002 = "Porter had been chosen current order for execute";
         }
     }
 
@@ -31,7 +34,9 @@ public final class BotModel {
         String UNFORTUNATELY_ALL_WORKERS_WERE_FOUND = "К сожалению, нужное число человек уже откликнулось на данный заказ. Ожидайте следующий заказ.";
         String ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS = "Формирование заказа %s завершено";
         String ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER = "Для выполнения заказа %s найдено необходимое число рабочих";
-        String SELECT_TIME = "Напишите временной интервал";
+        String INPUT_TIME_START = "В какое время вы готовы начать работу";
+
+        String PORTER_HAD_CHOSEN_CURRENT_ORDER = "Вы уже выбрали заказ № %s для выполнения";
     }
 
     public interface OrderCreationQuestions {
@@ -128,6 +133,10 @@ public final class BotModel {
             String PORTER_WANTS_TO_EXECUTE_ORDER = "Я хочу выполнить этот заказ";
 
             String PORTER_SELECT_TIMETABLE = "Выберите день, когда вы готовы работать";
+
+            String PORTER_FINISH_DATE = "До скольки вы готовы работать?";
+
+            String DAY_TIMETABLE_RESULT = "%s:\n вы работаете с %s до %s";
 
             interface Days {
                 String MONDAY = "Пн";

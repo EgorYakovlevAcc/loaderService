@@ -68,4 +68,25 @@ public class PorterServiceImpl implements PorterService {
         timeTableService.createTimeTableByDayAndPorter(dayId, porter);
         porterRepository.save(porter);
     }
+
+    @Override
+    public void setHasStartDateInputOn(Porter porter, String startTimeStr) {
+        porter.setHasStartDateInput(true);
+        Time startTime = getTimeByStr(startTimeStr);
+        timeTableService.completeDayTimetableByStartTime(porter, startTime);
+        porterRepository.save(porter);
+    }
+
+    @Override
+    public TimeTable setHasStartDateInputOff(Porter porter, String finishTimeStr) {
+        porter.setHasStartDateInput(false);
+        Time finishTime = getTimeByStr(finishTimeStr);
+        TimeTable timeTable = timeTableService.completeDayTimetableByFinishTime(porter, finishTime);
+        porterRepository.save(porter);
+        return timeTable;
+    }
+
+    private Time getTimeByStr(String timeStr) {
+        return Time.valueOf(timeStr);
+    }
 }

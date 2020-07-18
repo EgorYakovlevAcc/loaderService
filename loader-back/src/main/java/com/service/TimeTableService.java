@@ -7,5 +7,6 @@ import java.sql.Time;
 
 public interface TimeTableService {
     TimeTable createTimeTableByDayAndPorter(Integer dayId, Porter porter);
-    void completeDayTimetable(Porter porter, Time start, Time finish);
+    void completeDayTimetableByStartTime(Porter porter, Time start);
+    TimeTable completeDayTimetableByFinishTime(Porter porter, Time finish);
 }

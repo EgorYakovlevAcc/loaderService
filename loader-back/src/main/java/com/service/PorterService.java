@@ -1,5 +1,6 @@
 package com.service;
 
+import com.model.TimeTable;
 import com.model.user.Porter;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface PorterService {
     void setIsTimetable(Porter porter, boolean b);
 
     void setEditingDayTimetable(Porter porter, Integer dayId);
+
+    void setHasStartDateInputOn(Porter porter, String startTime);
+
+    TimeTable setHasStartDateInputOff(Porter porter, String finishTime);
 }

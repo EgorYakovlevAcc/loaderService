@@ -24,11 +24,17 @@ public class TimeTableServiceImpl implements TimeTableService{
     }
 
     @Override
-    public void completeDayTimetable(Porter porter, Time start, Time finish) {
+    public void completeDayTimetableByStartTime(Porter porter, Time start) {
+        TimeTable timeTable = timeTableRepository.findTimeTableByPorterAndIsDayEditing(porter, true);
+        timeTable.setStart(start);
+        timeTableRepository.save(timeTable);
+    }
+
+    @Override
+    public TimeTable completeDayTimetableByFinishTime(Porter porter, Time finish) {
         TimeTable timeTable = timeTableRepository.findTimeTableByPorterAndIsDayEditing(porter, true);
         timeTable.setDayEditing(false);
-        timeTable.setStart(start);
-        timeTable.setStart(finish);
-        timeTableRepository.save(timeTable);
+        timeTable.setFinish(finish);
+        return timeTableRepository.save(timeTable);
     }
 }
