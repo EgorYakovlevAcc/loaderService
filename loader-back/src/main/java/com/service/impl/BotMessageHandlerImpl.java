@@ -238,7 +238,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         try {
             String orderIdStr = command.replaceFirst(BotModel.InlineButtons.Commands.PORTER_EXECUTE_ORDER_REGEX, "");
             return Integer.parseInt(orderIdStr);
-        } catch (PatternSyntaxException e) {
+        } catch (PatternSyntaxException | NumberFormatException e) {
             return -1;
         }
     }
