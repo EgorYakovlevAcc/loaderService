@@ -191,6 +191,12 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 callBackCustomerMakeOrderHandler(messagesPackage, (Customer) botUser);
                 break;
             }
+            case BotModel.InlineButtons.Commands.PORTER_CHANGE_TIMETABLE_CMD: {
+                Porter porter = (Porter) botUser;
+                porterService.setIsTimetable(porter, true);
+                customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+                break;
+            }
             default: {
                 Porter porter = (Porter) botUser;
                 Integer orderId = getOrderIdFromPorterOrderExecutionCommand(command);
