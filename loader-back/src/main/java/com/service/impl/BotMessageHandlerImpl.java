@@ -1,6 +1,5 @@
 package com.service.impl;
 
-import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
 import com.exception.CustomBotException;
@@ -13,8 +12,6 @@ import com.model.user.BotUser;
 import com.model.user.Customer;
 import com.model.user.Porter;
 import com.service.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +32,6 @@ import java.util.regex.PatternSyntaxException;
 @Service
 @Transactional
 public class BotMessageHandlerImpl implements BotMessageHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Bot.class);
     @Autowired
     private UserService userService;
     @Autowired
@@ -89,18 +85,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 }
                             }
                         } else {
-                            answerService.savePorterAnswer(porter, message.getText());
-                            Question question = questionService.getNextQuestionForPorter(porter);
-                            if (question == null) {
-                                porterService.setFinishAskingQuestions(porter);
-                                scenarioForKnownPorter(messagesPackage, porter);
-                            } else {
-                                customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
-                                if (question.getLabel().equals("TIMETABLE")) {
-                                    porterService.setIsTimetable(porter, true);
-                                    customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
-                                }
-                            }
+                          getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
                         }
                     } else {
                         //todo: действия, когда грезчик не закончил регистрацию
@@ -132,6 +117,23 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             }
         }
         return messagesPackage;
+    }
+
+    private void getNextQuestionScenarioIfExistsForPorter(Porter porter, Message message, MessagesPackage messagesPackage) {
+        if (message != null) {
+            answerService.savePorterAnswer(porter, message.getText());
+        }
+        Question question = questionService.getNextQuestionForPorter(porter);
+        if (question == null) {
+            porterService.setFinishAskingQuestions(porter);
+            scenarioForKnownPorter(messagesPackage, porter);
+        } else {
+            customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
+            if (question.getLabel().equals("TIMETABLE")) {
+                porterService.setIsTimetable(porter, true);
+                customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+            }
+        }
     }
 
     private void setValuesToOrder(Customer customer, String answer) {
@@ -228,6 +230,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 else if(dayId == 7) {
                     String timetableConfirmN = timeTableService.getTimetableDescription(porter);
                     customSendMessage(messagesPackage, BotModel.Notifications.FINISH_COMPLETE_TIMETABLE + timetableConfirmN, porter.getChatId(), null);
+                    getNextQuestionScenarioIfExistsForPorter(porter, null, messagesPackage);
                     break;
                 }
                 break;
