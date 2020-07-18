@@ -30,6 +30,7 @@ public final class BotModel {
         String UNFORTUNATELY_ALL_WORKERS_WERE_FOUND = "К сожалению, нужное число человек уже откликнулось на данный заказ. Ожидайте следующий заказ.";
         String ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS = "Формирование заказа %s завершено";
         String ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER = "Для выполнения заказа %s найдено необходимое число рабочих";
+        String SELECT_TIME = "Напишите временной интервал";
     }
 
     public interface OrderCreationQuestions {
@@ -89,20 +90,15 @@ public final class BotModel {
             public final String PORTER_EXECUTE_ORDER = "REQUEST_EXECUTE_ORDER_%s";
             public final String PORTER_EXECUTE_ORDER_REGEX = "REQUEST_EXECUTE_ORDER_";
 
-            public final String MONDAY_SELECT_TIMETABLE = "MONDAY_SELECT_FOR_ORDER";
-            public final String MONDAY_SELECT_TIMETABLE_REGEX = "MONDAY_SELECT_FOR_ORDER_%s";
-            public final String TUESDAY_SELECT_TIMETABLE = "TUESDAY_SELECT_FOR_ORDER";
-            public final String TUESDAY_SELECT_TIMETABLE_REGEX = "TUESDAY_SELECT_FOR_ORDER_%s";
-            public final String THUSDAY_SELECT_TIMETABLE = "THUSDAY_SELECT_FOR_ORDER";
-            public final String THUSDAY_SELECT_TIMETABLE_REGEX = "THUSDAY_SELECT_FOR_ORDER_%s";
-            public final String WENSDAY_SELECT_TIMETABLE = "WENSDAY_SELECT_FOR_ORDER";
-            public final String WENSDAY_SELECT_TIMETABLE_REGEX = "WENSDAY_SELECT_FOR_ORDER_%s";
-            public final String FRIDAY_SELECT_TIMETABLE = "FRIDAY_SELECT_FOR_ORDER";
-            public final String FRIDAY_SELECT_TIMETABLE_REGEX = "FRIDAY_SELECT_FOR_ORDER_%s";
-            public final String SATURDAY_SELECT_TIMETABLE = "SATURDAY_SELECT_FOR_ORDER";
-            public final String SATURDAY_SELECT_TIMETABLE_REGEX = "SATURDAY_SELECT_FOR_ORDER";
-            public final String SUNDAY_SELECT_TIMETABLE = "SUNDAY_SELECT_FOR_ORDER_%s";
-            public final String SUNDAY_SELECT_TIMETABLE_REGEX = "SUNDAY_SELECT_FOR_ORDER";
+            public final String DAY_SELECT_TIMETABLE_REGEX = "(_SELECT_FOR_PORTER)$";
+
+            public final String MONDAY_SELECT_TIMETABLE = "0_SELECT_FOR_PORTER";
+            public final String TUESADAY_SELECT_TIMETABLE = "1_SELECT_FOR_PORTER";
+            public final String WENSDAY_SELECT_TIMETABLE = "2_SELECT_FOR_PORTER";
+            public final String THUESDAY_SELECT_TIMETABLE = "3_SELECT_FOR_PORTER";
+            public final String FRIDAY_SELECT_TIMETABLE = "4_SELECT_FOR_PORTER";
+            public final String SATURDAY_SELECT_TIMETABLE = "5_SELECT_FOR_PORTER";
+            public final String SUNDAY_SELECT_TIMETABLE = "6_SELECT_FOR_PORTER";
         }
 
         public interface Texts {

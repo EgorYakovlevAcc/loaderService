@@ -16,4 +16,6 @@ public interface PorterService {
     void deletePorterById(Integer porterId);
 
     void setIsTimetable(Porter porter, boolean b);
+
+    void setEditingDayTimetable(Porter porter, Integer dayId);
 }

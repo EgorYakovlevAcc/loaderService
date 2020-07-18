@@ -1,5 +1,6 @@
 package com.model.user;
 
+import com.model.TimeTable;
 import com.model.answer.AnswerPorter;
 import com.model.order.Order;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,6 @@ public class Porter implements BotUser {
     private boolean isStartTimetable;
     @ManyToMany
     private List<Order> orders;
+    @OneToMany(mappedBy = "porter",cascade = CascadeType.ALL)
+    private List<TimeTable> timeTables;
 }

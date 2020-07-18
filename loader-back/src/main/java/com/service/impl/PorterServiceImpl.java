@@ -1,18 +1,23 @@
 package com.service.impl;
 
+import com.model.TimeTable;
 import com.model.order.Order;
 import com.model.user.Porter;
 import com.repo.PorterRepository;
 import com.service.PorterService;
+import com.service.TimeTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
 import java.util.List;
 
 @Service
 @Transactional
 public class PorterServiceImpl implements PorterService {
+    @Autowired
+    private TimeTableService timeTableService;
     @Autowired
     private PorterRepository porterRepository;
 
@@ -46,7 +51,6 @@ public class PorterServiceImpl implements PorterService {
     @Override
     public void deletePorterById(Integer porterId) {
         Porter porter = porterRepository.findPorterById(porterId);
-        List<Order> orders = porter.getOrders();
         porter.setOrders(null);
         porterRepository.save(porter);
         porterRepository.deleteById(porterId);
@@ -55,6 +59,13 @@ public class PorterServiceImpl implements PorterService {
     @Override
     public void setIsTimetable(Porter porter, boolean b) {
         porter.setStartTimetable(b);
+        porterRepository.save(porter);
+    }
+
+    @Override
+    public void setEditingDayTimetable(Porter porter, Integer dayId) {
+        porter.setEditingTimetable(true);
+        timeTableService.createTimeTableByDayAndPorter(dayId, porter);
         porterRepository.save(porter);
     }
 }

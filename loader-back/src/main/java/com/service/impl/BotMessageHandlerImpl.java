@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -26,6 +27,8 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 @Service
@@ -64,17 +67,21 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                     callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                 } else {
                     if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
-                        answerService.savePorterAnswer(porter, message.getText());
-                        Question question = questionService.getNextQuestionForPorter(porter);
-                        if (question == null) {
-                            porterService.setFinishAskingQuestions(porter);
-                            scenarioForKnownPorter(messagesPackage, porter);
+                        if (porter.isStartTimetable()) {
+
                         }
                         else {
-                            if (question.getLabel().equals("TIMETABLE")) {
-                                porterService.setIsTimetable(porter, true);
+                            answerService.savePorterAnswer(porter, message.getText());
+                            Question question = questionService.getNextQuestionForPorter(porter);
+                            if (question == null) {
+                                porterService.setFinishAskingQuestions(porter);
+                                scenarioForKnownPorter(messagesPackage, porter);
+                            } else {
+                                if (question.getLabel().equals("TIMETABLE")) {
+                                    porterService.setIsTimetable(porter, true);
+                                }
+                                customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
                             }
-                            customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
                         }
                     } else {
                         //todo: действия, когда грезчик не закончил регистрацию
@@ -164,9 +171,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 break;
             }
             default: {
+                Porter porter = (Porter) botUser;
                 Integer orderId = getOrderIdFromPorterOrderExecutionCommand(command);
                 if (orderId != -1) {
-                    Porter porter = (Porter) botUser;
                     try {
                         Order order = orderService.subscribePorterForOrderAndReturnOrder(orderId, porter);
                         if (order.getStatus() == Status.RECRUITMENT_COMPLETED) {
@@ -179,9 +186,13 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             customSendMessage(messagesPackage, BotModel.Notifications.UNFORTUNATELY_ALL_WORKERS_WERE_FOUND, porter.getChatId(), null);
                         } else throw cbe;
                     }
+                    break;
                 }
-                else {
-
+                Integer dayId = getOrderIdFromPorterDayForTimetableCommand(command);
+                if (dayId != -1) {
+                    porterService.setEditingDayTimetable(porter, dayId);
+                    customSendMessage(messagesPackage, BotModel.Notifications.SELECT_TIME, porter.getChatId(), null);
+                    break;
                 }
                 break;
             }
@@ -205,8 +216,13 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     }
 
     private Integer getOrderIdFromPorterDayForTimetableCommand(String command) {
-        String dayAndOrderIdStr = command.replaceFirst("SELECT_FOR_ORDER_", "");
-        return null;
+        String dayAndOrderIdStr = "";
+        Pattern pattern = Pattern.compile(BotModel.InlineButtons.Commands.DAY_SELECT_TIMETABLE_REGEX);
+        Matcher matcher = pattern.matcher(command);
+        if (matcher.find()) {
+             dayAndOrderIdStr = matcher.replaceAll("");
+        }
+        return StringUtils.isEmpty(dayAndOrderIdStr) ? -1 : Integer.parseInt(dayAndOrderIdStr);
     }
 
     private void callBackCustomerMakeOrderHandler(MessagesPackage messagesPackage, Customer customer) {

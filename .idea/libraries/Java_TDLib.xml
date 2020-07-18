@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Java-TDLib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/loader-back/Java-TDLib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
