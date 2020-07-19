@@ -19,6 +19,7 @@ import { FirstAndLastMessagesEditorComponent } from './first-and-last-messages-e
 import { ScoreRangeMessageComponent } from './score-range-message/score-range-message.component';
 import { CustomerQuestionsComponent } from './customer-questions/customer-questions.component';
 import { UserCustomersComponent } from './user-customers/user-customers.component';
+import { AdminUsersComponent } from './admin-users/admin-users.component';
 
 const appRoutes: Routes = [
   {
@@ -75,7 +76,8 @@ const appRoutes: Routes = [
     FirstAndLastMessagesEditorComponent,
     ScoreRangeMessageComponent,
     CustomerQuestionsComponent,
-    UserCustomersComponent
+    UserCustomersComponent,
+    AdminUsersComponent
   ],
   imports: [
     BrowserModule,

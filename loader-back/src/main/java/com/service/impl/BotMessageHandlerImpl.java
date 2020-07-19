@@ -380,7 +380,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     }
 
     private void scenarioForKnownPorter(MessagesPackage messagesPackage, Porter porter) {
-        customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
+        customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.FULL_SELECT_PORTER_ACTION_KEYBOARD);
     }
 
     private void customSendMessage(MessagesPackage messagesPackage, String text, Long chatId, InlineKeyboardMarkup inlineKeyboardMarkup) {

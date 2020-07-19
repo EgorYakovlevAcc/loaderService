@@ -136,6 +136,85 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./src/app/admin-users/admin-users.component.ts":
+  /*!******************************************************!*\
+    !*** ./src/app/admin-users/admin-users.component.ts ***!
+    \******************************************************/
+
+  /*! exports provided: AdminUsersComponent */
+
+  /***/
+  function srcAppAdminUsersAdminUsersComponentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AdminUsersComponent", function () {
+      return AdminUsersComponent;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+    var AdminUsersComponent =
+    /*#__PURE__*/
+    function () {
+      function AdminUsersComponent() {
+        _classCallCheck(this, AdminUsersComponent);
+      }
+
+      _createClass(AdminUsersComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {}
+      }]);
+
+      return AdminUsersComponent;
+    }();
+
+    AdminUsersComponent.ɵfac = function AdminUsersComponent_Factory(t) {
+      return new (t || AdminUsersComponent)();
+    };
+
+    AdminUsersComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+      type: AdminUsersComponent,
+      selectors: [["app-admin-users"]],
+      decls: 2,
+      vars: 0,
+      template: function AdminUsersComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "admin-users works!");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        }
+      },
+      styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluLXVzZXJzL2FkbWluLXVzZXJzLmNvbXBvbmVudC5jc3MifQ== */"]
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AdminUsersComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+          selector: 'app-admin-users',
+          templateUrl: './admin-users.component.html',
+          styleUrls: ['./admin-users.component.css']
+        }]
+      }], function () {
+        return [];
+      }, null);
+    })();
+    /***/
+
+  },
+
+  /***/
   "./src/app/app-routing.module.ts":
   /*!***************************************!*\
     !*** ./src/app/app-routing.module.ts ***!
@@ -428,6 +507,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
     /*! ./user-customers/user-customers.component */
     "./src/app/user-customers/user-customers.component.ts");
+    /* harmony import */
+
+
+    var _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
+    /*! ./admin-users/admin-users.component */
+    "./src/app/admin-users/admin-users.component.ts");
 
     var appRoutes = [{
       path: 'questions-porter',
@@ -477,7 +562,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     (function () {
       (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, {
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"], _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"]],
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"], _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"], _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__["AdminUsersComponent"]],
         imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]],
         exports: [_angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]]
       });
@@ -489,7 +574,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AppModule, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
         args: [{
-          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"], _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"]],
+          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _navigation_navigation_component__WEBPACK_IMPORTED_MODULE_4__["NavigationComponent"], _questions_porter_questions_component__WEBPACK_IMPORTED_MODULE_6__["PorterQuestionsComponent"], _users_users_component__WEBPACK_IMPORTED_MODULE_7__["UsersComponent"], _not_found_not_found_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"], _mainpage_mainpage_component__WEBPACK_IMPORTED_MODULE_9__["MainpageComponent"], _question_question_component__WEBPACK_IMPORTED_MODULE_12__["QuestionComponent"], _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_13__["ModalAddQuestionComponent"], _message_form_message_form_component__WEBPACK_IMPORTED_MODULE_14__["MessageFormComponent"], _about_about_component__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"], _first_and_last_messages_editor_first_and_last_messages_editor_component__WEBPACK_IMPORTED_MODULE_16__["FirstAndLastMessagesEditorComponent"], _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"], _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"], _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"], _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__["AdminUsersComponent"]],
           imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"].forRoot(appRoutes)],
           exports: [_angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]],
           providers: [],
