@@ -39,6 +39,10 @@ const appRoutes: Routes = [
     component: UserCustomersComponent
   },
   {
+    path: 'admins',
+    component: AdminUsersComponent
+  },
+  {
     path: '',
     component: MainpageComponent,
     pathMatch: 'full'

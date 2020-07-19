@@ -26,4 +26,13 @@ export class UserServiceService {
     let url = "remove/porter?id=" + id;
     return this.httpClient.get(url);
   }
+
+  getAllAdmins(): Observable<any> {
+    return this.httpClient.get("all/admins");
+  }
+
+  deleteAdmin(id): Observable<any> {
+    let url = "remove/admin?id=" + id;
+    return this.httpClient.get(url);
+  }
 }

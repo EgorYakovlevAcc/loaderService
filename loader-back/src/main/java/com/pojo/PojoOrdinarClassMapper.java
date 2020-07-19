@@ -1,6 +1,7 @@
 package com.pojo;
 
 import com.model.UserType;
+import com.model.user.Administrator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +52,20 @@ public class PojoOrdinarClassMapper {
     public static List<Customer> customersToCustomerPojosMapping(List<com.model.user.Customer> customers) {
         return customers.stream()
                 .map(PojoOrdinarClassMapper::customerToCustomerPojoMapping)
+                .collect(Collectors.toList());
+    }
+
+    public static com.pojo.Administrator administatorToAdministratorPojoMapping(Administrator administrator) {
+        com.pojo.Administrator administratorPojo = new com.pojo.Administrator();
+        administratorPojo.setId(administrator.getId());
+        administratorPojo.setTelegramId(administrator.getTelegramId());
+        administratorPojo.setUserName(administrator.getFullName());
+        return administratorPojo;
+    }
+
+    public static List<com.pojo.Administrator> administatorsToAdministratorPojosMapping(List<Administrator> administrators) {
+        return administrators.stream()
+                .map(PojoOrdinarClassMapper::administatorToAdministratorPojoMapping)
                 .collect(Collectors.toList());
     }
 }

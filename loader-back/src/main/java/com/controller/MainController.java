@@ -1,9 +1,7 @@
 package com.controller;
 
-import com.pojo.Customer;
-import com.pojo.MessageToUsers;
-import com.pojo.PojoOrdinarClassMapper;
-import com.pojo.Porter;
+import com.pojo.*;
+import com.service.AdministratorService;
 import com.service.CustomerService;
 import com.service.GlobalTelegramMessageSender;
 import com.service.PorterService;
@@ -28,12 +26,22 @@ public class MainController {
     private PorterService portserService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private AdministratorService administratorService;
 
     @GetMapping("all/porters")
     @ResponseBody
     public List<Porter> getShowPorters() {
         return portserService.findAll().stream()
                 .map(PojoOrdinarClassMapper::porterToPorterPojoMapping)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("all/admins")
+    @ResponseBody
+    public List<Administrator> getShowAdmins() {
+        return administratorService.findAll().stream()
+                .map(PojoOrdinarClassMapper::administatorToAdministratorPojoMapping)
                 .collect(Collectors.toList());
     }
 
@@ -48,6 +56,12 @@ public class MainController {
     @GetMapping(value = "/remove/porter")
     public ResponseEntity removePorter(@RequestParam("id") Integer porterId) {
         portserService.deletePorterById(porterId);
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping(value = "/remove/admin")
+    public ResponseEntity removeAdminstrator(@RequestParam("id") Integer adminId) {
+        administratorService.deleteAdminById(adminId);
         return ResponseEntity.ok(null);
     }
 

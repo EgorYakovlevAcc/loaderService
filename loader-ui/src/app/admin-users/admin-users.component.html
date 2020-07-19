@@ -1,1 +1,45 @@
-<p>admin-users works!</p>
+<div class="container-fluid">
+  <button type="button" (click)="openCreationNewAdminForm()" class="btn btn-primary btn-lg btn-block"
+          style="margin: 20px 0 20px 0">add new admin
+  </button>
+  <table class="table table-borderless">
+    <thead>
+    <tr>
+      <th>
+        №
+      </th>
+      <th>
+        telegram id
+      </th>
+      <th>
+        name
+      </th>
+      <th>
+        actions
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let admin of admins; let i = index">
+    <tr id="'tr__' + {{i}}">
+      <td>
+        {{i + 1}}
+      </td>
+      <td>
+        {{admin.telegramId}}
+      </td>
+      <td>
+        {{admin.username}}
+      </td>
+      <td>
+        <div class="container">
+          <div class="row" style="text-align: center">
+            <div class="col">
+              <button class="btn btn-danger" (click)="deleteAdmin(admin.id)">delete</button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
