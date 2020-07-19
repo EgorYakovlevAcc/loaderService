@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.telegram.telegrambots.api.methods.groupadministration.ExportChatInviteLink;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -77,10 +78,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         } else {
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
-                if (porter.isFinishedAskingQuestions()) {
+                if (porter.isFinishedAskingQuestions() && (!porter.isStartTimetable())) {
                     callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                 } else {
-                    if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
+                    if ((porter.isAskingQuestions())) {
                         if (porter.isStartTimetable()) {
                             if (message == null) {
                                 callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
