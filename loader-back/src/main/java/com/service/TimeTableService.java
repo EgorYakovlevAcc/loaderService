@@ -12,7 +12,7 @@ public interface TimeTableService {
 
     String getTimetableDescription(Porter porter);
 
-    TimeTable findTimetableByPorterAndDayId(Porter porter, Integer dayId);
+    TimeTable findTimetableByPorterAndDayIdAndIsDayEditing(Porter porter, Integer dayId, boolean isDayEditing);
 
     TimeTable findTimeTableByPorterAndIsDayEditing(Porter porter);
 }

@@ -253,7 +253,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 if (dayId != -1) {
                     if (dayId != 7) {
                         porterService.setEditingDayTimetable(porter, dayId);
-                        TimeTable timeTable = timeTableService.findTimetableByPorterAndDayId(porter, dayId);
+                        TimeTable timeTable = timeTableService.findTimetableByPorterAndDayIdAndIsDayEditing(porter, dayId, false);
                         if (timeTable == null) {
                             customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
                         } else {

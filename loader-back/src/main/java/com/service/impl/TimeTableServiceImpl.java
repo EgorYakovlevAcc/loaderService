@@ -52,8 +52,8 @@ public class TimeTableServiceImpl implements TimeTableService{
     }
 
     @Override
-    public TimeTable findTimetableByPorterAndDayId(Porter porter, Integer dayId) {
-        return timeTableRepository.findTimeTableByPorterAndDay(porter, dayId);
+    public TimeTable findTimetableByPorterAndDayIdAndIsDayEditing(Porter porter, Integer dayId, boolean isDayEditing) {
+        return timeTableRepository.findTimeTableByPorterAndDayAndIsDayEditing(porter, dayId, isDayEditing);
     }
 
     @Override
