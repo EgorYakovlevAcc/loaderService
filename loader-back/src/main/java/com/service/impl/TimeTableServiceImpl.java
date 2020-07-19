@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TimeTableServiceImpl implements TimeTableService{
@@ -44,6 +44,12 @@ public class TimeTableServiceImpl implements TimeTableService{
     @Override
     public String getTimetableDescription(Porter porter) {
         List<TimeTable> timeTableList = timeTableRepository.findTimeTablesByPorterAndIsDayEditing(porter, false);
+        timeTableList.sort(new Comparator<TimeTable>() {
+            @Override
+            public int compare(TimeTable o1, TimeTable o2) {
+                return o1.getDay() - o2.getDay();
+            }
+        });
         StringBuilder timetableDescription = new StringBuilder();
         for (TimeTable timeTable: timeTableList) {
             timetableDescription.append(BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(timeTable.getDay()) + ":\n" + "начало работы: " + timeTable.getStart() + "\n" + "Окончание рабочего: " + timeTable.getFinish() + "\n");

@@ -18,18 +18,21 @@ public final class BotModel {
             final String EY_0001 = "EY_0001";
             final String EY_0002 = "EY_0002";
             final String EY_0003 = "EY_0003";
+            String EY_0004 = "EY_0004";
         }
 
         interface ErrorName {
             final String EY_0001 = "INVALID_STATUS_TRANSFER";
             final String EY_0002 = "PORTER_HAD_CHOSEN_CURRENT_ORDER";
             final String EY_0003 = "PORTER_HAD_INPUTED_TIME_IN_INCORRECT_FORMAT";
+            String EY_0004 = "EMAIL_HAS_INVALID_FORMAT";
         }
 
         interface ErrorDescription {
             final String EY_0001 = "Cannot execute action for order in RECRUITMENT_COMPLETED status";
             final String EY_0002 = "Porter had been chosen current order for execute";
             String EY_0003 = "Porter had inputed time value in incorrect format";
+            String EY_0004 = "Email has invalid format";
         }
     }
 
@@ -43,6 +46,7 @@ public final class BotModel {
         String FINISH_COMPLETE_TIMETABLE = "Вы обозначили следующий график работы:\n";
 
         String PORTER_HAD_CHOSEN_CURRENT_ORDER = "Вы уже выбрали заказ № %s для выполнения";
+        String INPUT_YOR_EMAIL = "Введите email";
     }
 
     public interface OrderCreationQuestions {
@@ -72,11 +76,12 @@ public final class BotModel {
     }
 
     public interface InlineKeyboards {
-        InlineKeyboardMarkup SELECT_ROLE_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_ROLE_BTN_LINE));
+        InlineKeyboardMarkup SELECT_ROLE_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_ROLE_BTN_LINE, InlineButtons.ButtonsLines.I_HAVE_ACCOUNT));
         InlineKeyboardMarkup SELECT_CUSTOMER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_CUSTOMER_ACTION_BTN_LINE));
         InlineKeyboardMarkup SELECT_PORTER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_PORTER_ACTION_BTN_LINE));
         InlineKeyboardMarkup PORTER_TIMETABLE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_BTN_LINE, InlineButtons.ButtonsLines.PORTER_TIMETABLE_CONFIRM_BTN_LINE));
         InlineKeyboardMarkup PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_CHANGE_CONFIRM_BTN_LINE, InlineButtons.ButtonsLines.PORTER_TIMETABLE_CANCEL_CONFIRM_BTN_LINE));
+        InlineKeyboardMarkup INPUT_EMAIL_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.EMAIL_BTN_LINE));
     }
 
     public interface InlineButtons {
@@ -91,6 +96,8 @@ public final class BotModel {
             List<InlineKeyboardButton> PORTER_TIMETABLE_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CONFIRM_INL_BTN);
             List<InlineKeyboardButton> PORTER_TIMETABLE_CHANGE_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CHANGE_CONFIRM_INL_BTN);
             List<InlineKeyboardButton> PORTER_TIMETABLE_CANCEL_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CHANGE_CANCEK_INL_BTN);
+            List<InlineKeyboardButton> I_HAVE_ACCOUNT = ImmutableList.of(Templates.I_HAVE_ACCOUNT_INL_BTN);
+            List<InlineKeyboardButton> EMAIL_BTN_LINE = ImmutableList.of(Templates.INPUT_EMAIL_INL_BTN, Templates.CANCEL_INPUT_EMAIL_INL_BTN);
         }
 
         interface Templates {
@@ -110,6 +117,9 @@ public final class BotModel {
             InlineKeyboardButton PORTER_TIMATABLE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CONFIRM_TIMETABLE_BTN, Commands.PORTER_CONFIRM_TIMETABLE);
             InlineKeyboardButton PORTER_TIMATABLE_CHANGE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CANCEL_CHANGE_TIMETABLE_BTN, Commands.PORTER_CONFIRM_TIMETABLE_CHANGE);
             InlineKeyboardButton PORTER_TIMATABLE_CHANGE_CANCEK_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CANCEL_CHANGE_TIMETABLE_BTN, Commands.PORTER_CANCEL_TIMETABLE_CHANGE);
+            InlineKeyboardButton I_HAVE_ACCOUNT_INL_BTN = ElementsHelper.createInlineButton(Texts.I_HAVE_ACCOUNT_BTN, Commands.I_HAVE_ACCOUNT_CMD);
+            InlineKeyboardButton INPUT_EMAIL_INL_BTN = ElementsHelper.createInlineButton(Texts.INPUT_EMAIL_BTN, Commands.INPUT_EMAIL_CMD);
+            InlineKeyboardButton CANCEL_INPUT_EMAIL_INL_BTN = ElementsHelper.createInlineButton(Texts.CANCEL_INPUT_EMAIL, Commands.CANCEL_INPUT_EMAIL_CMD);
         }
 
         public interface Commands {
@@ -136,6 +146,9 @@ public final class BotModel {
             String PORTER_CONFIRM_TIMETABLE = "7_SELECT_FOR_PORTER";
             String PORTER_CONFIRM_TIMETABLE_CHANGE = "CONFIRM_TIMETABLE_CHANGE";
             String PORTER_CANCEL_TIMETABLE_CHANGE = "CANCEL_TIMETABLE_CHANGE";
+            String I_HAVE_ACCOUNT_CMD = "I_HAVE_ACCOUNT";
+            String INPUT_EMAIL_CMD = "INPUT_EMAIL";
+            String CANCEL_INPUT_EMAIL_CMD = "CANCEL_INPUT_EMAIL";
         }
 
         public interface Texts {
@@ -156,6 +169,9 @@ public final class BotModel {
 
             String DAY_TIMETABLE_RESULT = "%s:\n вы работаете с %s до %s";
             String PORTER_INVALID_TIME_FORMAT = "Введите время в формате ЧЧ24-ММ";
+            String I_HAVE_ACCOUNT_BTN = "Уже есть акканут";
+            String INPUT_EMAIL_BTN = "Ввести email";
+            String CANCEL_INPUT_EMAIL = "Отмена";
 
             interface Days {
                 final String MONDAY = "Пн";

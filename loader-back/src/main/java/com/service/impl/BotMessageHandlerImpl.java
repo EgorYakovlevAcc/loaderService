@@ -8,6 +8,7 @@ import com.model.Question;
 import com.model.TimeTable;
 import com.model.order.Order;
 import com.model.order.Status;
+import com.model.user.Anonymous;
 import com.model.user.BotUser;
 import com.model.user.Customer;
 import com.model.user.Porter;
@@ -46,6 +47,8 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private OrderService orderService;
     @Autowired
     private TimeTableService timeTableService;
+    @Autowired
+    private AnonymousService anonymousService;
 
     @Override
     public MessagesPackage handleMessage(Update update) {
@@ -57,7 +60,19 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             if (update.hasCallbackQuery()) {
                 callbackScenario(messagesPackage, update.getCallbackQuery(), null);
             } else {
-                anonymousHelloScenario(messagesPackage, message.getChatId());
+                Anonymous anonymous = anonymousService.findAnonymousByTelegramId(user.getId());
+                if (anonymous == null) {
+                    anonymousHelloScenario(messagesPackage, message.getChatId());
+                }
+                else {
+                    String email = message.getText();
+                    try {
+                        anonymousService.addEmailToAnonymous(anonymous, email);
+                    }
+                    catch (CustomBotException cbe) {
+                        customSendMessage(messagesPackage, "Неверный формат email", message.getChatId(), BotModel.InlineKeyboards.INPUT_EMAIL_ACTION_KEYBOARD);
+                    }
+                }
             }
         } else {
             if (botUser instanceof Porter) {
@@ -214,6 +229,19 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
                 break;
             }
+            case BotModel.InlineButtons.Commands.I_HAVE_ACCOUNT_CMD: {
+                anonymousService.createAnonymous(callbackQuery.getFrom().getId(), callbackQuery.getMessage().getChatId());
+                iHaveAccountScenario(messagesPackage, callbackQuery.getMessage().getChatId());
+                break;
+            }
+            case BotModel.InlineButtons.Commands.INPUT_EMAIL_CMD: {
+                iHaveAccountScenario(messagesPackage, callbackQuery.getMessage().getChatId());
+                break;
+            }
+            case BotModel.InlineButtons.Commands.CANCEL_INPUT_EMAIL_CMD: {
+                anonymousHelloScenario(messagesPackage, callbackQuery.getMessage().getChatId());
+                break;
+            }
             case BotModel.InlineButtons.Commands.PORTER_CANCEL_TIMETABLE_CHANGE: {
                 Porter porter = (Porter) botUser;
                 customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
@@ -269,6 +297,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 break;
             }
         }
+    }
+
+    private void iHaveAccountScenario(MessagesPackage messagesPackage, Long chatId) {
+        customSendMessage(messagesPackage, BotModel.Notifications.INPUT_YOR_EMAIL, chatId, null);
     }
 
     private void orderRecruitmentCompletedHandler(MessagesPackage messagesPackage, List<Porter> porters, Customer customer, Integer orderId) {

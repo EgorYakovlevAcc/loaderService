@@ -30,6 +30,7 @@ public class Customer implements BotUser {
     private boolean isOrderCreationProcessing;
     private Integer orderQuestionNum;
     private String username;
+    private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="customer_id")
