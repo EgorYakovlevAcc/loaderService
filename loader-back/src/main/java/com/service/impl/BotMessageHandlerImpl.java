@@ -26,6 +26,7 @@ import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import javax.sound.sampled.Port;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,39 +79,15 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         } else {
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
-                if (porter.isFinishedAskingQuestions() && (!porter.isStartTimetable())) {
+                if (porter.isFinishedAskingQuestions()) {
                     callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                 } else {
-                    if ((porter.isAskingQuestions())) {
+                    if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
                         if (porter.isStartTimetable()) {
                             if (message == null) {
                                 callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                             } else {
-                                try {
-                                    if (!porter.isHasStartDateInput()) {
-                                        String startTime = message.getText();
-                                        porterService.setHasStartDateInputOn(porter, startTime);
-                                        customSendMessage(messagesPackage,
-                                                BotModel.InlineButtons.Texts.PORTER_FINISH_DATE,
-                                                porter.getChatId(),
-                                                null);
-                                    } else {
-                                        String finishTime = message.getText();
-                                        TimeTable timeTable = porterService.setHasStartDateInputOff(porter, finishTime);
-                                        customSendMessage(messagesPackage,
-                                                String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT,
-                                                        timeTable.getDay(),
-                                                        timeTable.getStart(),
-                                                        timeTable.getFinish()),
-                                                porter.getChatId(),
-                                                BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
-                                    }
-                                } catch (CustomBotException cbe) {
-                                    customSendMessage(messagesPackage,
-                                            BotModel.InlineButtons.Texts.PORTER_INVALID_TIME_FORMAT,
-                                            porter.getChatId(),
-                                            null);
-                                }
+                               startFinishTimeScenario(messagesPackage, porter, message);
                             }
                         } else {
                             getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
@@ -145,6 +122,34 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             }
         }
         return messagesPackage;
+    }
+
+    private void startFinishTimeScenario(MessagesPackage messagesPackage, Porter porter, Message message) {
+        try {
+            if (!porter.isHasStartDateInput()) {
+                String startTime = message.getText();
+                porterService.setHasStartDateInputOn(porter, startTime);
+                customSendMessage(messagesPackage,
+                        BotModel.InlineButtons.Texts.PORTER_FINISH_DATE,
+                        porter.getChatId(),
+                        null);
+            } else {
+                String finishTime = message.getText();
+                TimeTable timeTable = porterService.setHasStartDateInputOff(porter, finishTime);
+                customSendMessage(messagesPackage,
+                        String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT,
+                                timeTable.getDay(),
+                                timeTable.getStart(),
+                                timeTable.getFinish()),
+                        porter.getChatId(),
+                        BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+            }
+        } catch (CustomBotException cbe) {
+            customSendMessage(messagesPackage,
+                    BotModel.InlineButtons.Texts.PORTER_INVALID_TIME_FORMAT,
+                    porter.getChatId(),
+                    null);
+        }
     }
 
     private void getNextQuestionScenarioIfExistsForPorter(Porter porter, Message message, MessagesPackage messagesPackage) {

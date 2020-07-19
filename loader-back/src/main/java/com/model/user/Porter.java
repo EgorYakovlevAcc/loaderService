@@ -40,4 +40,5 @@ public class Porter implements BotUser {
     private List<Order> orders;
     @OneToMany(mappedBy = "porter",cascade = CascadeType.ALL)
     private List<TimeTable> timeTables;
+    private boolean hasChangeTimetable;
 }
