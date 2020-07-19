@@ -52,7 +52,7 @@ public class TimeTableServiceImpl implements TimeTableService{
         });
         StringBuilder timetableDescription = new StringBuilder();
         for (TimeTable timeTable: timeTableList) {
-            timetableDescription.append(BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(timeTable.getDay()) + ":\n" + "начало работы: " + timeTable.getStart() + "\n" + "Окончание рабочего: " + timeTable.getFinish() + "\n");
+            timetableDescription.append(BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(timeTable.getDay()) + ":\n" + "начало работы: " + timeTable.getStart() + "\n" + "конец работы: " + timeTable.getFinish() + "\n");
         }
         return timetableDescription.toString();
     }
@@ -68,8 +68,15 @@ public class TimeTableServiceImpl implements TimeTableService{
     }
 
     @Override
-    public void setDayIsEditing(TimeTable timeTable) {
-        timeTable.setDayEditing(true);
+    public void setDayIsEditing(TimeTable timeTable, boolean isEditing) {
+        timeTable.setDayEditing(isEditing);
         timeTableRepository.save(timeTable);
+    }
+
+    @Override
+    public void cancelEditingTimetable(Porter porter) {
+        TimeTable timetable = findTimeTableByPorterAndIsDayEditing(porter);
+        timetable.setDayEditing(false);
+        timeTableRepository.save(timetable);
     }
 }

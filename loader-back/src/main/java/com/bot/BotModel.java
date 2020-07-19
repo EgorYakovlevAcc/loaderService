@@ -79,6 +79,7 @@ public final class BotModel {
         InlineKeyboardMarkup SELECT_ROLE_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_ROLE_BTN_LINE, InlineButtons.ButtonsLines.I_HAVE_ACCOUNT));
         InlineKeyboardMarkup SELECT_CUSTOMER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_CUSTOMER_ACTION_BTN_LINE));
         InlineKeyboardMarkup SELECT_PORTER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_PORTER_ACTION_BTN_LINE));
+        InlineKeyboardMarkup FULL_SELECT_PORTER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_PORTER_SHOW_TIMETABLE, InlineButtons.ButtonsLines.SELECT_PORTER_ACTION_BTN_LINE));
         InlineKeyboardMarkup PORTER_TIMETABLE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_BTN_LINE, InlineButtons.ButtonsLines.PORTER_TIMETABLE_CONFIRM_BTN_LINE));
         InlineKeyboardMarkup PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_CHANGE_CONFIRM_BTN_LINE, InlineButtons.ButtonsLines.PORTER_TIMETABLE_CANCEL_CONFIRM_BTN_LINE));
         InlineKeyboardMarkup INPUT_EMAIL_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.EMAIL_BTN_LINE));
@@ -98,6 +99,7 @@ public final class BotModel {
             List<InlineKeyboardButton> PORTER_TIMETABLE_CANCEL_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CHANGE_CANCEK_INL_BTN);
             List<InlineKeyboardButton> I_HAVE_ACCOUNT = ImmutableList.of(Templates.I_HAVE_ACCOUNT_INL_BTN);
             List<InlineKeyboardButton> EMAIL_BTN_LINE = ImmutableList.of(Templates.INPUT_EMAIL_INL_BTN, Templates.CANCEL_INPUT_EMAIL_INL_BTN);
+            List<InlineKeyboardButton> SELECT_PORTER_SHOW_TIMETABLE = ImmutableList.of(Templates.SELECT_PORTER_SHOW_TIMETABLE_INL_BTN);
         }
 
         interface Templates {
@@ -120,6 +122,7 @@ public final class BotModel {
             InlineKeyboardButton I_HAVE_ACCOUNT_INL_BTN = ElementsHelper.createInlineButton(Texts.I_HAVE_ACCOUNT_BTN, Commands.I_HAVE_ACCOUNT_CMD);
             InlineKeyboardButton INPUT_EMAIL_INL_BTN = ElementsHelper.createInlineButton(Texts.INPUT_EMAIL_BTN, Commands.INPUT_EMAIL_CMD);
             InlineKeyboardButton CANCEL_INPUT_EMAIL_INL_BTN = ElementsHelper.createInlineButton(Texts.CANCEL_INPUT_EMAIL, Commands.CANCEL_INPUT_EMAIL_CMD);
+            InlineKeyboardButton SELECT_PORTER_SHOW_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.SELECT_PORTER_SHOW_TIMETABLE, Commands.SELECT_PORTER_SHOW_TIMETABLE_CMD);
         }
 
         public interface Commands {
@@ -149,6 +152,7 @@ public final class BotModel {
             String I_HAVE_ACCOUNT_CMD = "I_HAVE_ACCOUNT";
             String INPUT_EMAIL_CMD = "INPUT_EMAIL";
             String CANCEL_INPUT_EMAIL_CMD = "CANCEL_INPUT_EMAIL";
+            String SELECT_PORTER_SHOW_TIMETABLE_CMD = "PORTER_SHOW_TIMETABLE";
         }
 
         public interface Texts {
@@ -173,6 +177,7 @@ public final class BotModel {
             String INPUT_EMAIL_BTN = "Ввести email";
             String CANCEL_INPUT_EMAIL = "Отмена";
             String PORTER_CONFIRM_TIMETABLE_CHANGE_BTN = "Да, хочу изменить";
+            String SELECT_PORTER_SHOW_TIMETABLE = "Показать график работы";
 
             interface Days {
                 final String MONDAY = "Пн";

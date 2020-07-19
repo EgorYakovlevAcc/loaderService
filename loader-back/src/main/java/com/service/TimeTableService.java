@@ -16,5 +16,7 @@ public interface TimeTableService {
 
     TimeTable findTimeTableByPorterAndIsDayEditing(Porter porter);
 
-    void setDayIsEditing(TimeTable timeTable);
+    void setDayIsEditing(TimeTable timeTable, boolean isEditing);
+
+    void cancelEditingTimetable(Porter porter);
 }

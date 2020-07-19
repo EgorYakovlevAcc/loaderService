@@ -116,6 +116,7 @@ public class PorterServiceImpl implements PorterService {
     @Override
     public void setEditingDayTimetableOff(Porter porter, Integer dayId) {
         porter.setStartTimetable(false);
+        porter.setHasChangeTimetable(false);
         porterRepository.save(porter);
     }
 

@@ -79,10 +79,14 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                     if (update.hasCallbackQuery()) {
                         callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                     } else {
-                        startFinishTimeScenario(messagesPackage, porter, message);
+                        if (porter.isHasChangeTimetable()) {
+                            startFinishTimeScenario(messagesPackage, porter, message);
+                        } else {
+                            customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
+                        }
                     }
                 } else {
-                    if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
+                    if ((porter.isAskingQuestions())) {
                         if (porter.isStartTimetable()) {
                             if (message == null) {
                                 callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
@@ -224,6 +228,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 callBackCustomerMakeOrderHandler(messagesPackage, (Customer) botUser);
                 break;
             }
+            case BotModel.InlineButtons.Commands.SELECT_PORTER_SHOW_TIMETABLE_CMD: {
+                showPorterTimetableScenario();
+                break;
+            }
             case BotModel.InlineButtons.Commands.PORTER_CHANGE_TIMETABLE_CMD: {
                 Porter porter = (Porter) botUser;
                 porterService.setIsTimetable(porter, true);
@@ -251,6 +259,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             }
             case BotModel.InlineButtons.Commands.PORTER_CANCEL_TIMETABLE_CHANGE: {
                 Porter porter = (Porter) botUser;
+                timeTableService.cancelEditingTimetable(porter);
                 customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
                 break;
             }
@@ -293,7 +302,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             timeTableService.createTimeTableByDayAndPorter(dayId, porter);
                             customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
                         } else {
-                            timeTableService.setDayIsEditing(timeTable);
+                            timeTableService.setDayIsEditing(timeTable, true);
                             customSendMessage(messagesPackage, BotModel.Notifications.DUPLICATE_TIMETABLE_FOR_DAY, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD);
                         }
                     } else {
@@ -306,6 +315,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 break;
             }
         }
+    }
+
+    private void showPorterTimetableScenario() {
     }
 
     private void iHaveAccountScenario(MessagesPackage messagesPackage, Long chatId) {
