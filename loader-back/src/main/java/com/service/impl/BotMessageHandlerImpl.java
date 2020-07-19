@@ -63,13 +63,11 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 Anonymous anonymous = anonymousService.findAnonymousByTelegramId(user.getId());
                 if (anonymous == null) {
                     anonymousHelloScenario(messagesPackage, message.getChatId());
-                }
-                else {
+                } else {
                     String email = message.getText();
                     try {
                         anonymousService.addEmailToAnonymous(anonymous, email);
-                    }
-                    catch (CustomBotException cbe) {
+                    } catch (CustomBotException cbe) {
                         customSendMessage(messagesPackage, "Неверный формат email", message.getChatId(), BotModel.InlineKeyboards.INPUT_EMAIL_ACTION_KEYBOARD);
                     }
                 }
@@ -78,16 +76,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if (porter.isFinishedAskingQuestions()) {
-                    if (porter.isHasChangeTimetable()) {
-                        if (update.hasCallbackQuery()) {
-                            callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
-                        }
-                        else {
-                            startFinishTimeScenario(messagesPackage, porter, message);
-                        }
-                    }
-                    else {
+                    if (update.hasCallbackQuery()) {
                         callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
+                    } else {
+                        startFinishTimeScenario(messagesPackage, porter, message);
                     }
                 } else {
                     if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {
@@ -95,7 +87,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             if (message == null) {
                                 callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                             } else {
-                               startFinishTimeScenario(messagesPackage, porter, message);
+                                startFinishTimeScenario(messagesPackage, porter, message);
                             }
                         } else {
                             getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
