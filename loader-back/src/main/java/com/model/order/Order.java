@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
     private Integer restAmountOfWorkers;
+    private Time time;
     @ManyToMany
     private List<Porter> porters;
 }

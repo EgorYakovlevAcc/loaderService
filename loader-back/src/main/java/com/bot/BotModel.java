@@ -52,9 +52,10 @@ public final class BotModel {
     public interface OrderCreationQuestions {
         Map<Integer, String> CREATE_ORDER_QUESTIONS = ImmutableMap.of(
                 0, "Дата заказа",
-                1, "Колличество грузчиков",
-                2, "Время выполнения заказа",
-                3, "Почасовая оплата одного грузчика");
+                1, "Время заказа",
+                2, "Колличество грузчиков",
+                3, "Время выполнения заказа",
+                4, "Почасовая оплата одного грузчика");
     }
 
     public interface DefaultValues {

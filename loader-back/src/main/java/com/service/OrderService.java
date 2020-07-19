@@ -26,4 +26,6 @@ public interface OrderService {
     Order subscribePorterForOrderAndReturnOrder(Integer orderId, Porter porter);
 
     void deleteOrders(List<Order> orders);
+
+    void setTimeForOrder(Order order, String answer);
 }

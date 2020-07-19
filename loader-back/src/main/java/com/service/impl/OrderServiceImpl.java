@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -124,4 +125,20 @@ public class OrderServiceImpl implements OrderService {
                 .orElse(null);
     }
 
+    @Override
+    public void setTimeForOrder(Order order, String answer) {
+        Time time = getTimeByStrResult(answer);
+        order.setTime(time);
+        orderRepository.save(order);
+    }
+
+    private Time getTimeByStrResult(String timeStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        try {
+            Time time = new Time (sdf.parse(timeStr).getTime());
+            return time;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
 }

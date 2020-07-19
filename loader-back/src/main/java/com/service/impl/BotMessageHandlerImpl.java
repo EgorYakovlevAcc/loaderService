@@ -4,6 +4,7 @@ import com.bot.BotModel;
 import com.bot.MessagesPackage;
 import com.exception.CustomBotException;
 import com.google.common.collect.ImmutableList;
+import com.model.ModelUtils;
 import com.model.Question;
 import com.model.TimeTable;
 import com.model.order.Order;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -182,14 +184,18 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 break;
             }
             case 1: {
-                orderService.setAmountOfPortersForOrder(order, answer);
+                orderService.setTimeForOrder(order, answer);
                 break;
             }
             case 2: {
-                orderService.setTimeForExecutingOrder(order, answer);
+                orderService.setAmountOfPortersForOrder(order, answer);
                 break;
             }
             case 3: {
+                orderService.setTimeForExecutingOrder(order, answer);
+                break;
+            }
+            case 4: {
                 orderService.setPayForHourOfOnePersonforOrder(order, answer);
                 break;
             }
@@ -399,7 +405,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private void sendNotificationForPorters(MessagesPackage messagesPackage, Order order) {
         String description = String.format(BotModel.InlineButtons.Texts.ORDER_NOTIFICATION_TEMPLATE,
                 order.getOrderDate(), order.getWorkersNum(), order.getHoursNum(), order.getPrice());
-        List<Porter> porters = porterService.findPortersByTimetable();
+        //todo:refactoring must have!
+        List<Porter> porters = porterService.findPortersByTimetable().stream()
+                .filter(porter -> ModelUtils.filterPortersByTimetable(porter, order))
+                .collect(Collectors.toList());
         for (Porter porter : porters) {
             customSendMessage(messagesPackage, description, porter.getChatId(), getKeyBoardOfExecutingOrderForPorter(order.getId()));
         }
