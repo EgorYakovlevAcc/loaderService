@@ -66,4 +66,10 @@ public class TimeTableServiceImpl implements TimeTableService{
     public TimeTable findTimeTableByPorterAndIsDayEditing(Porter porter) {
         return timeTableRepository.findTimeTableByPorterAndAndIsDayEditing(porter, true);
     }
+
+    @Override
+    public void setDayIsEditing(TimeTable timeTable) {
+        timeTable.setDayEditing(true);
+        timeTableRepository.save(timeTable);
+    }
 }

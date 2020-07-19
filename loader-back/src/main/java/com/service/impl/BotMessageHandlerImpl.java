@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.telegram.telegrambots.api.methods.groupadministration.ExportChatInviteLink;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -26,7 +25,6 @@ import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import javax.sound.sampled.Port;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -300,8 +298,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         porterService.setEditingDayTimetable(porter, dayId);
                         TimeTable timeTable = timeTableService.findTimetableByPorterAndDayIdAndIsDayEditing(porter, dayId, false);
                         if (timeTable == null) {
+                            timeTableService.createTimeTableByDayAndPorter(dayId, porter);
                             customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
                         } else {
+                            timeTableService.setDayIsEditing(timeTable);
                             customSendMessage(messagesPackage, BotModel.Notifications.DUPLICATE_TIMETABLE_FOR_DAY, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD);
                         }
                     } else {

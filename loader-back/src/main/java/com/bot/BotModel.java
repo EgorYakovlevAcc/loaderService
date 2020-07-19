@@ -195,7 +195,6 @@ public final class BotModel {
             }
 
             String PORTER_CONFIRM_TIMETABLE_BTN = "Расписание сформировано";
-            String PORTER_CONFIRM_CHANGE_TIMETABLE_BTN = "Продолжить";
             String PORTER_CANCEL_CHANGE_TIMETABLE_BTN = "Отменить";
 
         }
