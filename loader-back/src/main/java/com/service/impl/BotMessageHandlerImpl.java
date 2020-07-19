@@ -74,18 +74,30 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                     if (!porter.isHasStartDateInput()) {
                                         String startTime = message.getText();
                                         porterService.setHasStartDateInputOn(porter, startTime);
-                                        customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_FINISH_DATE, porter.getChatId(), null);
+                                        customSendMessage(messagesPackage,
+                                                BotModel.InlineButtons.Texts.PORTER_FINISH_DATE,
+                                                porter.getChatId(),
+                                                null);
                                     } else {
                                         String finishTime = message.getText();
                                         TimeTable timeTable = porterService.setHasStartDateInputOff(porter, finishTime);
-                                        customSendMessage(messagesPackage, String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT, timeTable.getDay(), timeTable.getStart(), timeTable.getFinish()), porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+                                        customSendMessage(messagesPackage,
+                                                String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT,
+                                                        timeTable.getDay(),
+                                                        timeTable.getStart(),
+                                                        timeTable.getFinish()),
+                                                porter.getChatId(),
+                                                BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
                                     }
                                 } catch (CustomBotException cbe) {
-                                    customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_INVALID_TIME_FORMAT, porter.getChatId(), null);
+                                    customSendMessage(messagesPackage,
+                                            BotModel.InlineButtons.Texts.PORTER_INVALID_TIME_FORMAT,
+                                            porter.getChatId(),
+                                            null);
                                 }
                             }
                         } else {
-                          getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
+                            getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
                         }
                     } else {
                         //todo: действия, когда грезчик не закончил регистрацию
@@ -197,6 +209,16 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
                 break;
             }
+            case BotModel.InlineButtons.Commands.PORTER_CONFIRM_TIMETABLE_CHANGE: {
+                Porter porter = (Porter) botUser;
+                customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
+                break;
+            }
+            case BotModel.InlineButtons.Commands.PORTER_CANCEL_TIMETABLE_CHANGE: {
+                Porter porter = (Porter) botUser;
+                customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+                break;
+            }
             default: {
                 Porter porter = (Porter) botUser;
                 Integer orderId = getOrderIdFromPorterOrderExecutionCommand(command);
@@ -228,16 +250,21 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                     break;
                 }
                 Integer dayId = getOrderIdFromPorterDayForTimetableCommand(command);
-                if (dayId != -1 && dayId != 7) {
-                    porterService.setEditingDayTimetable(porter, dayId);
-                    customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
-                    break;
-                }
-                else if(dayId == 7) {
-                    String timetableConfirmN = timeTableService.getTimetableDescription(porter);
-                    customSendMessage(messagesPackage, BotModel.Notifications.FINISH_COMPLETE_TIMETABLE + timetableConfirmN, porter.getChatId(), null);
-                    getNextQuestionScenarioIfExistsForPorter(porter, null, messagesPackage);
-                    break;
+                if (dayId != -1) {
+                    if (dayId != 7) {
+                        porterService.setEditingDayTimetable(porter, dayId);
+                        TimeTable timeTable = timeTableService.findTimetableByPorterAndDayId(porter, dayId);
+                        if (timeTable == null) {
+                            customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
+                        } else {
+                            customSendMessage(messagesPackage, BotModel.Notifications.DUPLICATE_TIMETABLE_FOR_DAY, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD);
+                        }
+                    } else {
+                        porterService.setEditingDayTimetableOff(porter, dayId);
+                        String timetableConfirmN = timeTableService.getTimetableDescription(porter);
+                        customSendMessage(messagesPackage, BotModel.Notifications.FINISH_COMPLETE_TIMETABLE + timetableConfirmN, porter.getChatId(), null);
+                        getNextQuestionScenarioIfExistsForPorter(porter, null, messagesPackage);
+                    }
                 }
                 break;
             }

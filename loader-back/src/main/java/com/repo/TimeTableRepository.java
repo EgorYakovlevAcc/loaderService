@@ -11,4 +11,6 @@ import java.util.List;
 public interface TimeTableRepository extends JpaRepository<TimeTable, Integer> {
     TimeTable findTimeTableByPorterAndIsDayEditing(Porter porter, boolean isDayEditing);
     List<TimeTable> findTimeTablesByPorterAndIsDayEditing(Porter porter, boolean isDayEditing);
+    TimeTable findTimeTableByPorterAndDay(Porter porter, Integer day);
+    TimeTable findTimeTableByPorterAndAndIsDayEditing(Porter porter, boolean isDayEditing);
 }

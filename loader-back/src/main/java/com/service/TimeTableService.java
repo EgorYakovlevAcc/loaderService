@@ -11,4 +11,8 @@ public interface TimeTableService {
     TimeTable completeDayTimetableByFinishTime(Porter porter, Time finish);
 
     String getTimetableDescription(Porter porter);
+
+    TimeTable findTimetableByPorterAndDayId(Porter porter, Integer dayId);
+
+    TimeTable findTimeTableByPorterAndIsDayEditing(Porter porter);
 }

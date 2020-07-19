@@ -23,4 +23,8 @@ public interface PorterService {
     void setHasStartDateInputOn(Porter porter, String startTime);
 
     TimeTable setHasStartDateInputOff(Porter porter, String finishTime);
+
+    void setEditingDayTimetableOff(Porter porter, Integer dayId);
+
+    void updateTimeTableForPorter(Porter porter);
 }

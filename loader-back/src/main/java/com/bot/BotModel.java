@@ -39,6 +39,7 @@ public final class BotModel {
         String ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS = "Формирование заказа %s завершено";
         String ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER = "Для выполнения заказа %s найдено необходимое число рабочих";
         String INPUT_TIME_START = "В какое время вы готовы начать работу";
+        String DUPLICATE_TIMETABLE_FOR_DAY = "Вы уже определи график на работы на %s. Вы точно хотите определить новый график (старый график будет безвозвратно потерян)?";
 
         String FINISH_COMPLETE_TIMETABLE = "Вы обозначили следующий график работы:\n";
 
@@ -76,6 +77,7 @@ public final class BotModel {
         InlineKeyboardMarkup SELECT_CUSTOMER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_CUSTOMER_ACTION_BTN_LINE));
         InlineKeyboardMarkup SELECT_PORTER_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.SELECT_PORTER_ACTION_BTN_LINE));
         InlineKeyboardMarkup PORTER_TIMETABLE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_BTN_LINE, InlineButtons.ButtonsLines.PORTER_TIMETABLE_CONFIRM_BTN_LINE));
+        InlineKeyboardMarkup PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD = new InlineKeyboardMarkup().setKeyboard(ImmutableList.of(InlineButtons.ButtonsLines.PORTER_TIMETABLE_CHANGE_CONFIRM_BTN_LINE, InlineButtons.ButtonsLines.PORTER_TIMETABLE_CANCEL_CONFIRM_BTN_LINE));
     }
 
     public interface InlineButtons {
@@ -88,6 +90,8 @@ public final class BotModel {
                     Templates.THUESDAY_TIMETABLE_INL_BTN, Templates.FRIDAY_TIMETABLE_INL_BTN,
                     Templates.SATURDAY_TIMETABLE_INL_BTN, Templates.SUNDAY_TIMETABLE_INL_BTN);
             List<InlineKeyboardButton> PORTER_TIMETABLE_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CONFIRM_INL_BTN);
+            List<InlineKeyboardButton> PORTER_TIMETABLE_CHANGE_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CHANGE_CONFIRM_INL_BTN);
+            List<InlineKeyboardButton> PORTER_TIMETABLE_CANCEL_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CHANGE_CANCEK_INL_BTN);
         }
 
         interface Templates {
@@ -105,6 +109,8 @@ public final class BotModel {
             InlineKeyboardButton SUNDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SUNDAY, Commands.SUNDAY_SELECT_TIMETABLE);
 
             InlineKeyboardButton PORTER_TIMATABLE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CONFIRM_TIMETABLE_BTN, Commands.PORTER_CONFIRM_TIMETABLE);
+            InlineKeyboardButton PORTER_TIMATABLE_CHANGE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CANCEL_CHANGE_TIMETABLE_BTN, Commands.PORTER_CONFIRM_TIMETABLE_CHANGE);
+            InlineKeyboardButton PORTER_TIMATABLE_CHANGE_CANCEK_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CANCEL_CHANGE_TIMETABLE_BTN, Commands.PORTER_CANCEL_TIMETABLE_CHANGE);
         }
 
         public interface Commands {
@@ -129,6 +135,8 @@ public final class BotModel {
             public final String SUNDAY_SELECT_TIMETABLE = "6_SELECT_FOR_PORTER";
 
             String PORTER_CONFIRM_TIMETABLE = "7_SELECT_FOR_PORTER";
+            String PORTER_CONFIRM_TIMETABLE_CHANGE = "CONFIRM_TIMETABLE_CHANGE";
+            String PORTER_CANCEL_TIMETABLE_CHANGE = "CANCEL_TIMETABLE_CHANGE";
         }
 
         public interface Texts {
@@ -171,6 +179,8 @@ public final class BotModel {
             }
 
             String PORTER_CONFIRM_TIMETABLE_BTN = "Расписание сформировано";
+            String PORTER_CONFIRM_CHANGE_TIMETABLE_BTN = "Продолжить";
+            String PORTER_CANCEL_CHANGE_TIMETABLE_BTN = "Отменить";
 
         }
     }
