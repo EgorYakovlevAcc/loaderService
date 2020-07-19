@@ -20,6 +20,7 @@ import { ScoreRangeMessageComponent } from './score-range-message/score-range-me
 import { CustomerQuestionsComponent } from './customer-questions/customer-questions.component';
 import { UserCustomersComponent } from './user-customers/user-customers.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { ModalAddAdminComponent } from './modal-add-admin/modal-add-admin.component';
 
 const appRoutes: Routes = [
   {
@@ -81,7 +82,8 @@ const appRoutes: Routes = [
     ScoreRangeMessageComponent,
     CustomerQuestionsComponent,
     UserCustomersComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    ModalAddAdminComponent
   ],
   imports: [
     BrowserModule,

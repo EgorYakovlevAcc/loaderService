@@ -81,7 +81,7 @@ AboutComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminUsersComponent", function() { return AdminUsersComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modal-add-question/modal-add-question.component */ "./src/app/modal-add-question/modal-add-question.component.ts");
+/* harmony import */ var _modal_add_admin_modal_add_admin_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modal-add-admin/modal-add-admin.component */ "./src/app/modal-add-admin/modal-add-admin.component.ts");
 /* harmony import */ var _service_user_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/user-service.service */ "./src/app/service/user-service.service.ts");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/ng-bootstrap.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
@@ -141,7 +141,7 @@ class AdminUsersComponent {
         });
     }
     openCreationNewAdminForm() {
-        let modalForm = this.modalService.open(_modal_add_question_modal_add_question_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddQuestionComponent"]);
+        let modalForm = this.modalService.open(_modal_add_admin_modal_add_admin_component__WEBPACK_IMPORTED_MODULE_1__["ModalAddAdminComponent"]);
         modalForm.componentInstance.userType = "ADMIN";
     }
     deleteAdmin(id) {
@@ -301,6 +301,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./customer-questions/customer-questions.component */ "./src/app/customer-questions/customer-questions.component.ts");
 /* harmony import */ var _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./user-customers/user-customers.component */ "./src/app/user-customers/user-customers.component.ts");
 /* harmony import */ var _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./admin-users/admin-users.component */ "./src/app/admin-users/admin-users.component.ts");
+/* harmony import */ var _modal_add_admin_modal_add_admin_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./modal-add-admin/modal-add-admin.component */ "./src/app/modal-add-admin/modal-add-admin.component.ts");
+
 
 
 
@@ -392,7 +394,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
         _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"],
         _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"],
         _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"],
-        _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__["AdminUsersComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+        _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__["AdminUsersComponent"],
+        _modal_add_admin_modal_add_admin_component__WEBPACK_IMPORTED_MODULE_21__["ModalAddAdminComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_2__["AppRoutingModule"],
         _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormsModule"],
         _angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"]] }); })();
@@ -414,7 +417,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _score_range_message_score_range_message_component__WEBPACK_IMPORTED_MODULE_17__["ScoreRangeMessageComponent"],
                     _customer_questions_customer_questions_component__WEBPACK_IMPORTED_MODULE_18__["CustomerQuestionsComponent"],
                     _user_customers_user_customers_component__WEBPACK_IMPORTED_MODULE_19__["UserCustomersComponent"],
-                    _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__["AdminUsersComponent"]
+                    _admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_20__["AdminUsersComponent"],
+                    _modal_add_admin_modal_add_admin_component__WEBPACK_IMPORTED_MODULE_21__["ModalAddAdminComponent"]
                 ],
                 imports: [
                     _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -764,6 +768,100 @@ MessageFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
 
 /***/ }),
 
+/***/ "./src/app/modal-add-admin/modal-add-admin.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/modal-add-admin/modal-add-admin.component.ts ***!
+  \**************************************************************/
+/*! exports provided: ModalAddAdminComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalAddAdminComponent", function() { return ModalAddAdminComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _service_user_service_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../service/user-service.service */ "./src/app/service/user-service.service.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/ng-bootstrap.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
+
+
+
+
+
+class ModalAddAdminComponent {
+    constructor(userService, modalService, modal) {
+        this.userService = userService;
+        this.modalService = modalService;
+        this.modal = modal;
+        this.admin = {
+            activeNow: false, color: "", firstName: "", id: 0, lastName: "", presentGiven: false, score: 0, status: false,
+            telegramId: '',
+            username: ''
+        };
+        this.modalForm = modal;
+    }
+    ngOnInit() {
+    }
+    saveAdmin() {
+        let i = 0;
+        this.userService.createAdmin(this.admin).subscribe(result => {
+            location.reload();
+        }, error => {
+            alert("Error");
+        });
+        this.modalForm.close("Efrfrf");
+    }
+}
+ModalAddAdminComponent.ɵfac = function ModalAddAdminComponent_Factory(t) { return new (t || ModalAddAdminComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_service_user_service_service__WEBPACK_IMPORTED_MODULE_1__["UserServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbActiveModal"])); };
+ModalAddAdminComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ModalAddAdminComponent, selectors: [["app-modal-add-admin"]], decls: 17, vars: 1, consts: [[1, "modal-lg"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [1, "modal-body"], [1, "container"], [1, "row"], [1, "col"], [3, "ngModel", "ngModelChange"], ["type", "submit", 1, "btn", "btn-primary", 2, "margin", "0 20px auto", 3, "click"]], template: function ModalAddAdminComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "h4", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "add new admin");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "button", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ModalAddAdminComponent_Template_button_click_4_listener($event) { return ctx.modalForm.dismiss("Cross click"); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "span", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "\u00D7");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](12, "telegram id");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "input", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function ModalAddAdminComponent_Template_input_ngModelChange_14_listener($event) { return ctx.admin.telegramId = $event; });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "button", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ModalAddAdminComponent_Template_button_click_15_listener($event) { return ctx.saveAdmin; });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16, " save ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.admin.telegramId);
+    } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NgModel"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL21vZGFsLWFkZC1hZG1pbi9tb2RhbC1hZGQtYWRtaW4uY29tcG9uZW50LmNzcyJ9 */"] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ModalAddAdminComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+                selector: 'app-modal-add-admin',
+                templateUrl: './modal-add-admin.component.html',
+                styleUrls: ['./modal-add-admin.component.css']
+            }]
+    }], function () { return [{ type: _service_user_service_service__WEBPACK_IMPORTED_MODULE_1__["UserServiceService"] }, { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"] }, { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbActiveModal"] }]; }, null); })();
+
+
+/***/ }),
+
 /***/ "./src/app/modal-add-question/modal-add-question.component.ts":
 /*!********************************************************************!*\
   !*** ./src/app/modal-add-question/modal-add-question.component.ts ***!
@@ -936,7 +1034,7 @@ class NavigationComponent {
     }
 }
 NavigationComponent.ɵfac = function NavigationComponent_Factory(t) { return new (t || NavigationComponent)(); };
-NavigationComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: NavigationComponent, selectors: [["app-navigation"]], decls: 21, vars: 0, consts: [[1, "navbar", "navbar-expand-lg", "navbar-light", "bg-light"], ["href", "#", 1, "navbar-brand"], ["type", "button", "data-toggle", "collapse", "data-target", "#navbarNavAltMarkup", "aria-controls", "navbarNavAltMarkup", "aria-expanded", "false", "aria-label", "Toggle navigation", 1, "navbar-toggler"], [1, "navbar-toggler-icon"], ["id", "navbarNavAltMarkup", 1, "collapse", "navbar-collapse"], [1, "navbar-nav"], ["href", "/", 1, "nav-item", "nav-link", "active"], [1, "sr-only"], ["href", "/questions-customer", 1, "nav-item", "nav-link"], ["href", "/questions-porter", 1, "nav-item", "nav-link"], ["href", "/customers", 1, "nav-item", "nav-link"], ["href", "/porters", 1, "nav-item", "nav-link"], ["href", "#", "tabindex", "-1", "aria-disabled", "true", 1, "nav-item", "nav-link", "disabled"]], template: function NavigationComponent_Template(rf, ctx) { if (rf & 1) {
+NavigationComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: NavigationComponent, selectors: [["app-navigation"]], decls: 23, vars: 0, consts: [[1, "navbar", "navbar-expand-lg", "navbar-light", "bg-light"], ["href", "#", 1, "navbar-brand"], ["type", "button", "data-toggle", "collapse", "data-target", "#navbarNavAltMarkup", "aria-controls", "navbarNavAltMarkup", "aria-expanded", "false", "aria-label", "Toggle navigation", 1, "navbar-toggler"], [1, "navbar-toggler-icon"], ["id", "navbarNavAltMarkup", 1, "collapse", "navbar-collapse"], [1, "navbar-nav"], ["href", "/", 1, "nav-item", "nav-link", "active"], [1, "sr-only"], ["href", "/questions-customer", 1, "nav-item", "nav-link"], ["href", "/questions-porter", 1, "nav-item", "nav-link"], ["href", "/customers", 1, "nav-item", "nav-link"], ["href", "/porters", 1, "nav-item", "nav-link"], ["href", "/admins", 1, "nav-item", "nav-link"], ["href", "#", "tabindex", "-1", "aria-disabled", "true", 1, "nav-item", "nav-link", "disabled"]], template: function NavigationComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "nav", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "PORTER SERVICE");
@@ -965,7 +1063,10 @@ NavigationComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18, "\u0440\u0430\u0431\u043E\u0442\u043D\u0438\u043A\u0438");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "a", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, "sign in/up");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](20, "\u0430\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440\u044B");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "a", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22, "sign in/up");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -1596,6 +1697,10 @@ class UserServiceService {
     deleteAdmin(id) {
         let url = "remove/admin?id=" + id;
         return this.httpClient.get(url);
+    }
+    createAdmin(admin) {
+        let url = "create/admin";
+        return this.httpClient.post(url, admin);
     }
 }
 UserServiceService.ɵfac = function UserServiceService_Factory(t) { return new (t || UserServiceService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };

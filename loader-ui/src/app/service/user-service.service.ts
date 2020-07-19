@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {User} from "../model/user/user";
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,10 @@ export class UserServiceService {
   deleteAdmin(id): Observable<any> {
     let url = "remove/admin?id=" + id;
     return this.httpClient.get(url);
+  }
+
+  createAdmin(admin:User) {
+    let url = "create/admin";
+    return this.httpClient.post(url, admin);
   }
 }

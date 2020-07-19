@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../model/user/user";
-import {ModalAddQuestionComponent} from "../modal-add-question/modal-add-question.component";
 import {UserServiceService} from "../service/user-service.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ModalAddAdminComponent} from "../modal-add-admin/modal-add-admin.component";
 
 @Component({
   selector: 'app-admin-users',
@@ -23,7 +23,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   openCreationNewAdminForm() {
-    let modalForm = this.modalService.open(ModalAddQuestionComponent);
+    let modalForm = this.modalService.open(ModalAddAdminComponent);
     modalForm.componentInstance.userType = "ADMIN";
   }
 
