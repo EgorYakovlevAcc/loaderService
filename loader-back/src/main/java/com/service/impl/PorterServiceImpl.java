@@ -124,4 +124,10 @@ public class PorterServiceImpl implements PorterService {
     public void updateTimeTableForPorter(Porter porter) {
         TimeTable timeTable = timeTableService.findTimeTableByPorterAndIsDayEditing(porter);
     }
+
+    @Override
+    public void setHasTimetableChanged(Porter porter, boolean b) {
+        porter.setHasChangeTimetable(b);
+        porterRepository.save(porter);
+    }
 }

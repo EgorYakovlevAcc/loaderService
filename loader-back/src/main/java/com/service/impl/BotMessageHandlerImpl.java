@@ -80,6 +80,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if (porter.isFinishedAskingQuestions()) {
+                    if (porter.isHasChangeTimetable()) {
+                        startFinishTimeScenario(messagesPackage, porter, message);
+                    }
                     callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                 } else {
                     if ((porter.isAskingQuestions()) && (!porter.isFinishedAskingQuestions())) {

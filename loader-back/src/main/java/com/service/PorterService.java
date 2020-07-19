@@ -27,4 +27,6 @@ public interface PorterService {
     void setEditingDayTimetableOff(Porter porter, Integer dayId);
 
     void updateTimeTableForPorter(Porter porter);
+
+    void setHasTimetableChanged(Porter porter, boolean b);
 }
