@@ -100,7 +100,7 @@ public final class BotModel {
             List<InlineKeyboardButton> PORTER_TIMETABLE_CANCEL_CONFIRM_BTN_LINE = ImmutableList.of(Templates.PORTER_TIMATABLE_CHANGE_CANCEK_INL_BTN);
             List<InlineKeyboardButton> I_HAVE_ACCOUNT = ImmutableList.of(Templates.I_HAVE_ACCOUNT_INL_BTN);
             List<InlineKeyboardButton> EMAIL_BTN_LINE = ImmutableList.of(Templates.INPUT_EMAIL_INL_BTN, Templates.CANCEL_INPUT_EMAIL_INL_BTN);
-            List<InlineKeyboardButton> FULL_SELECT_PORTER_ACTION_BTN_LINE = ImmutableList.of(Templates.SELECT_PORTER_SHOW_TIMETABLE_INL_BTN, Templates.SELECT_PORTER_INL_BTN);
+            List<InlineKeyboardButton> FULL_SELECT_PORTER_ACTION_BTN_LINE = ImmutableList.of(Templates.SELECT_PORTER_SHOW_TIMETABLE_INL_BTN, Templates.PORTER_CHANGE_TIMETABLE_INL_BTN);
         }
 
         interface Templates {

@@ -230,7 +230,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 break;
             }
             case BotModel.InlineButtons.Commands.SELECT_PORTER_SHOW_TIMETABLE_CMD: {
-                showPorterTimetableScenario(messagesPackage, (Porter) botUser);
+                Porter porter = (Porter) botUser;
+                showPorterTimetableScenario(messagesPackage, porter);
+                scenarioForKnownPorter(messagesPackage, porter);
                 break;
             }
             case BotModel.InlineButtons.Commands.PORTER_CHANGE_TIMETABLE_CMD: {
