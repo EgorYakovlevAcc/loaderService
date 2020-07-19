@@ -25,6 +25,7 @@ import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import javax.sound.sampled.Port;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -229,7 +230,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 break;
             }
             case BotModel.InlineButtons.Commands.SELECT_PORTER_SHOW_TIMETABLE_CMD: {
-                showPorterTimetableScenario();
+                showPorterTimetableScenario(messagesPackage, (Porter) botUser);
                 break;
             }
             case BotModel.InlineButtons.Commands.PORTER_CHANGE_TIMETABLE_CMD: {
@@ -308,8 +309,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         }
                     } else {
                         porterService.setEditingDayTimetableOff(porter, dayId);
-                        String timetableConfirmN = timeTableService.getTimetableDescription(porter);
-                        customSendMessage(messagesPackage, BotModel.Notifications.FINISH_COMPLETE_TIMETABLE + timetableConfirmN, porter.getChatId(), null);
+                        showPorterTimetableScenario(messagesPackage, porter);
                         getNextQuestionScenarioIfExistsForPorter(porter, null, messagesPackage);
                     }
                 }
@@ -318,7 +318,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         }
     }
 
-    private void showPorterTimetableScenario() {
+    private void showPorterTimetableScenario(MessagesPackage messagesPackage, Porter porter) {
+        String timetableConfirmN = timeTableService.getTimetableDescription(porter);
+        customSendMessage(messagesPackage, BotModel.Notifications.FINISH_COMPLETE_TIMETABLE + timetableConfirmN, porter.getChatId(), null);
+
     }
 
     private void iHaveAccountScenario(MessagesPackage messagesPackage, Long chatId) {
