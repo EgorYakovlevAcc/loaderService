@@ -8,4 +8,6 @@ public interface AdministratorService {
     List<Administrator> findAll();
 
     void deleteAdminById(Integer adminId);
+
+    void createAdministratorByAdministratorPojo(com.pojo.Administrator administrator);
 }

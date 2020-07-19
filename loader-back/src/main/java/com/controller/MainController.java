@@ -81,4 +81,10 @@ public class MainController {
         globalTelegramMessageSender.sendGlobalMessage(messageToUsers.getText(), messageToUsers.getMinScore(), messageToUsers.getMaxScore());
         return ResponseEntity.ok(null);
     }
+
+    @PostMapping(value = "create/admin")
+    public ResponseEntity createAdmin(@RequestBody Administrator administrator){
+        administratorService.createAdministratorByAdministratorPojo(administrator);
+        return ResponseEntity.ok(null);
+    }
 }

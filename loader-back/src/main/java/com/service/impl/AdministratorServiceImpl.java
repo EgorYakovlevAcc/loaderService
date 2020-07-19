@@ -22,4 +22,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void deleteAdminById(Integer adminId) {
         administratorRepository.deleteAdministratorById(adminId);
     }
+
+    @Override
+    public void createAdministratorByAdministratorPojo(com.pojo.Administrator administratorPojo) {
+        Administrator administrator = new Administrator();
+        administrator.setTelegramId(administrator.getTelegramId());
+        administratorRepository.save(administrator);
+    }
 }
