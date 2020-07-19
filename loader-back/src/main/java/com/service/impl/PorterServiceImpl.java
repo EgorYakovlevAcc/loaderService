@@ -105,7 +105,7 @@ public class PorterServiceImpl implements PorterService {
     }
 
     private Time getTimeByStrResult(String timeStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("hh24:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
         try {
             Time time = new Time (sdf.parse(timeStr).getTime());
             return time;
