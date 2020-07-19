@@ -235,6 +235,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             case BotModel.InlineButtons.Commands.PORTER_CHANGE_TIMETABLE_CMD: {
                 Porter porter = (Porter) botUser;
                 porterService.setIsTimetable(porter, true);
+                porterService.setHasTimetableChanged(porter, true);
                 customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
                 break;
             }
