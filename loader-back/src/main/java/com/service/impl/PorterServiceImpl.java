@@ -77,7 +77,7 @@ public class PorterServiceImpl implements PorterService {
     }
 
     @Override
-    public void setHasStartDateInputOn(Porter porter, String startTimeStr) {
+    public void setHasStartDateInputOn(Porter porter, String startTimeStr)  throws CustomBotException{
         porter.setHasStartDateInput(true);
         Time startTime = getTimeByStr(startTimeStr);
         timeTableService.completeDayTimetableByStartTime(porter, startTime);
@@ -85,7 +85,7 @@ public class PorterServiceImpl implements PorterService {
     }
 
     @Override
-    public TimeTable setHasStartDateInputOff(Porter porter, String finishTimeStr) {
+    public TimeTable setHasStartDateInputOff(Porter porter, String finishTimeStr) throws CustomBotException {
         porter.setHasStartDateInput(false);
         Time finishTime = getTimeByStr(finishTimeStr);
         TimeTable timeTable = timeTableService.completeDayTimetableByFinishTime(porter, finishTime);
