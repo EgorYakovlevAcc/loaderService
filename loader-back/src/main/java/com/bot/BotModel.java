@@ -115,7 +115,7 @@ public final class BotModel {
             InlineKeyboardButton SUNDAY_TIMETABLE_INL_BTN = ElementsHelper.createInlineButton(Texts.Days.SUNDAY, Commands.SUNDAY_SELECT_TIMETABLE);
 
             InlineKeyboardButton PORTER_TIMATABLE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CONFIRM_TIMETABLE_BTN, Commands.PORTER_CONFIRM_TIMETABLE);
-            InlineKeyboardButton PORTER_TIMATABLE_CHANGE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CANCEL_CHANGE_TIMETABLE_BTN, Commands.PORTER_CONFIRM_TIMETABLE_CHANGE);
+            InlineKeyboardButton PORTER_TIMATABLE_CHANGE_CONFIRM_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CONFIRM_TIMETABLE_CHANGE_BTN, Commands.PORTER_CONFIRM_TIMETABLE_CHANGE);
             InlineKeyboardButton PORTER_TIMATABLE_CHANGE_CANCEK_INL_BTN = ElementsHelper.createInlineButton(Texts.PORTER_CANCEL_CHANGE_TIMETABLE_BTN, Commands.PORTER_CANCEL_TIMETABLE_CHANGE);
             InlineKeyboardButton I_HAVE_ACCOUNT_INL_BTN = ElementsHelper.createInlineButton(Texts.I_HAVE_ACCOUNT_BTN, Commands.I_HAVE_ACCOUNT_CMD);
             InlineKeyboardButton INPUT_EMAIL_INL_BTN = ElementsHelper.createInlineButton(Texts.INPUT_EMAIL_BTN, Commands.INPUT_EMAIL_CMD);
@@ -172,6 +172,7 @@ public final class BotModel {
             String I_HAVE_ACCOUNT_BTN = "Уже есть акканут";
             String INPUT_EMAIL_BTN = "Ввести email";
             String CANCEL_INPUT_EMAIL = "Отмена";
+            String PORTER_CONFIRM_TIMETABLE_CHANGE_BTN = "Да, хочу изменить";
 
             interface Days {
                 final String MONDAY = "Пн";
