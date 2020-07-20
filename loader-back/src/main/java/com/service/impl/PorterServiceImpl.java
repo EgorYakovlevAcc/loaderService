@@ -139,6 +139,7 @@ public class PorterServiceImpl implements PorterService {
     @Override
     public void setStartEmailInput(Porter porter) {
         porter.setEmailInput(true);
+        porterRepository.save(porter);
     }
 
     @Override
