@@ -73,7 +73,7 @@ public class QuestionServiceImpl implements QuestionService {
         }
         Integer questionNumber = currentQuestionNumber == -1 ? 0 : currentQuestionNumber;
         Question question = questionRepository.findQuestionByQuestionNumberAndUserType(questionNumber, UserType.CUSTOMER);
-        customer.setCurrentQuestionNum(questionNumber + 1);
+        customer.setCurrentQuestionNum(currentQuestionNumber + 1);
         customer.setAskingQuestions(true);
         customerRepository.save(customer);
         return question;

@@ -119,7 +119,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
                     }
                 } else {
-                    if ((customer.isAskingQuestions()) && (!customer.isFinishedAskingQuestions())) {
+                    if ((customer.isAskingQuestions())) {
                         answerService.saveCustomerAnswer(customer, message.getText());
                         Question question = questionService.getNextQuestionForCustomer(customer);
                         if (question == null) {
