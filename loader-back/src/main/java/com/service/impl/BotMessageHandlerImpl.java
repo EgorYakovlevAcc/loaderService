@@ -5,6 +5,7 @@ import com.bot.BotModel;
 import com.bot.MessagesPackage;
 import com.exception.CustomBotException;
 import com.google.common.collect.ImmutableList;
+import com.google.inject.internal.cglib.core.$MethodWrapper;
 import com.model.ModelUtils;
 import com.model.Question;
 import com.model.TimeTable;
@@ -79,6 +80,18 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 }
             }
         } else {
+            if (message != null) {
+                if (message.getText().equals("/removeme")) {
+                    if (botUser instanceof Porter) {
+                        Porter porter = (Porter) botUser;
+                        porterService.fullDeletePorter(porter);
+                    }
+                    else if (botUser instanceof Customer){
+                        Customer customer = (Customer) botUser;
+                        customerService.fullDeleteCustomer(customer);
+                    }
+                }
+            }
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if (porter.isFinishedAskingQuestions()) {
@@ -366,9 +379,6 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         customSendMessage(messagesPackage, String.format("Сформирован новый заказ для %s из %s рабочих. Создайте беседу и добавьте всех людей в неё", customer.getUsername(), porters.size()), administrator.getChatId(), null);
         SendContact customerContact = new SendContact();
         customerContact.setChatId(administrator.getChatId());
-        customerContact.setFirstName("Egor");
-        customerContact.setLastName("Yakovlev");
-        customerContact.setPhoneNumber("89951181936");
         messagesPackage.addMessageToPackage(customerContact);
         for (Porter porter : porters) {
             SendContact sendContact = new SendContact();

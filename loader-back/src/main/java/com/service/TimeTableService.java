@@ -19,4 +19,6 @@ public interface TimeTableService {
     void setDayIsEditing(TimeTable timeTable, boolean isEditing);
 
     void cancelEditingTimetable(Porter porter);
+
+    void deleteAllTimeTableForPorter(Porter porter);
 }

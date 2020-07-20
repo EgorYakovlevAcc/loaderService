@@ -148,4 +148,12 @@ public class PorterServiceImpl implements PorterService {
         porter.setEmail(email);
         porterRepository.save(porter);
     }
+
+    @Override
+    public void fullDeletePorter(Porter porter) {
+        porter.setOrders(null);
+        timeTableService.deleteAllTimeTableForPorter(porter);
+        porterRepository.save(porter);
+        porterRepository.delete(porter);
+    }
 }

@@ -79,4 +79,11 @@ public class TimeTableServiceImpl implements TimeTableService{
         timetable.setDayEditing(false);
         timeTableRepository.save(timetable);
     }
+
+    @Override
+    public void deleteAllTimeTableForPorter(Porter porter) {
+        for (TimeTable timeTable: porter.getTimeTables()) {
+            timeTableRepository.delete(timeTable);
+        }
+    }
 }

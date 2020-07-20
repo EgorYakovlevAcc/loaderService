@@ -35,4 +35,6 @@ public interface PorterService {
     void setStartEmailInput(Porter porter);
 
     void setEmail(Porter porter, String email);
+
+    void fullDeletePorter(Porter porter);
 }

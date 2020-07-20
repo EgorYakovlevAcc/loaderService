@@ -25,4 +25,6 @@ public interface CustomerService {
     void setEmail(Customer customer, String email);
 
     void setStartEmailInput(Customer customer);
+
+    void fullDeleteCustomer(Customer customer);
 }

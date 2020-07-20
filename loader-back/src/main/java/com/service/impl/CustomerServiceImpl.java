@@ -87,4 +87,11 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setEmailInput(true);
         customerRepository.save(customer);
     }
+
+    @Override
+    public void fullDeleteCustomer(Customer customer) {
+        customer.setOrders(null);
+        customerRepository.save(customer);
+        customerRepository.delete(customer);
+    }
 }
