@@ -36,9 +36,9 @@ public class Bot extends TelegramLongPollingBot {
                         SendPhoto sendPhoto = (SendPhoto) answer;
                         sendPhoto(sendPhoto); // Call method to send the message
                     }
-                }
-                for (PartialBotApiMethod contact: answersPackage.getContacts()) {
-                    execute(contact);
+                    else if (answer instanceof SendContact) {
+                        execute((SendContact) answer); // Call method to send contact
+                    }
                 }
             } catch (TelegramApiException e) {
                 e.printStackTrace();
