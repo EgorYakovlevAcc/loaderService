@@ -3,11 +3,13 @@ package com.service.impl;
 import com.model.user.BotUser;
 import com.model.user.Customer;
 import com.model.user.Porter;
+import com.service.AdministratorService;
 import com.service.CustomerService;
 import com.service.PorterService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.api.objects.User;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,6 +17,8 @@ public class UserServiceImpl implements UserService {
     private PorterService porterService;
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private AdministratorService administratorService;
 
     @Override
     public BotUser findTelegramUserByTelegramId(Integer id) {
@@ -23,12 +27,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Porter createPorter(Integer telegramUserId, Long chatId) {
+    public BotUser findTelegramUserByEmail(String email) {
+        return porterService.findPorterByEmail(email);
+    }
+
+    @Override
+    public Porter createPorter(User user, Long chatId) {
         Porter porter = new Porter();
         porter.setChatId(chatId);
         porter.setFinishedAskingQuestions(false);
         porter.setAskingQuestions(false);
-        porter.setTelegramId(telegramUserId);
+        porter.setTelegramId(user.getId());
+        porter.setFullName(user.getUserName());
         porter.setStartTimetable(false);
         porter.setHasStartDateInput(false);
         porter.setCurrentQuestionNum(-1);
@@ -36,12 +46,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Customer createCustomer(Integer telegramUserId, Long chatId) {
+    public Customer createCustomer(User user, Long chatId) {
         Customer customer = new Customer();
         customer.setFinishedAskingQuestions(false);
         customer.setAskingQuestions(false);
         customer.setChatId(chatId);
-        customer.setTelegramId(telegramUserId);
+        customer.setName(user.getUserName());
+        customer.setTelegramId(user.getId());
         customer.setCurrentQuestionNum(-1);
         return customerService.createCustomer(customer);
     }

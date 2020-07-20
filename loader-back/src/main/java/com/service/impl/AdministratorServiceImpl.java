@@ -34,4 +34,9 @@ public class AdministratorServiceImpl implements AdministratorService {
     public Administrator getAdministrator() {
         return administratorRepository.findAll().stream().findFirst().orElse(null);
     }
+
+    @Override
+    public Administrator findAdministratorByEmail(String email) {
+        return administratorRepository.findAdministratorByEmail(email);
+    }
 }

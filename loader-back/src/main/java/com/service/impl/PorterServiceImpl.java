@@ -130,4 +130,9 @@ public class PorterServiceImpl implements PorterService {
         porter.setHasChangeTimetable(b);
         porterRepository.save(porter);
     }
+
+    @Override
+    public Porter findPorterByEmail(String email) {
+        return porterRepository.findPorterByEmail(email);
+    }
 }

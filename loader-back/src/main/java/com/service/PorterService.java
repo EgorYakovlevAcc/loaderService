@@ -29,4 +29,6 @@ public interface PorterService {
     void updateTimeTableForPorter(Porter porter);
 
     void setHasTimetableChanged(Porter porter, boolean b);
+
+    Porter findPorterByEmail(String email);
 }

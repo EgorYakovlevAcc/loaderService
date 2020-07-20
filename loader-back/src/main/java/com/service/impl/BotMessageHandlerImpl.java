@@ -361,6 +361,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             sendContact.setLastName(porter.getChatId().toString());
             messagesPackage.addMessageToPackage(sendContact);
         }
+        scenarioForKnownCustomer(messagesPackage, customer);
     }
 
     private Integer getOrderIdFromPorterOrderExecutionCommand(String command) {
@@ -389,12 +390,12 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     }
 
     private void callBackSelectPorterHandler(MessagesPackage messagesPackage, User user, Long chatId) {
-        Porter porter = userService.createPorter(user.getId(), chatId);
+        Porter porter = userService.createPorter(user, chatId);
         customSendMessage(messagesPackage, questionService.getNextQuestionForPorter(porter).getText(), chatId, null);
     }
 
     private void callBackSelectCustomerHandler(MessagesPackage messagesPackage, User user, Long chatId) {
-        Customer customer = userService.createCustomer(user.getId(), chatId);
+        Customer customer = userService.createCustomer(user, chatId);
         customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), chatId, null);
     }
 

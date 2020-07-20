@@ -11,4 +11,5 @@ public interface PorterRepository extends JpaRepository<Porter, Integer> {
     Porter findPorterById(Integer id);
     Porter findPorterByChatId(Long chatId);
     Porter findPorterByTelegramId(Integer telegramId);
+    Porter findPorterByEmail(String email);
 }

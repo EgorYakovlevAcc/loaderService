@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CustomerService {
     Customer findCustomerByTelegramId(Integer id);
+    Customer findCustomerByEmail(String email);
     void save(Customer customer);
 
     Customer createCustomer(Customer customer);
