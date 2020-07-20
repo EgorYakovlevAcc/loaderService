@@ -10,4 +10,6 @@ public interface AdministratorService {
     void deleteAdminById(Integer adminId);
 
     void createAdministratorByAdministratorPojo(com.pojo.Administrator administrator);
+
+    Administrator getAdministrator();
 }

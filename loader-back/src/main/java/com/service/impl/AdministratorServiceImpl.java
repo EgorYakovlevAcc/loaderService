@@ -29,4 +29,9 @@ public class AdministratorServiceImpl implements AdministratorService {
         administrator.setTelegramId(administrator.getTelegramId());
         administratorRepository.save(administrator);
     }
+
+    @Override
+    public Administrator getAdministrator() {
+        return administratorRepository.findAll().stream().findFirst().orElse(null);
+    }
 }

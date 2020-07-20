@@ -9,16 +9,14 @@ import com.model.Question;
 import com.model.TimeTable;
 import com.model.order.Order;
 import com.model.order.Status;
-import com.model.user.Anonymous;
-import com.model.user.BotUser;
-import com.model.user.Customer;
-import com.model.user.Porter;
+import com.model.user.*;
 import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.api.methods.groupadministration.ExportChatInviteLink;
+import org.telegram.telegrambots.api.methods.send.SendContact;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -28,6 +26,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import javax.sound.sampled.Port;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +52,8 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private TimeTableService timeTableService;
     @Autowired
     private AnonymousService anonymousService;
+    @Autowired
+    private AdministratorService administratorService;
 
     @Override
     public MessagesPackage handleMessage(Update update) {
@@ -340,11 +341,26 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private void orderRecruitmentCompletedHandler(MessagesPackage messagesPackage, List<Porter> porters, Customer customer, Integer orderId) {
         for (Porter porter : porters) {
             customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS, orderId), porter.getChatId(), null);
-            ExportChatInviteLink exportChatInviteLink = new ExportChatInviteLink();
-            exportChatInviteLink.setChatId("320089991");
-            messagesPackage.addMessageToPackage(exportChatInviteLink);
         }
         customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER, orderId), customer.getChatId(), null);
+        sendContactsToAdministrator(messagesPackage, customer, porters);
+    }
+
+    private void sendContactsToAdministrator(MessagesPackage messagesPackage, Customer customer, List<Porter> porters) {
+        Administrator administrator = administratorService.getAdministrator();
+        customSendMessage(messagesPackage, String.format("Сформирован новый заказ для %s из %s рабочих. Создайте беседу и добавьте всех людей в неё", customer.getUsername(), porters.size()), administrator.getChatId(), null);
+        SendContact customerContact = new SendContact();
+        customerContact.setChatId(administrator.getChatId());
+        customerContact.setFirstName("Egor");
+        customerContact.setLastName("Yakovlev");
+        customerContact.setPhoneNumber("89951181936");
+        messagesPackage.addMessageToPackage(customerContact);
+        for (Porter porter: porters) {
+            SendContact sendContact = new SendContact();
+            sendContact.setChatId(administrator.getChatId());
+            sendContact.setLastName(porter.getChatId().toString());
+            messagesPackage.addMessageToPackage(sendContact);
+        }
     }
 
     private Integer getOrderIdFromPorterOrderExecutionCommand(String command) {

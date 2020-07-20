@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.api.methods.groupadministration.ExportChatInviteLink;
+import org.telegram.telegrambots.api.methods.send.SendContact;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.Update;
@@ -34,9 +35,10 @@ public class Bot extends TelegramLongPollingBot {
                     } else if (answer instanceof SendPhoto){
                         SendPhoto sendPhoto = (SendPhoto) answer;
                         sendPhoto(sendPhoto); // Call method to send the message
-                    } else if (answer instanceof ExportChatInviteLink){
-                        execute((ExportChatInviteLink) answer);// call method to send chat invite link
                     }
+                }
+                for (PartialBotApiMethod contact: answersPackage.getContacts()) {
+                    execute(contact);
                 }
             } catch (TelegramApiException e) {
                 e.printStackTrace();
