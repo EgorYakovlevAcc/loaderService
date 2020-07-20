@@ -80,18 +80,6 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 }
             }
         } else {
-            if (message != null) {
-                if (message.getText().equals("/removeme")) {
-                    if (botUser instanceof Porter) {
-                        Porter porter = (Porter) botUser;
-                        porterService.fullDeletePorter(porter);
-                    }
-                    else if (botUser instanceof Customer){
-                        Customer customer = (Customer) botUser;
-                        customerService.fullDeleteCustomer(customer);
-                    }
-                }
-            }
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if (porter.isFinishedAskingQuestions()) {
