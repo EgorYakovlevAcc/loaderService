@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.telegram.telegrambots.api.methods.groupadministration.ExportChatInviteLink;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -339,6 +340,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private void orderRecruitmentCompletedHandler(MessagesPackage messagesPackage, List<Porter> porters, Customer customer, Integer orderId) {
         for (Porter porter : porters) {
             customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS, orderId), porter.getChatId(), null);
+            ExportChatInviteLink exportChatInviteLink = new ExportChatInviteLink();
+            exportChatInviteLink.setChatId("320089991");
+            messagesPackage.addMessageToPackage(exportChatInviteLink);
         }
         customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER, orderId), customer.getChatId(), null);
     }
