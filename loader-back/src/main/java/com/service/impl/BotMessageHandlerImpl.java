@@ -1,11 +1,9 @@
 package com.service.impl;
 
-import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
 import com.exception.CustomBotException;
 import com.google.common.collect.ImmutableList;
-import com.google.inject.internal.cglib.core.$MethodWrapper;
 import com.model.ModelUtils;
 import com.model.Question;
 import com.model.TimeTable;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.telegram.telegrambots.api.methods.groupadministration.ExportChatInviteLink;
 import org.telegram.telegrambots.api.methods.send.SendContact;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
@@ -27,8 +24,6 @@ import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import javax.sound.sampled.Port;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -367,6 +362,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         customSendMessage(messagesPackage, String.format("Сформирован новый заказ для %s из %s рабочих. Создайте беседу и добавьте всех людей в неё", customer.getUsername(), porters.size()), administrator.getChatId(), null);
         SendContact customerContact = new SendContact();
         customerContact.setChatId(administrator.getChatId());
+        customerContact.setFirstName("Egor");
+        customerContact.setLastName("Yakovlev");
+        customerContact.setPhoneNumber("89951181936");
         messagesPackage.addMessageToPackage(customerContact);
         for (Porter porter : porters) {
             SendContact sendContact = new SendContact();
