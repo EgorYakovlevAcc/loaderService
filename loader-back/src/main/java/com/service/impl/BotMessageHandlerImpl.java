@@ -88,10 +88,6 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         if (porter.isHasChangeTimetable()) {
                             startFinishTimeScenario(messagesPackage, porter, message);
                         } else {
-                            if (porter.isEmailInput()) {
-                                String email = message.getText();
-                                porterService.setEmail(porter, email);
-                            }
                             customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
                         }
                     }
@@ -104,6 +100,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 startFinishTimeScenario(messagesPackage, porter, message);
                             }
                         } else {
+                            //email заполняется тут для портера
                             if (porter.isEmailInput()) {
                                 String email = message.getText();
                                 porterService.setEmail(porter, email);
@@ -125,15 +122,19 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                     }
                 } else {
                     if ((customer.isAskingQuestions())) {
+                        if (customer.isEmailInput()) {
+                            String email = message.getText();
+                            customerService.setEmail(customer, email);
+                        }
                         answerService.saveCustomerAnswer(customer, message.getText());
                         Question question = questionService.getNextQuestionForCustomer(customer);
                         if (question == null) {
                             customerService.setFinishAskingQuestions(customer);
                             scenarioForKnownCustomer(messagesPackage, customer);
                         } else {
-                            if (customer.isEmailInput()) {
-                                String email = message.getText();
-                                customerService.setEmail(customer, email);
+                            if (question.getLabel().equals("EMAIL")) {
+                                customerService.setStartEmailInput(customer);
+                                customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, customer.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
                             }
                             customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
                         }

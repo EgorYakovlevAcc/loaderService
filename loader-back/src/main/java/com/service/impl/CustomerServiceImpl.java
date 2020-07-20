@@ -81,4 +81,10 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setEmailInput(false);
         customerRepository.save(customer);
     }
+
+    @Override
+    public void setStartEmailInput(Customer customer) {
+        customer.setEmailInput(true);
+        customerRepository.save(customer);
+    }
 }

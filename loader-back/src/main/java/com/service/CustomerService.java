@@ -23,4 +23,6 @@ public interface CustomerService {
     void deleteCustomerById(Integer customerId);
 
     void setEmail(Customer customer, String email);
+
+    void setStartEmailInput(Customer customer);
 }
