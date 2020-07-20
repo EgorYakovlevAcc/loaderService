@@ -135,4 +135,16 @@ public class PorterServiceImpl implements PorterService {
     public Porter findPorterByEmail(String email) {
         return porterRepository.findPorterByEmail(email);
     }
+
+    @Override
+    public void setStartEmailInput(Porter porter) {
+        porter.setEmailInput(true);
+    }
+
+    @Override
+    public void setEmail(Porter porter, String email) {
+        porter.setEmailInput(false);
+        porter.setEmail(email);
+        porterRepository.save(porter);
+    }
 }

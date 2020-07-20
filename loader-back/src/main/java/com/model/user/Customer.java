@@ -31,6 +31,7 @@ public class Customer implements BotUser {
     private Integer orderQuestionNum;
     private String username;
     private String email;
+    private boolean isEmailInput;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="customer_id")

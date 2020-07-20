@@ -87,6 +87,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                         if (porter.isHasChangeTimetable()) {
                             startFinishTimeScenario(messagesPackage, porter, message);
                         } else {
+                            if (porter.isEmailInput()) {
+                                String email = message.getText();
+                                porterService.setEmail(porter, email);
+                            }
                             customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
                         }
                     }
@@ -122,6 +126,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             customerService.setFinishAskingQuestions(customer);
                             scenarioForKnownCustomer(messagesPackage, customer);
                         } else {
+                            if (customer.isEmailInput()) {
+                                String email = message.getText();
+                                customerService.setEmail(customer, email);
+                            }
                             customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
                         }
                     } else {
@@ -174,6 +182,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             if (question.getLabel().equals("TIMETABLE")) {
                 porterService.setIsTimetable(porter, true);
                 customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
+            }
+            if (question.getLabel().equals("EMAIL")) {
+                porterService.setStartEmailInput(porter);
             }
         }
     }
@@ -355,7 +366,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         customerContact.setLastName("Yakovlev");
         customerContact.setPhoneNumber("89951181936");
         messagesPackage.addMessageToPackage(customerContact);
-        for (Porter porter: porters) {
+        for (Porter porter : porters) {
             SendContact sendContact = new SendContact();
             sendContact.setChatId(administrator.getChatId());
             sendContact.setLastName(porter.getChatId().toString());

@@ -31,4 +31,8 @@ public interface PorterService {
     void setHasTimetableChanged(Porter porter, boolean b);
 
     Porter findPorterByEmail(String email);
+
+    void setStartEmailInput(Porter porter);
+
+    void setEmail(Porter porter, String email);
 }

@@ -21,4 +21,6 @@ public interface CustomerService {
     List<Customer> findAll();
 
     void deleteCustomerById(Integer customerId);
+
+    void setEmail(Customer customer, String email);
 }
