@@ -175,7 +175,7 @@ public final class BotModel {
             String PORTER_FINISH_DATE = "До скольки вы готовы работать?";
 
             SimpleDateFormat COMMON_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat COMMON_TIME_FORMAT = new SimpleDateFormat("hh24:mm");
+            SimpleDateFormat COMMON_TIME_FORMAT = new SimpleDateFormat("HH:mm");
             String DAY_TIMETABLE_RESULT = "%s:\n вы работаете с %s до %s";
             String PORTER_INVALID_TIME_FORMAT = "Введите время в формате ЧЧ24-ММ";
             String I_HAVE_ACCOUNT_BTN = "Уже есть акканут";

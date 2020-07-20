@@ -104,6 +104,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 startFinishTimeScenario(messagesPackage, porter, message);
                             }
                         } else {
+                            if (porter.isEmailInput()) {
+                                String email = message.getText();
+                                porterService.setEmail(porter, email);
+                            }
                             getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
                         }
                     } else {
@@ -183,9 +187,6 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             if (question.getLabel().equals("TIMETABLE")) {
                 porterService.setIsTimetable(porter, true);
                 customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
-            }
-            if (question.getLabel().equals("EMAIL")) {
-                porterService.setStartEmailInput(porter);
             }
         }
     }

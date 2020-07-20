@@ -133,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Time getTimeByStrResult(String timeStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         try {
             Time time = new Time (sdf.parse(timeStr).getTime());
             return time;
