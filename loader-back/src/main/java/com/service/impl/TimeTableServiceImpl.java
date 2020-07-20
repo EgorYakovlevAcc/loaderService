@@ -52,7 +52,7 @@ public class TimeTableServiceImpl implements TimeTableService{
         });
         StringBuilder timetableDescription = new StringBuilder();
         for (TimeTable timeTable: timeTableList) {
-            timetableDescription.append(BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(timeTable.getDay()) + ":\n" + "начало работы: " + timeTable.getStart() + "\n" + "конец работы: " + timeTable.getFinish() + "\n");
+            timetableDescription.append(BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(timeTable.getDay()) + ":\n" + "начало работы: " + BotModel.InlineButtons.Texts.COMMON_TIME_FORMAT.format(timeTable.getStart()) + "\n" + "конец работы: " + BotModel.InlineButtons.Texts.COMMON_TIME_FORMAT.format(timeTable.getFinish()) + "\n");
         }
         return timetableDescription.toString();
     }

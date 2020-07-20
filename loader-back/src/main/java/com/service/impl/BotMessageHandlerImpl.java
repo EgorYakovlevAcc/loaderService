@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
 import com.exception.CustomBotException;
@@ -155,9 +156,9 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 TimeTable timeTable = porterService.setHasStartDateInputOff(porter, finishTime);
                 customSendMessage(messagesPackage,
                         String.format(BotModel.InlineButtons.Texts.DAY_TIMETABLE_RESULT,
-                                timeTable.getDay(),
-                                timeTable.getStart(),
-                                timeTable.getFinish()),
+                                BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(timeTable.getDay()),
+                                BotModel.InlineButtons.Texts.COMMON_TIME_FORMAT.format(timeTable.getStart()),
+                                BotModel.InlineButtons.Texts.COMMON_TIME_FORMAT.format(timeTable.getFinish())),
                         porter.getChatId(),
                         BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
             }
@@ -326,7 +327,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             customSendMessage(messagesPackage, BotModel.Notifications.INPUT_TIME_START, porter.getChatId(), null);
                         } else {
                             timeTableService.setDayIsEditing(timeTable, true);
-                            customSendMessage(messagesPackage, BotModel.Notifications.DUPLICATE_TIMETABLE_FOR_DAY, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD);
+                            customSendMessage(messagesPackage, String.format(BotModel.Notifications.DUPLICATE_TIMETABLE_FOR_DAY, BotModel.InlineButtons.Texts.Days.DAY_ID_AND_DAY.get(dayId)), porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_CHANGE_ACTION_KEYBOARD);
                         }
                     } else {
                         porterService.setEditingDayTimetableOff(porter, dayId);

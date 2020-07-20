@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -173,6 +174,8 @@ public final class BotModel {
 
             String PORTER_FINISH_DATE = "До скольки вы готовы работать?";
 
+            SimpleDateFormat COMMON_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat COMMON_TIME_FORMAT = new SimpleDateFormat("hh24:mm");
             String DAY_TIMETABLE_RESULT = "%s:\n вы работаете с %s до %s";
             String PORTER_INVALID_TIME_FORMAT = "Введите время в формате ЧЧ24-ММ";
             String I_HAVE_ACCOUNT_BTN = "Уже есть акканут";
