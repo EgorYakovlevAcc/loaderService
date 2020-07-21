@@ -39,4 +39,12 @@ public class AdministratorServiceImpl implements AdministratorService {
     public Administrator findAdministratorByEmail(String email) {
         return administratorRepository.findAdministratorByEmail(email);
     }
+
+    @Override
+    public void createAdmin(Integer id, Long chatId) {
+        Administrator administrator = new Administrator();
+        administrator.setChatId(chatId);
+        administrator.setTelegramId(id);
+        administratorRepository.save(administrator);
+    }
 }

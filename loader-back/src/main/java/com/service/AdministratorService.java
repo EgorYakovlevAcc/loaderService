@@ -14,4 +14,6 @@ public interface AdministratorService {
     Administrator getAdministrator();
 
     Administrator findAdministratorByEmail(String email);
+
+    void createAdmin(Integer id, Long chatId);
 }
