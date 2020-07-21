@@ -362,9 +362,6 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         customSendMessage(messagesPackage, String.format("Сформирован новый заказ для %s из %s рабочих. Создайте беседу и добавьте всех людей в неё", customer.getUsername(), porters.size()), administrator.getChatId(), null);
         SendContact customerContact = new SendContact();
         customerContact.setChatId(administrator.getChatId());
-        customerContact.setFirstName("Egor");
-        customerContact.setLastName("Yakovlev");
-        customerContact.setPhoneNumber("89951181936");
         messagesPackage.addMessageToPackage(customerContact);
         for (Porter porter : porters) {
             SendContact sendContact = new SendContact();
