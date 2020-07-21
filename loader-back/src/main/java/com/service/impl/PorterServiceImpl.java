@@ -153,6 +153,7 @@ public class PorterServiceImpl implements PorterService {
     public void fullDeletePorter(Porter porter) {
         porter.setOrders(null);
         timeTableService.deleteAllTimeTableForPorter(porter);
+        porter.setTimeTables(null);
         porterRepository.save(porter);
         porterRepository.delete(porter);
     }
