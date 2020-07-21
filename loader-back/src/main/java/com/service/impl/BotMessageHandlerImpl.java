@@ -64,19 +64,19 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         Message message = update.getMessage();
         User user = message == null ? update.getCallbackQuery().getFrom() : message.getFrom();
         BotUser botUser = userService.findTelegramUserByTelegramId(user.getId());
-        if (message != null && "/removeme".equals(message.getText())) {
-            if (botUser != null) {
-                if (botUser instanceof Porter) {
-                    Porter porter = (Porter) botUser;
-                    porterService.fullDeletePorter(porter);
-                }
-                else if (botUser instanceof Customer) {
-                    Customer customer = (Customer) botUser;
-                    customerService.fullDeleteCustomer(customer);
-                }
-            }
-        }
-        else if(message != null && "/iadmin".equals(message.getText())) {
+//        if (message != null && "/removeme".equals(message.getText())) {
+//            if (botUser != null) {
+//                if (botUser instanceof Porter) {
+//                    Porter porter = (Porter) botUser;
+//                    porterService.fullDeletePorter(porter);
+//                }
+//                else if (botUser instanceof Customer) {
+//                    Customer customer = (Customer) botUser;
+//                    customerService.fullDeleteCustomer(customer);
+//                }
+//            }
+//        }
+        if(message != null && "/iadmin".equals(message.getText())) {
             administratorService.createAdmin(user.getId(),  message.getChatId());
         }
         else {
