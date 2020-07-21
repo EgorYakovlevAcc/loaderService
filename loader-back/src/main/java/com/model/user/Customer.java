@@ -38,4 +38,6 @@ public class Customer implements BotUser {
     private AnswerCustomer answer;
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private List<Order> orders;
+    private String firstName;
+    private String lastName;
 }

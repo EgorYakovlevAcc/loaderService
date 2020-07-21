@@ -34,6 +34,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Porter createPorter(User user, Long chatId) {
         Porter porter = new Porter();
+        porter.setFirstName(user.getFirstName());
+        porter.setLastName(user.getLastName());
         porter.setChatId(chatId);
         porter.setFinishedAskingQuestions(false);
         porter.setAskingQuestions(false);
@@ -51,6 +53,8 @@ public class UserServiceImpl implements UserService {
         customer.setFinishedAskingQuestions(false);
         customer.setAskingQuestions(false);
         customer.setChatId(chatId);
+        customer.setFirstName(user.getFirstName());
+        customer.setLastName(user.getLastName());
         customer.setName(user.getUserName());
         customer.setTelegramId(user.getId());
         customer.setCurrentQuestionNum(-1);

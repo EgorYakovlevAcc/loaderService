@@ -362,11 +362,14 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         customSendMessage(messagesPackage, String.format("Сформирован новый заказ для %s из %s рабочих. Создайте беседу и добавьте всех людей в неё", customer.getUsername(), porters.size()), administrator.getChatId(), null);
         SendContact customerContact = new SendContact();
         customerContact.setChatId(administrator.getChatId());
+        customerContact.setFirstName(customer.getFirstName());
+        customerContact.setFirstName(customer.getLastName());
         messagesPackage.addMessageToPackage(customerContact);
         for (Porter porter : porters) {
             SendContact sendContact = new SendContact();
             sendContact.setChatId(administrator.getChatId());
-            sendContact.setLastName(porter.getChatId().toString());
+            sendContact.setLastName(porter.getLastName());
+            sendContact.setLastName(porter.getFirstName());
             messagesPackage.addMessageToPackage(sendContact);
         }
         scenarioForKnownCustomer(messagesPackage, customer);

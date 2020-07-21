@@ -42,4 +42,6 @@ public class Porter implements BotUser {
     private List<TimeTable> timeTables;
     private boolean hasChangeTimetable;
     private boolean isEmailInput;
+    private String firstName;
+    private String lastName;
 }
