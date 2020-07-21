@@ -76,7 +76,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 }
             }
         }
-        else if(message != null && "iadmin".equals(message.getText())) {
+        else if(message != null && "/iadmin".equals(message.getText())) {
             administratorService.createAdmin(user.getId(),  message.getChatId());
         }
         else {

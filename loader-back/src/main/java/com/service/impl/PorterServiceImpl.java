@@ -154,6 +154,7 @@ public class PorterServiceImpl implements PorterService {
         porter.setOrders(null);
         timeTableService.deleteAllTimeTableForPorter(porter);
         porter.setTimeTables(null);
+        porter.setOrders(null);
         porterRepository.save(porter);
         porterRepository.delete(porter);
     }
