@@ -83,70 +83,74 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 String mpn = message.getContact().getPhoneNumber();
                 if (botUser instanceof Porter) {
                     porterService.setMpnForPorter((Porter) botUser, mpn);
+                    customSendMessage(messagesPackage, questionService.getNextQuestionForPorter((Porter) botUser).getText(), message.getChatId(), null);
                 } else if (botUser instanceof Customer) {
                     customerService.setMpnForCustomer((Customer) botUser, mpn);
+                    customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer((Customer) botUser).getText(), message.getChatId(), null);
                 }
             }
-            if (botUser instanceof Porter) {
-                Porter porter = (Porter) botUser;
-                if (porter.isFinishedAskingQuestions()) {
-                    if (update.hasCallbackQuery()) {
-                        callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
-                    } else {
-                        if (porter.isHasChangeTimetable()) {
-                            startFinishTimeScenario(messagesPackage, porter, message);
+            else {
+                if (botUser instanceof Porter) {
+                    Porter porter = (Porter) botUser;
+                    if (porter.isFinishedAskingQuestions()) {
+                        if (update.hasCallbackQuery()) {
+                            callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
                         } else {
-                            customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
-                        }
-                    }
-                } else {
-                    if ((porter.isAskingQuestions())) {
-                        if (porter.isStartTimetable()) {
-                            if (message == null) {
-                                callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
-                            } else {
+                            if (porter.isHasChangeTimetable()) {
                                 startFinishTimeScenario(messagesPackage, porter, message);
+                            } else {
+                                customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
                             }
-                        } else {
-                            //email заполняется тут для портера
-                            if (porter.isEmailInput()) {
-                                String email = message.getText();
-                                porterService.setEmail(porter, email);
-                            }
-                            getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
                         }
                     } else {
-                        //todo: действия, когда грезчик не закончил регистрацию
-                    }
-                }
-            } else {
-                Customer customer = (Customer) botUser;
-                if (customer.isFinishedAskingQuestions()) {
-                    if (customer.isOrderCreationProcessing()) {
-                        setValuesToOrder(customer, message.getText());
-                        orderCreationActionHandler(messagesPackage, customer);
-                    } else {
-                        callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
+                        if ((porter.isAskingQuestions())) {
+                            if (porter.isStartTimetable()) {
+                                if (message == null) {
+                                    callbackScenario(messagesPackage, update.getCallbackQuery(), porter);
+                                } else {
+                                    startFinishTimeScenario(messagesPackage, porter, message);
+                                }
+                            } else {
+                                //email заполняется тут для портера
+                                if (porter.isEmailInput()) {
+                                    String email = message.getText();
+                                    porterService.setEmail(porter, email);
+                                }
+                                getNextQuestionScenarioIfExistsForPorter(porter, message, messagesPackage);
+                            }
+                        } else {
+                            //todo: действия, когда грезчик не закончил регистрацию
+                        }
                     }
                 } else {
-                    if ((customer.isAskingQuestions())) {
-                        if (customer.isEmailInput()) {
-                            String email = message.getText();
-                            customerService.setEmail(customer, email);
-                        }
-                        answerService.saveCustomerAnswer(customer, message.getText());
-                        Question question = questionService.getNextQuestionForCustomer(customer);
-                        if (question == null) {
-                            customerService.setFinishAskingQuestions(customer);
-                            scenarioForKnownCustomer(messagesPackage, customer);
+                    Customer customer = (Customer) botUser;
+                    if (customer.isFinishedAskingQuestions()) {
+                        if (customer.isOrderCreationProcessing()) {
+                            setValuesToOrder(customer, message.getText());
+                            orderCreationActionHandler(messagesPackage, customer);
                         } else {
-                            if (question.getLabel().equals("EMAIL")) {
-                                customerService.setStartEmailInput(customer);
-                            }
-                            customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
+                            callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
                         }
                     } else {
-                        //todo:действия, когда клиент не закончил регистрацию
+                        if ((customer.isAskingQuestions())) {
+                            if (customer.isEmailInput()) {
+                                String email = message.getText();
+                                customerService.setEmail(customer, email);
+                            }
+                            answerService.saveCustomerAnswer(customer, message.getText());
+                            Question question = questionService.getNextQuestionForCustomer(customer);
+                            if (question == null) {
+                                customerService.setFinishAskingQuestions(customer);
+                                scenarioForKnownCustomer(messagesPackage, customer);
+                            } else {
+                                if (question.getLabel().equals("EMAIL")) {
+                                    customerService.setStartEmailInput(customer);
+                                }
+                                customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
+                            }
+                        } else {
+                            //todo:действия, когда клиент не закончил регистрацию
+                        }
                     }
                 }
             }
@@ -414,16 +418,13 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
 
     private void callBackSelectPorterHandler(MessagesPackage messagesPackage, User user, Long chatId) {
         Porter porter = userService.createPorter(user, chatId);
-        customSendMessage(messagesPackage, questionService.getNextQuestionForPorter(porter).getText(), chatId, null);
+        customSendMessage(messagesPackage, "Разрешить использовать номер мобильного телефона?", chatId, getButtonForGetUsesMPN());
+
     }
 
     private void callBackSelectCustomerHandler(MessagesPackage messagesPackage, User user, Long chatId) {
         Customer customer = userService.createCustomer(user, chatId);
-        if (customer.getMpn() == null) {
-            customSendMessage(messagesPackage, "Разрешить использовать номер мобильного телефона?", chatId, getButtonForGetUsesMPN());
-        } else {
-            customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), chatId, null);
-        }
+        customSendMessage(messagesPackage, "Разрешить использовать номер мобильного телефона?", chatId, getButtonForGetUsesMPN());
     }
 
     private void anonymousHelloScenario(MessagesPackage messagesPackage, Long chatId) {
