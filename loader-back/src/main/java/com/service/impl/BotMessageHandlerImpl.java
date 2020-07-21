@@ -83,7 +83,6 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             if (message.getContact() != null) {
                 String mpn = message.getContact().getPhoneNumber();
                 ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
-                replyKeyboardRemove.setSelective(false);
                 if (botUser instanceof Porter) {
                     porterService.setMpnForPorter((Porter) botUser, mpn);
                     customSendMessage(messagesPackage, questionService.getNextQuestionForPorter((Porter) botUser).getText(), message.getChatId(), replyKeyboardRemove);
@@ -146,7 +145,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 customerService.setFinishAskingQuestions(customer);
                                 scenarioForKnownCustomer(messagesPackage, customer);
                             } else {
-                                if (question.getLabel().equals("EMAIL")) {
+                                if ("EMAIL".equals(question.getLabel())) {
                                     customerService.setStartEmailInput(customer);
                                 }
                                 customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
@@ -199,10 +198,10 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             scenarioForKnownPorter(messagesPackage, porter);
         } else {
             customSendMessage(messagesPackage, question.getText(), porter.getChatId(), null);
-            if (question.getLabel().equals("TIMETABLE")) {
+            if ("TIMETABLE".equals(question.getLabel())) {
                 porterService.setIsTimetable(porter, true);
                 customSendMessage(messagesPackage, BotModel.InlineButtons.Texts.PORTER_SELECT_TIMETABLE, porter.getChatId(), BotModel.InlineKeyboards.PORTER_TIMETABLE_ACTION_KEYBOARD);
-            } else if (question.getLabel().equals("EMAIL")) {
+            } else if ("EMAIL".equals(question.getLabel())) {
                 porterService.setStartEmailInput(porter);
             }
         }
