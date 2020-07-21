@@ -22,7 +22,7 @@ public class Question {
     private String text;
     @Lob
     private byte[] attachement;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Option> options;
     private Integer relatedTo;
     @Enumerated(EnumType.STRING)

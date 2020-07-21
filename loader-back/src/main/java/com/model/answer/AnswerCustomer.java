@@ -22,6 +22,6 @@ public class AnswerCustomer {
     private Integer id;
     private String content;
     private Integer questionNum;
-    @OneToOne(mappedBy="answer", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy="answer", cascade = CascadeType.REMOVE)
     private Customer customer;
 }

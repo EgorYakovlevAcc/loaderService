@@ -36,7 +36,7 @@ public class Customer implements BotUser {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="customer_id")
     private AnswerCustomer answer;
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.REMOVE)
     private List<Order> orders;
     private String firstName;
     private String lastName;

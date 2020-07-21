@@ -24,6 +24,7 @@ import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -81,12 +82,14 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         } else {
             if (message.getContact() != null) {
                 String mpn = message.getContact().getPhoneNumber();
+                ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
+                replyKeyboardRemove.setSelective(false);
                 if (botUser instanceof Porter) {
                     porterService.setMpnForPorter((Porter) botUser, mpn);
-                    customSendMessage(messagesPackage, questionService.getNextQuestionForPorter((Porter) botUser).getText(), message.getChatId(), null);
+                    customSendMessage(messagesPackage, questionService.getNextQuestionForPorter((Porter) botUser).getText(), message.getChatId(), replyKeyboardRemove);
                 } else if (botUser instanceof Customer) {
                     customerService.setMpnForCustomer((Customer) botUser, mpn);
-                    customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer((Customer) botUser).getText(), message.getChatId(), null);
+                    customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer((Customer) botUser).getText(), message.getChatId(), replyKeyboardRemove);
                 }
             }
             else {

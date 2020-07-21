@@ -30,7 +30,7 @@ public class Porter implements BotUser {
     private Long chatId;
     private boolean isAskingQuestions;
     private boolean isFinishedAskingQuestions;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="porter_id")
     private AnswerPorter answer;
     private boolean isStartTimetable;
@@ -38,7 +38,7 @@ public class Porter implements BotUser {
     private String email;
     @ManyToMany
     private List<Order> orders;
-    @OneToMany(mappedBy = "porter",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "porter",cascade = CascadeType.REMOVE)
     private List<TimeTable> timeTables;
     private boolean hasChangeTimetable;
     private boolean isEmailInput;
