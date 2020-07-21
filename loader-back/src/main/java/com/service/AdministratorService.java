@@ -11,7 +11,7 @@ public interface AdministratorService {
 
     void createAdministratorByAdministratorPojo(com.pojo.Administrator administrator);
 
-    Administrator getAdministrator();
+    List<Administrator> getAdministrators();
 
     Administrator findAdministratorByEmail(String email);
 

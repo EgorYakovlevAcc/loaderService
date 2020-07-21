@@ -393,20 +393,24 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     }
 
     private void sendContactsToAdministrator(MessagesPackage messagesPackage, Customer customer, List<Porter> porters) {
-        Administrator administrator = administratorService.getAdministrator();
-        customSendMessage(messagesPackage, String.format("Сформирован новый заказ для %s из %s рабочих. Создайте беседу и добавьте всех людей в неё", customer.getUsername(), porters.size()), administrator.getChatId(), null);
-        SendContact customerContact = new SendContact();
-        customerContact.setChatId(administrator.getChatId());
-        customerContact.setFirstName(customer.getFirstName());
-        customerContact.setPhoneNumber(customer.getMpn());
-        messagesPackage.addMessageToPackage(customerContact);
-        for (Porter porter : porters) {
-            SendContact sendContact = new SendContact();
-            sendContact.setChatId(administrator.getChatId());
-            sendContact.setLastName(porter.getLastName());
-            sendContact.setFirstName(porter.getFirstName());
-            sendContact.setPhoneNumber(porter.getMpn());
-            messagesPackage.addMessageToPackage(sendContact);
+        List<Administrator> administrators = administratorService.getAdministrators();
+        for (Administrator administrator: administrators) {
+            customSendMessage(messagesPackage, String.format("Сформирован новый заказ для %s из %s рабочих. Создайте беседу и добавьте всех людей в неё", customer.getFirstName(), porters.size()), administrator.getChatId(), null);
+            customSendMessage(messagesPackage, "Контакт клиента:", administrator.getChatId(), null);
+            SendContact customerContact = new SendContact();
+            customerContact.setChatId(administrator.getChatId());
+            customerContact.setFirstName(customer.getFirstName());
+            customerContact.setPhoneNumber(customer.getMpn());
+            messagesPackage.addMessageToPackage(customerContact);
+            customSendMessage(messagesPackage, "Контакты грузчиков:", administrator.getChatId(), null);
+            for (Porter porter : porters) {
+                SendContact sendContact = new SendContact();
+                sendContact.setChatId(administrator.getChatId());
+                sendContact.setLastName(porter.getLastName());
+                sendContact.setFirstName(porter.getFirstName());
+                sendContact.setPhoneNumber(porter.getMpn());
+                messagesPackage.addMessageToPackage(sendContact);
+            }
         }
         scenarioForKnownCustomer(messagesPackage, customer);
     }

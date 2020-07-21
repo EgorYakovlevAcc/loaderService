@@ -31,8 +31,8 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public Administrator getAdministrator() {
-        return administratorRepository.findAll().stream().findFirst().orElse(null);
+    public List<Administrator> getAdministrators() {
+        return administratorRepository.findAll();
     }
 
     @Override
