@@ -388,7 +388,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
             SendContact sendContact = new SendContact();
             sendContact.setChatId(administrator.getChatId());
             sendContact.setLastName(porter.getLastName());
-            sendContact.setLastName(porter.getFirstName());
+            sendContact.setFirstName(porter.getFirstName());
             sendContact.setPhoneNumber(porter.getMpn());
             messagesPackage.addMessageToPackage(sendContact);
         }
