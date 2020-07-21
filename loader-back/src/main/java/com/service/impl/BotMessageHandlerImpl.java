@@ -382,12 +382,14 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         customerContact.setChatId(administrator.getChatId());
         customerContact.setFirstName(customer.getFirstName());
         customerContact.setFirstName(customer.getLastName());
+        customerContact.setPhoneNumber(customer.getMpn());
         messagesPackage.addMessageToPackage(customerContact);
         for (Porter porter : porters) {
             SendContact sendContact = new SendContact();
             sendContact.setChatId(administrator.getChatId());
             sendContact.setLastName(porter.getLastName());
             sendContact.setLastName(porter.getFirstName());
+            sendContact.setPhoneNumber(porter.getMpn());
             messagesPackage.addMessageToPackage(sendContact);
         }
         scenarioForKnownCustomer(messagesPackage, customer);
