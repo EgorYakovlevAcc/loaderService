@@ -80,7 +80,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 }
             }
         } else {
-            if (message.getContact() != null) {
+            if (message != null && message.getContact() != null) {
                 String mpn = message.getContact().getPhoneNumber();
                 ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
                 if (botUser instanceof Porter) {
