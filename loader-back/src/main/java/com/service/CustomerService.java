@@ -27,4 +27,6 @@ public interface CustomerService {
     void setStartEmailInput(Customer customer);
 
     void fullDeleteCustomer(Customer customer);
+
+    void setMpnForCustomer(Customer botUser, String mpn);
 }

@@ -40,4 +40,5 @@ public class Customer implements BotUser {
     private List<Order> orders;
     private String firstName;
     private String lastName;
+    private String mpn;
 }

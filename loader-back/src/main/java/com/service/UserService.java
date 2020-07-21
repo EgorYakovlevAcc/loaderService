@@ -10,4 +10,5 @@ public interface UserService {
     BotUser findTelegramUserByEmail(String email);
     Customer createCustomer(User user, Long chatId);
     Porter createPorter(User user, Long chatId);
+    boolean isUserHasSharedMPN(BotUser botUser);
 }

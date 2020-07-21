@@ -156,4 +156,10 @@ public class PorterServiceImpl implements PorterService {
         porterRepository.save(porter);
         porterRepository.delete(porter);
     }
+
+    @Override
+    public void setMpnForPorter(Porter botUser, String mpn) {
+        botUser.setMpn(mpn);
+        porterRepository.save(botUser);
+    }
 }

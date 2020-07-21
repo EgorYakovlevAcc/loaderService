@@ -37,4 +37,6 @@ public interface PorterService {
     void setEmail(Porter porter, String email);
 
     void fullDeletePorter(Porter porter);
+
+    void setMpnForPorter(Porter botUser, String mpn);
 }

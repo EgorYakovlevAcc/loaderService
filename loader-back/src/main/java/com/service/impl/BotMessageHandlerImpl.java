@@ -22,7 +22,11 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -75,6 +79,14 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 }
             }
         } else {
+            if (message.getContact() != null) {
+                String mpn = message.getContact().getPhoneNumber();
+                if (botUser instanceof Porter) {
+                    porterService.setMpnForPorter((Porter) botUser, mpn);
+                } else if (botUser instanceof Customer) {
+                    customerService.setMpnForCustomer((Customer) botUser, mpn);
+                }
+            }
             if (botUser instanceof Porter) {
                 Porter porter = (Porter) botUser;
                 if (porter.isFinishedAskingQuestions()) {
@@ -407,7 +419,11 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
 
     private void callBackSelectCustomerHandler(MessagesPackage messagesPackage, User user, Long chatId) {
         Customer customer = userService.createCustomer(user, chatId);
-        customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), chatId, null);
+        if (customer.getMpn() == null) {
+            customSendMessage(messagesPackage, "Разрешить использовать номер мобильного телефона?", chatId, getButtonForGetUsesMPN());
+        } else {
+            customSendMessage(messagesPackage, questionService.getNextQuestionForCustomer(customer).getText(), chatId, null);
+        }
     }
 
     private void anonymousHelloScenario(MessagesPackage messagesPackage, Long chatId) {
@@ -426,11 +442,11 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.FULL_SELECT_PORTER_ACTION_KEYBOARD);
     }
 
-    private void customSendMessage(MessagesPackage messagesPackage, String text, Long chatId, InlineKeyboardMarkup inlineKeyboardMarkup) {
+    private void customSendMessage(MessagesPackage messagesPackage, String text, Long chatId, ReplyKeyboard replyKeyboard) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setText(text);
         sendMessage.setChatId(chatId);
-        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
+        sendMessage.setReplyMarkup(replyKeyboard);
         messagesPackage.addMessageToPackage(sendMessage);
     }
 
@@ -453,5 +469,17 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
         inlineKeyboardButton.setCallbackData(String.format(BotModel.InlineButtons.Commands.PORTER_EXECUTE_ORDER, orderId));
         inlineKeyboardMarkup.setKeyboard(ImmutableList.of(ImmutableList.of(inlineKeyboardButton)));
         return inlineKeyboardMarkup;
+    }
+
+    private ReplyKeyboardMarkup getButtonForGetUsesMPN() {
+        KeyboardButton keyboardButton = new KeyboardButton();
+        keyboardButton.setRequestContact(true);
+        keyboardButton.setText("Да, разрешить");
+
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add(keyboardButton);
+        replyKeyboardMarkup.setKeyboard(ImmutableList.of(keyboardRow));
+        return replyKeyboardMarkup;
     }
 }

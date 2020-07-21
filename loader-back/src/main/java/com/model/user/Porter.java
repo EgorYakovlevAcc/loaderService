@@ -44,4 +44,5 @@ public class Porter implements BotUser {
     private boolean isEmailInput;
     private String firstName;
     private String lastName;
+    private String mpn;
 }

@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isUserHasSharedMPN(BotUser botUser) {
+        throw new IllegalArgumentException("DO NOT USE ME");
+    }
+
+    @Override
     public Customer createCustomer(User user, Long chatId) {
         Customer customer = new Customer();
         customer.setFinishedAskingQuestions(false);

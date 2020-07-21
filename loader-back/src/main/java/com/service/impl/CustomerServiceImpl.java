@@ -94,4 +94,10 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(customer);
         customerRepository.delete(customer);
     }
+
+    @Override
+    public void setMpnForCustomer(Customer botUser, String mpn) {
+        botUser.setMpn(mpn);
+        customerRepository.save(botUser);
+    }
 }
