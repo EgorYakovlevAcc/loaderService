@@ -415,6 +415,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
     private void orderRecruitmentCompletedHandler(MessagesPackage messagesPackage, List<Porter> porters, Customer customer, Integer orderId) {
         for (Porter porter : porters) {
             customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_PORTERS, orderId), porter.getChatId(), null);
+            scenarioForKnownPorter(messagesPackage, porter);
         }
         customSendMessage(messagesPackage, String.format(BotModel.Notifications.ORDER_RECRUITMENT_COMPLETED_FOR_CUSTOMER, orderId), customer.getChatId(), null);
         sendContactsToAdministrator(messagesPackage, customer, porters);
