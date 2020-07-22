@@ -1,5 +1,6 @@
 package com.service.impl;
 
+import com.bot.Bot;
 import com.bot.BotModel;
 import com.bot.MessagesPackage;
 import com.exception.CustomBotException;
@@ -147,7 +148,14 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 setValuesToOrder(customer, message.getText());
                                 orderCreationActionHandler(messagesPackage, customer);
                             } else {
-                                callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
+                                //сюда приплывает всё, если не найдены совпадения после получения реакции на заказ
+                                if (update.hasCallbackQuery()) {
+                                    callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
+                                }
+                                else {
+                                    customSendMessage(messagesPackage, BotModel.Messages.SELECT_ACTIONS,
+                                            update.getMessage().getChatId(), BotModel.InlineKeyboards.FULL_SELECT_PORTER_ACTION_KEYBOARD);
+                                }
                             }
                         } else {
                             if ((customer.isAskingQuestions())) {
@@ -484,6 +492,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 .collect(Collectors.toList());
         for (Porter porter : porters) {
             customSendMessage(messagesPackage, description, porter.getChatId(), getKeyBoardOfExecutingOrderForPorter(order.getId()));
+            customSendMessage(messagesPackage, BotModel.Messages.SELECT_ACTIONS, porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
         }
     }
 
