@@ -118,7 +118,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 if (porter.isHasChangeTimetable()) {
                                     startFinishTimeScenario(messagesPackage, porter, message);
                                 } else {
-                                    customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
+                                    customSendMessage(messagesPackage, String.format(BotModel.Messages.SELECT_ACTIONS, porter.getFullName()), porter.getChatId(), BotModel.InlineKeyboards.FULL_SELECT_PORTER_ACTION_KEYBOARD);
                                 }
                             }
                         } else {
@@ -492,7 +492,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                 .collect(Collectors.toList());
         for (Porter porter : porters) {
             customSendMessage(messagesPackage, description, porter.getChatId(), getKeyBoardOfExecutingOrderForPorter(order.getId()));
-            customSendMessage(messagesPackage, BotModel.Messages.SELECT_ACTIONS, porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
+            //customSendMessage(messagesPackage, BotModel.Messages.SELECT_ACTIONS, porter.getChatId(), BotModel.InlineKeyboards.SELECT_PORTER_ACTION_KEYBOARD);
         }
     }
 
