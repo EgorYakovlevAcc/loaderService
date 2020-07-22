@@ -1,6 +1,7 @@
 package com.service.impl;
 
 import com.model.user.Administrator;
+import com.model.user.BotUser;
 import com.repo.AdministratorRepository;
 import com.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,10 @@ public class AdministratorServiceImpl implements AdministratorService {
         administrator.setChatId(chatId);
         administrator.setTelegramId(id);
         administratorRepository.save(administrator);
+    }
+
+    @Override
+    public BotUser findAdministratorByTelegramId(Integer id) {
+        return administratorRepository.findAdministratorByTelegramId(id);
     }
 }

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
     void deleteAdministratorById(Integer id);
     Administrator findAdministratorByEmail(String email);
+
+    Administrator findAdministratorByTelegramId(Integer id);
 }

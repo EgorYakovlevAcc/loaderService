@@ -1,6 +1,7 @@
 package com.service;
 
 import com.model.user.Administrator;
+import com.model.user.BotUser;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface AdministratorService {
     Administrator findAdministratorByEmail(String email);
 
     void createAdmin(Integer id, Long chatId);
+
+    BotUser findAdministratorByTelegramId(Integer id);
 }

@@ -23,7 +23,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public BotUser findTelegramUserByTelegramId(Integer id) {
         BotUser telegramUser = porterService.findPorterByTelegramId(id);
-        return telegramUser != null ? telegramUser : customerService.findCustomerByTelegramId(id);
+        if (telegramUser != null) {
+            return telegramUser;
+        }
+        else {
+            telegramUser = customerService.findCustomerByTelegramId(id);
+            if (telegramUser != null) {
+                return telegramUser;
+            }
+            else {
+                telegramUser = administratorService.findAdministratorByTelegramId(id);
+                return telegramUser;
+            }
+        }
     }
 
     @Override

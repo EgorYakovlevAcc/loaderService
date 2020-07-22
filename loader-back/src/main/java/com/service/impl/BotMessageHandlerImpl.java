@@ -78,7 +78,24 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
 //            }
 //        }
         if(message != null && "/iadmin".equals(message.getText())) {
-            administratorService.createAdmin(user.getId(),  message.getChatId());
+            if (botUser == null) {
+                administratorService.createAdmin(user.getId(), message.getChatId());
+            }
+            else {
+                customSendMessage(messagesPackage, "Вы уже зарегистрированы в системе", message.getChatId(), null);
+                if (botUser instanceof Customer) {
+                    scenarioForKnownCustomer(messagesPackage, (Customer) botUser);
+                }
+                else {
+                    if (botUser instanceof Porter) {
+                        scenarioForKnownPorter(messagesPackage, (Porter) botUser);
+                    }
+                    else {
+                        customSendMessage(messagesPackage, "Вы уже зарегистрированы как администратор", message.getChatId(), null);
+                    }
+                }
+
+            }
         }
         else {
             if (botUser == null) {
@@ -142,40 +159,43 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                             }
                         }
                     } else {
-                        Customer customer = (Customer) botUser;
-                        if (customer.isFinishedAskingQuestions()) {
-                            if (customer.isOrderCreationProcessing()) {
-                                setValuesToOrder(customer, message.getText());
-                                orderCreationActionHandler(messagesPackage, customer);
-                            } else {
-                                //сюда приплывает всё, если не найдены совпадения после получения реакции на заказ
-                                if (update.hasCallbackQuery()) {
-                                    callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
-                                }
-                                else {
-                                    customSendMessage(messagesPackage, BotModel.Messages.SELECT_ACTIONS,
-                                            update.getMessage().getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
-                                }
-                            }
+                        if (botUser instanceof Administrator) {
+                            customSendMessage(messagesPackage, "Вы администратор. Пока вам не доступны действия в боте.", ((Administrator) botUser).getChatId(), null);
                         } else {
-                            if ((customer.isAskingQuestions())) {
-                                if (customer.isEmailInput()) {
-                                    String email = message.getText();
-                                    customerService.setEmail(customer, email);
-                                }
-                                answerService.saveCustomerAnswer(customer, message.getText());
-                                Question question = questionService.getNextQuestionForCustomer(customer);
-                                if (question == null) {
-                                    customerService.setFinishAskingQuestions(customer);
-                                    scenarioForKnownCustomer(messagesPackage, customer);
+                            Customer customer = (Customer) botUser;
+                            if (customer.isFinishedAskingQuestions()) {
+                                if (customer.isOrderCreationProcessing()) {
+                                    setValuesToOrder(customer, message.getText());
+                                    orderCreationActionHandler(messagesPackage, customer);
                                 } else {
-                                    if ("EMAIL".equals(question.getLabel())) {
-                                        customerService.setStartEmailInput(customer);
+                                    //сюда приплывает всё, если не найдены совпадения после получения реакции на заказ
+                                    if (update.hasCallbackQuery()) {
+                                        callbackScenario(messagesPackage, update.getCallbackQuery(), customer);
+                                    } else {
+                                        customSendMessage(messagesPackage, BotModel.Messages.SELECT_ACTIONS,
+                                                update.getMessage().getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
                                     }
-                                    customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
                                 }
                             } else {
-                                //todo:действия, когда клиент не закончил регистрацию
+                                if ((customer.isAskingQuestions())) {
+                                    if (customer.isEmailInput()) {
+                                        String email = message.getText();
+                                        customerService.setEmail(customer, email);
+                                    }
+                                    answerService.saveCustomerAnswer(customer, message.getText());
+                                    Question question = questionService.getNextQuestionForCustomer(customer);
+                                    if (question == null) {
+                                        customerService.setFinishAskingQuestions(customer);
+                                        scenarioForKnownCustomer(messagesPackage, customer);
+                                    } else {
+                                        if ("EMAIL".equals(question.getLabel())) {
+                                            customerService.setStartEmailInput(customer);
+                                        }
+                                        customSendMessage(messagesPackage, question.getText(), customer.getChatId(), null);
+                                    }
+                                } else {
+                                    //todo:действия, когда клиент не закончил регистрацию
+                                }
                             }
                         }
                     }
