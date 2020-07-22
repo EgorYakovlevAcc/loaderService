@@ -154,7 +154,7 @@ public class BotMessageHandlerImpl implements BotMessageHandler {
                                 }
                                 else {
                                     customSendMessage(messagesPackage, BotModel.Messages.SELECT_ACTIONS,
-                                            update.getMessage().getChatId(), BotModel.InlineKeyboards.FULL_SELECT_PORTER_ACTION_KEYBOARD);
+                                            update.getMessage().getChatId(), BotModel.InlineKeyboards.SELECT_CUSTOMER_ACTION_KEYBOARD);
                                 }
                             }
                         } else {
